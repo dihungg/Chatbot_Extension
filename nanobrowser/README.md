@@ -125,7 +125,7 @@ If you prefer to build Nanobrowser yourself, follow these steps:
 
 4. **Build the Extension**:
    ```bash
-   pnpm install
+   pnpm build
 
    ```
 

@@ -178,3 +178,56 @@ export interface AgentOutput<T = unknown> {
    */
   error?: string;
 }
+
+// --- BẮT ĐẦU KHU VỰC THÊM MỚI (LUỒNG C) ---
+
+// Các trường riêng cho từng loại sản phẩm [cite: 25, 515-516]
+const LaptopSpecsSchema = z.object({
+  ram_gb: z.number().optional(),
+  ssd_gb: z.number().optional(),
+  cpu_model: z.string().optional(),
+  gpu_model: z.string().optional(),
+});
+
+const PhoneSpecsSchema = z.object({
+  camera_main_mp: z.number().optional(),
+  camera_ultrawide_mp: z.number().optional(),
+  battery_mah: z.number().optional(),
+  chipset: z.string().optional(),
+});
+
+const HeadphoneSpecsSchema = z.object({
+  anc: z.boolean().optional(),
+  wireless: z.boolean().optional(),
+  latency_ms: z.number().optional(),
+  driver_size_mm: z.number().optional(),
+});
+
+// Schema thống nhất cho sản phẩm
+export const UnifiedProductSchema = z.object({
+  // Trường bắt buộc
+  product_type: z.enum(['laptop', 'phone', 'headphone', 'unknown']),
+  url: z.string().url().describe("URL trang chi tiết của sản phẩm"),
+  name: z.string().describe("Tên đầy đủ của sản phẩm"),
+
+  // Các trường chung [cite: 25, 514]
+  brand: z.string().optional(),
+  price_vnd: z.number().optional().describe("Giá sản phẩm (chỉ điền số)"),
+  weight: z.string().optional().describe("Ví dụ: '1.2kg'"),
+  battery: z.string().optional().describe("Ví dụ: '5000 mAh' hoặc 'Lên đến 10 giờ'"),
+  screen_spec: z.string().optional().describe("Ví dụ: '6.7 inch, OLED, 120Hz'"),
+  connectivity: z.string().optional().describe("Ví dụ: 'Bluetooth 5.3, Wi-Fi 6E'"),
+  warranty: z.string().optional().describe("Ví dụ: '12 tháng'"),
+
+  // Các trường chi tiết theo category
+  specs: z.object({
+    laptop: LaptopSpecsSchema.optional(),
+    phone: PhoneSpecsSchema.optional(),
+    headphone: HeadphoneSpecsSchema.optional(),
+  }).optional(),
+});
+
+// Xuất type để sử dụng trong code
+export type UnifiedProduct = z.infer<typeof UnifiedProductSchema>;
+
+// --- KẾT THÚC KHU VỰC THÊM MỚI ---
