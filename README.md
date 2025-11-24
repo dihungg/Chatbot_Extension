@@ -1,1 +1,1 @@
-# Chatbot_Extension
+# Lab of Intelligent Data Analysis course
