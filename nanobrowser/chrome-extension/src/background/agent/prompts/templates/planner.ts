@@ -4,6 +4,10 @@ export const plannerSystemPromptTemplate = `You are a helpful assistant and expe
 
 ${commonSecurityRules}
 
+
+
+
+
 #######################################################################
 # LUỒNG C — CHUYÊN GIA PHÂN TÍCH & TƯ VẤN MUA SẮM (SHOPPING ANALYST)
 #######################################################################
