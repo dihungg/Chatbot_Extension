@@ -1,0 +1,61 @@
+_wandb:
+    value:
+        cli_version: 0.23.0
+        e:
+            njdrbmxae7152j9513x9qf7pqtkybbx3:
+                apple:
+                    ecpuCores: 2
+                    gpuCores: 14
+                    memoryGb: 16
+                    name: Apple M1 Pro
+                    pcpuCores: 6
+                    ramTotalBytes: "17179869184"
+                    swapTotalBytes: "4294967296"
+                codePath: /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/lightgbm.ipynb
+                cpu_count: 8
+                cpu_count_logical: 8
+                disk:
+                    /:
+                        total: "494384795648"
+                        used: "405219717120"
+                email: nguyenanhkhoi0608@gmail.com
+                executable: /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/bin/python
+                git:
+                    commit: 71f412ab94b5d2f477764c5178a7a12a36adb905
+                    remote: https://github.com/dihungg/Chatbot_Extension.git
+                host: 192.168.1.109
+                memory:
+                    total: "17179869184"
+                os: macOS-26.0.1-arm64-arm-64bit
+                program: /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/lightgbm.ipynb
+                python: CPython 3.10.19
+                root: /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension
+                startedAt: "2025-11-27T08:06:02.164879Z"
+                writerId: njdrbmxae7152j9513x9qf7pqtkybbx3
+        m: []
+        python_version: 3.10.19
+        t:
+            "1":
+                - 5
+                - 8
+                - 35
+                - 53
+            "2":
+                - 5
+                - 8
+                - 35
+                - 53
+            "3":
+                - 2
+                - 13
+                - 61
+            "4": 3.10.19
+            "5": 0.23.0
+            "8":
+                - 1
+                - 2
+            "12": 0.23.0
+            "13": darwin-arm64
+direction:
+    value:
+        - MAXIMIZE

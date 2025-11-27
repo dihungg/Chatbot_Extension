@@ -1,0 +1,12 @@
+{"time":"2025-11-26T15:04:34.561688+07:00","level":"INFO","msg":"stream: starting","core version":"0.23.0"}
+{"time":"2025-11-26T15:04:34.997509+07:00","level":"INFO","msg":"stream: created new stream","id":"vt1v7xla"}
+{"time":"2025-11-26T15:04:34.997569+07:00","level":"INFO","msg":"handler: started","stream_id":"vt1v7xla"}
+{"time":"2025-11-26T15:04:34.997836+07:00","level":"INFO","msg":"stream: started","id":"vt1v7xla"}
+{"time":"2025-11-26T15:04:34.99784+07:00","level":"INFO","msg":"writer: started","stream_id":"vt1v7xla"}
+{"time":"2025-11-26T15:04:34.997863+07:00","level":"INFO","msg":"sender: started","stream_id":"vt1v7xla"}
+{"time":"2025-11-26T15:05:06.920701+07:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-11-26T15:05:07.329874+07:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-11-26T15:05:07.334042+07:00","level":"INFO","msg":"stream: closing","id":"vt1v7xla"}
+{"time":"2025-11-26T15:05:07.334061+07:00","level":"INFO","msg":"handler: closed","stream_id":"vt1v7xla"}
+{"time":"2025-11-26T15:05:07.334125+07:00","level":"INFO","msg":"sender: closed","stream_id":"vt1v7xla"}
+{"time":"2025-11-26T15:05:07.334133+07:00","level":"INFO","msg":"stream: closed","id":"vt1v7xla"}

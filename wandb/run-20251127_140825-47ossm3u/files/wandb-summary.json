@@ -1,0 +1,1 @@
+{"_wandb":{"runtime":0},"valid_auc":0.9742429485769609,"valid_f1_macro":0.8940842184459085,"_timestamp":1.764227379523456e+09,"threshold":0.39564072722794524,"valid_accuracy":0.9363539445628998,"_runtime":0,"valid_ap":0.9030539720307611,"_step":49}

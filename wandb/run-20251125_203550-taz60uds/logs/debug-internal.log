@@ -1,0 +1,12 @@
+{"time":"2025-11-25T20:35:52.828064+07:00","level":"INFO","msg":"stream: starting","core version":"0.23.0"}
+{"time":"2025-11-25T20:35:53.303415+07:00","level":"INFO","msg":"stream: created new stream","id":"taz60uds"}
+{"time":"2025-11-25T20:35:53.303498+07:00","level":"INFO","msg":"handler: started","stream_id":"taz60uds"}
+{"time":"2025-11-25T20:35:53.304636+07:00","level":"INFO","msg":"stream: started","id":"taz60uds"}
+{"time":"2025-11-25T20:35:53.304658+07:00","level":"INFO","msg":"sender: started","stream_id":"taz60uds"}
+{"time":"2025-11-25T20:35:53.304647+07:00","level":"INFO","msg":"writer: started","stream_id":"taz60uds"}
+{"time":"2025-11-25T20:36:04.493008+07:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-11-25T20:36:04.935344+07:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-11-25T20:36:04.942274+07:00","level":"INFO","msg":"stream: closing","id":"taz60uds"}
+{"time":"2025-11-25T20:36:04.942345+07:00","level":"INFO","msg":"handler: closed","stream_id":"taz60uds"}
+{"time":"2025-11-25T20:36:04.942499+07:00","level":"INFO","msg":"sender: closed","stream_id":"taz60uds"}
+{"time":"2025-11-25T20:36:04.942514+07:00","level":"INFO","msg":"stream: closed","id":"taz60uds"}

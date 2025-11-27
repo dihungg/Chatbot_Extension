@@ -1,0 +1,253 @@
+/var/folders/yf/bvb_cdgn46s4l8cp8l3wd_nc0000gn/T/ipykernel_67277/701190723.py:1: ExperimentalWarning: optuna_integration.wandb.wandb.WeightsAndBiasesCallback.track_in_wandb is experimental (supported from v3.0.0). The interface can change in the future.
+  @wandb_callback.track_in_wandb()
+[I 2025-11-27 14:16:38,461] A new study created in memory with name: no-name-958595af-1ad1-40f7-8d18-dafd626f59f5
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:16:38] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:16:40,185] Trial 0 finished with value: 0.8900715242139251 and parameters: {'colsample_bytree': 0.16156724626922092, 'n_estimators': 864, 'learning_rate': 0.09772147654212704, 'reg_lambda': 2.5339417980575085, 'reg_alpha': 0.8144349705626945, 'max_depth': 6, 'num_leaves': 37, 'gamma': 0.21401914718433462, 'threshold': 0.6029826561804343}. Best is trial 0 with value: 0.8900715242139251.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:16:40] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:16:41,066] Trial 1 finished with value: 0.8739204580050552 and parameters: {'colsample_bytree': 0.5993097948121705, 'n_estimators': 504, 'learning_rate': 0.04160318833079454, 'reg_lambda': 2.2838870574057144, 'reg_alpha': 1.943411955906448, 'max_depth': 3, 'num_leaves': 4, 'gamma': 0.49969738562025956, 'threshold': 0.681993169490855}. Best is trial 0 with value: 0.8900715242139251.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:16:41] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:16:41,600] Trial 2 finished with value: 0.8306002420787657 and parameters: {'colsample_bytree': 0.14850765931665322, 'n_estimators': 409, 'learning_rate': 0.031221958878592415, 'reg_lambda': 1.565024782699581, 'reg_alpha': 0.5908789229394658, 'max_depth': 2, 'num_leaves': 4, 'gamma': 0.2837744404990084, 'threshold': 0.14187390946246028}. Best is trial 0 with value: 0.8900715242139251.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:16:41] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:16:42,677] Trial 3 finished with value: 0.8844425087108014 and parameters: {'colsample_bytree': 0.7513413516269445, 'n_estimators': 458, 'learning_rate': 0.047678179107340235, 'reg_lambda': 0.9191632367537865, 'reg_alpha': 3.4843072072652777, 'max_depth': 4, 'num_leaves': 12, 'gamma': 0.08037405910891826, 'threshold': 0.21608705039985887}. Best is trial 0 with value: 0.8900715242139251.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:16:42] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:16:43,854] Trial 4 finished with value: 0.8793893179897858 and parameters: {'colsample_bytree': 0.17616093191929671, 'n_estimators': 547, 'learning_rate': 0.0693388056100977, 'reg_lambda': 3.3820324007178653, 'reg_alpha': 1.9597550637189913, 'max_depth': 4, 'num_leaves': 8, 'gamma': 0.2829467221814775, 'threshold': 0.647594724963517}. Best is trial 0 with value: 0.8900715242139251.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:16:43] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:16:44,817] Trial 5 finished with value: 0.8731432435478418 and parameters: {'colsample_bytree': 0.5452383123570262, 'n_estimators': 777, 'learning_rate': 0.09148459993185268, 'reg_lambda': 1.2020097004888406, 'reg_alpha': 3.0155197070839392, 'max_depth': 4, 'num_leaves': 10, 'gamma': 0.4297376740030744, 'threshold': 0.16206496517384875}. Best is trial 0 with value: 0.8900715242139251.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:16:44] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:16:46,489] Trial 6 finished with value: 0.8835046351478764 and parameters: {'colsample_bytree': 0.13796538053135843, 'n_estimators': 462, 'learning_rate': 0.026652059652018244, 'reg_lambda': 0.8623849796744754, 'reg_alpha': 0.5230058716716632, 'max_depth': 8, 'num_leaves': 239, 'gamma': 0.38392512341459106, 'threshold': 0.2587926018068375}. Best is trial 0 with value: 0.8900715242139251.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:16:46] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:16:47,515] Trial 7 finished with value: 0.8648306027525148 and parameters: {'colsample_bytree': 0.8739121071749424, 'n_estimators': 518, 'learning_rate': 0.07106657190276891, 'reg_lambda': 3.434998165471633, 'reg_alpha': 3.3697042037625224, 'max_depth': 5, 'num_leaves': 11, 'gamma': 0.2604607211604508, 'threshold': 0.7588305498369241}. Best is trial 0 with value: 0.8900715242139251.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:16:47] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:16:49,019] Trial 8 finished with value: 0.8888604100542672 and parameters: {'colsample_bytree': 0.37296464653504835, 'n_estimators': 480, 'learning_rate': 0.030747150230264808, 'reg_lambda': 2.280445608365503, 'reg_alpha': 0.0599235607809141, 'max_depth': 6, 'num_leaves': 7, 'gamma': 0.13653331181949852, 'threshold': 0.6205133226974201}. Best is trial 0 with value: 0.8900715242139251.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:16:49] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:16:50,901] Trial 9 finished with value: 0.9008797468479486 and parameters: {'colsample_bytree': 0.8976838385557253, 'n_estimators': 827, 'learning_rate': 0.0453970687822977, 'reg_lambda': 0.7782265643346329, 'reg_alpha': 3.446842429319021, 'max_depth': 5, 'num_leaves': 12, 'gamma': 0.060502549151422114, 'threshold': 0.3227886524630312}. Best is trial 9 with value: 0.9008797468479486.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:16:50] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:16:56,353] Trial 10 finished with value: 0.926287496065981 and parameters: {'colsample_bytree': 0.9695923026648829, 'n_estimators': 984, 'learning_rate': 0.010034920060016786, 'reg_lambda': 0.03076036215293465, 'reg_alpha': 2.472478605661515, 'max_depth': 10, 'num_leaves': 95, 'gamma': 0.028411223545880965, 'threshold': 0.3679336926391309}. Best is trial 10 with value: 0.926287496065981.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:16:56] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:17:01,665] Trial 11 finished with value: 0.9319463605646747 and parameters: {'colsample_bytree': 0.9529155457074929, 'n_estimators': 983, 'learning_rate': 0.01218764517382382, 'reg_lambda': 0.0072008428991756634, 'reg_alpha': 2.663005752308345, 'max_depth': 10, 'num_leaves': 96, 'gamma': 0.018581397478494688, 'threshold': 0.4045278423154641}. Best is trial 11 with value: 0.9319463605646747.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:17:01] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:17:07,474] Trial 12 finished with value: 0.929309211094113 and parameters: {'colsample_bytree': 0.9687988854119999, 'n_estimators': 996, 'learning_rate': 0.010542837051088164, 'reg_lambda': 0.11145774531833035, 'reg_alpha': 2.6674847176820116, 'max_depth': 10, 'num_leaves': 97, 'gamma': 0.001429136396725133, 'threshold': 0.41959002000064066}. Best is trial 11 with value: 0.9319463605646747.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:17:07] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:17:12,935] Trial 13 finished with value: 0.9272956542361508 and parameters: {'colsample_bytree': 0.7325477644669649, 'n_estimators': 988, 'learning_rate': 0.011146071584026652, 'reg_lambda': 0.14848693162365553, 'reg_alpha': 2.737230249049711, 'max_depth': 10, 'num_leaves': 130, 'gamma': 0.0012925231364196046, 'threshold': 0.47019946170530785}. Best is trial 11 with value: 0.9319463605646747.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:17:12] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:17:16,782] Trial 14 finished with value: 0.9257801909958117 and parameters: {'colsample_bytree': 0.7619339608340212, 'n_estimators': 917, 'learning_rate': 0.020273653311589312, 'reg_lambda': 0.3864542060990577, 'reg_alpha': 1.4249418984830737, 'max_depth': 8, 'num_leaves': 83, 'gamma': 0.1289555402258638, 'threshold': 0.4152570347618076}. Best is trial 11 with value: 0.9319463605646747.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:17:16] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:17:18,580] Trial 15 finished with value: 0.8087534786720243 and parameters: {'colsample_bytree': 0.9712202211932237, 'n_estimators': 703, 'learning_rate': 0.06313574380505138, 'reg_lambda': 1.5993161738791404, 'reg_alpha': 3.9091411809866585, 'max_depth': 8, 'num_leaves': 189, 'gamma': 0.19943849229734842, 'threshold': 0.8859547527025853}. Best is trial 11 with value: 0.9319463605646747.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:17:18] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:17:21,608] Trial 16 finished with value: 0.9131848386137363 and parameters: {'colsample_bytree': 0.4300486750948994, 'n_estimators': 630, 'learning_rate': 0.018045471158106324, 'reg_lambda': 0.4435923188484999, 'reg_alpha': 2.3611953879408047, 'max_depth': 9, 'num_leaves': 78, 'gamma': 0.105965702764632, 'threshold': 0.49762077152357176}. Best is trial 11 with value: 0.9319463605646747.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:17:21] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:17:25,928] Trial 17 finished with value: 0.945169390708255 and parameters: {'colsample_bytree': 0.8259393142960281, 'n_estimators': 915, 'learning_rate': 0.03535656285909395, 'reg_lambda': 1.5311385647027147, 'reg_alpha': 1.5053015902851201, 'max_depth': 9, 'num_leaves': 148, 'gamma': 0.019097696427955682, 'threshold': 0.31441529560265963}. Best is trial 17 with value: 0.945169390708255.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:17:25] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:17:28,333] Trial 18 finished with value: 0.9173769233914502 and parameters: {'colsample_bytree': 0.6238701429777677, 'n_estimators': 918, 'learning_rate': 0.03742986105400401, 'reg_lambda': 2.705121244687444, 'reg_alpha': 1.449450284702828, 'max_depth': 9, 'num_leaves': 155, 'gamma': 0.17866360752527577, 'threshold': 0.28682146698768746}. Best is trial 17 with value: 0.945169390708255.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:17:28] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:17:30,193] Trial 19 finished with value: 0.9185058932853531 and parameters: {'colsample_bytree': 0.8480708247510141, 'n_estimators': 757, 'learning_rate': 0.05528353684503527, 'reg_lambda': 1.743343731260782, 'reg_alpha': 1.375650006124798, 'max_depth': 7, 'num_leaves': 59, 'gamma': 0.05744788101402037, 'threshold': 0.5447391398941177}. Best is trial 17 with value: 0.945169390708255.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:17:30] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:17:31,916] Trial 20 finished with value: 0.8873077189264446 and parameters: {'colsample_bytree': 0.005014471537334753, 'n_estimators': 890, 'learning_rate': 0.023762999318597655, 'reg_lambda': 2.989114978095712, 'reg_alpha': 1.7530871896849063, 'max_depth': 9, 'num_leaves': 132, 'gamma': 0.3478495511036827, 'threshold': 0.3448892472709188}. Best is trial 17 with value: 0.945169390708255.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:17:31] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:17:37,107] Trial 21 finished with value: 0.9448552418448151 and parameters: {'colsample_bytree': 0.9777482221020569, 'n_estimators': 998, 'learning_rate': 0.017768776519274325, 'reg_lambda': 0.4822357921415452, 'reg_alpha': 2.3661703788664, 'max_depth': 10, 'num_leaves': 119, 'gamma': 0.005254942631293396, 'threshold': 0.45509976709223277}. Best is trial 17 with value: 0.945169390708255.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:17:37] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:17:41,838] Trial 22 finished with value: 0.9569187169109787 and parameters: {'colsample_bytree': 0.8151838748166993, 'n_estimators': 935, 'learning_rate': 0.03468191854779987, 'reg_lambda': 1.1671821006496326, 'reg_alpha': 2.3110522674329768, 'max_depth': 10, 'num_leaves': 177, 'gamma': 0.03927321224987311, 'threshold': 0.4177742621200911}. Best is trial 22 with value: 0.9569187169109787.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:17:41] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:17:44,748] Trial 23 finished with value: 0.9330060642615436 and parameters: {'colsample_bytree': 0.6628086072417289, 'n_estimators': 825, 'learning_rate': 0.03544543551829136, 'reg_lambda': 1.2661115224917912, 'reg_alpha': 2.1518061941504074, 'max_depth': 9, 'num_leaves': 191, 'gamma': 0.08416827991580847, 'threshold': 0.513935279744624}. Best is trial 22 with value: 0.9569187169109787.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:17:44] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:17:46,359] Trial 24 finished with value: 0.8989830201682214 and parameters: {'colsample_bytree': 0.8134123292759321, 'n_estimators': 940, 'learning_rate': 0.05239113899545102, 'reg_lambda': 3.9975963734938036, 'reg_alpha': 1.044772828146024, 'max_depth': 7, 'num_leaves': 128, 'gamma': 0.15787574871155752, 'threshold': 0.2256962407819728}. Best is trial 22 with value: 0.9569187169109787.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:17:46] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:17:50,690] Trial 25 finished with value: 0.9559852470040482 and parameters: {'colsample_bytree': 0.8235305835827526, 'n_estimators': 853, 'learning_rate': 0.02810037005267447, 'reg_lambda': 1.2508737361404407, 'reg_alpha': 1.7197905500788075, 'max_depth': 10, 'num_leaves': 179, 'gamma': 0.048046790540623815, 'threshold': 0.45960945353234306}. Best is trial 22 with value: 0.9569187169109787.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:17:50] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:17:54,319] Trial 26 finished with value: 0.9474964914027433 and parameters: {'colsample_bytree': 0.7112826732580592, 'n_estimators': 847, 'learning_rate': 0.03900725889733765, 'reg_lambda': 1.265116193642034, 'reg_alpha': 1.6037402259630351, 'max_depth': 9, 'num_leaves': 181, 'gamma': 0.049377997788499016, 'threshold': 0.5526765462928848}. Best is trial 22 with value: 0.9569187169109787.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:17:54] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:17:56,111] Trial 27 finished with value: 0.9200316936165692 and parameters: {'colsample_bytree': 0.5103869823853946, 'n_estimators': 770, 'learning_rate': 0.058350372271566614, 'reg_lambda': 1.2676987696600552, 'reg_alpha': 1.0165705897487376, 'max_depth': 8, 'num_leaves': 193, 'gamma': 0.10849836264487864, 'threshold': 0.5707970226345824}. Best is trial 22 with value: 0.9569187169109787.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:17:56] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:17:58,754] Trial 28 finished with value: 0.8954487126695343 and parameters: {'colsample_bytree': 0.6758443165083976, 'n_estimators': 855, 'learning_rate': 0.04186392515720094, 'reg_lambda': 1.9275118069851676, 'reg_alpha': 1.7390799260666658, 'max_depth': 7, 'num_leaves': 120, 'gamma': 0.05222261709287715, 'threshold': 0.6974942443454648}. Best is trial 22 with value: 0.9569187169109787.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:17:58] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:18:02,181] Trial 29 finished with value: 0.8945362345212158 and parameters: {'colsample_bytree': 0.7121237120236211, 'n_estimators': 685, 'learning_rate': 0.02922712008078263, 'reg_lambda': 1.0757736874885468, 'reg_alpha': 1.124756880389923, 'max_depth': 10, 'num_leaves': 220, 'gamma': 0.2390954762648448, 'threshold': 0.7744143375369587}. Best is trial 22 with value: 0.9569187169109787.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:18:02] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:18:03,858] Trial 30 finished with value: 0.9159643476074988 and parameters: {'colsample_bytree': 0.43738103583814864, 'n_estimators': 858, 'learning_rate': 0.09765322808014623, 'reg_lambda': 1.950405856692001, 'reg_alpha': 2.1996763456058503, 'max_depth': 9, 'num_leaves': 169, 'gamma': 0.16401733478787922, 'threshold': 0.5707345747765307}. Best is trial 22 with value: 0.9569187169109787.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:18:03] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:18:08,312] Trial 31 finished with value: 0.9507514171655989 and parameters: {'colsample_bytree': 0.8031937140642327, 'n_estimators': 943, 'learning_rate': 0.035460152275296426, 'reg_lambda': 1.4544717026061238, 'reg_alpha': 1.6827444027255238, 'max_depth': 9, 'num_leaves': 158, 'gamma': 0.04123245351867558, 'threshold': 0.38412762908268616}. Best is trial 22 with value: 0.9569187169109787.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:18:08] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:18:11,339] Trial 32 finished with value: 0.930682410681338 and parameters: {'colsample_bytree': 0.7829320842933309, 'n_estimators': 949, 'learning_rate': 0.0419788276678487, 'reg_lambda': 1.4256712613177842, 'reg_alpha': 1.7978725356495668, 'max_depth': 8, 'num_leaves': 211, 'gamma': 0.05209810904068053, 'threshold': 0.37475358236051803}. Best is trial 22 with value: 0.9569187169109787.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:18:11] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:18:14,135] Trial 33 finished with value: 0.9499764580652765 and parameters: {'colsample_bytree': 0.8986320854364724, 'n_estimators': 808, 'learning_rate': 0.04863430174812042, 'reg_lambda': 0.6718814593899991, 'reg_alpha': 2.028774821753826, 'max_depth': 10, 'num_leaves': 171, 'gamma': 0.10635668863892365, 'threshold': 0.4638453649584745}. Best is trial 22 with value: 0.9569187169109787.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:18:14] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:18:16,758] Trial 34 finished with value: 0.9517278948851787 and parameters: {'colsample_bytree': 0.9039202521386527, 'n_estimators': 800, 'learning_rate': 0.04828584280761501, 'reg_lambda': 0.6780184403949547, 'reg_alpha': 2.055371525826803, 'max_depth': 10, 'num_leaves': 165, 'gamma': 0.09805331816273839, 'threshold': 0.4449849970211383}. Best is trial 22 with value: 0.9569187169109787.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:18:16] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:18:17,873] Trial 35 finished with value: 0.8957835706375952 and parameters: {'colsample_bytree': 0.5935569854237565, 'n_estimators': 882, 'learning_rate': 0.024672369504529966, 'reg_lambda': 1.0020576088851572, 'reg_alpha': 2.8806538470846688, 'max_depth': 2, 'num_leaves': 4, 'gamma': 0.09098333496019557, 'threshold': 0.4038344088163757}. Best is trial 22 with value: 0.9569187169109787.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:18:17] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:18:19,932] Trial 36 finished with value: 0.9380332179467471 and parameters: {'colsample_bytree': 0.9028063027043006, 'n_estimators': 737, 'learning_rate': 0.04829183247296008, 'reg_lambda': 2.3570330611253336, 'reg_alpha': 2.010754498525743, 'max_depth': 10, 'num_leaves': 151, 'gamma': 0.12594842862020333, 'threshold': 0.4980858092692189}. Best is trial 22 with value: 0.9569187169109787.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:18:19] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:18:23,377] Trial 37 finished with value: 0.9327201912186521 and parameters: {'colsample_bytree': 0.796552120505316, 'n_estimators': 805, 'learning_rate': 0.03298675276928181, 'reg_lambda': 1.7433677920629664, 'reg_alpha': 1.2285524923263105, 'max_depth': 9, 'num_leaves': 206, 'gamma': 0.04240073111088884, 'threshold': 0.2687163538244025}. Best is trial 22 with value: 0.9569187169109787.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:18:23] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:18:25,310] Trial 38 finished with value: 0.9291455990295947 and parameters: {'colsample_bytree': 0.31027743515105444, 'n_estimators': 951, 'learning_rate': 0.06218429801296661, 'reg_lambda': 0.7317040010117506, 'reg_alpha': 0.536306802534845, 'max_depth': 10, 'num_leaves': 242, 'gamma': 0.49170116743291764, 'threshold': 0.4515254962583963}. Best is trial 22 with value: 0.9569187169109787.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:18:25] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:18:26,437] Trial 39 finished with value: 0.9044165279173229 and parameters: {'colsample_bytree': 0.8558369864301649, 'n_estimators': 898, 'learning_rate': 0.07374805999046637, 'reg_lambda': 0.9693848885090119, 'reg_alpha': 3.1159540590593737, 'max_depth': 6, 'num_leaves': 32, 'gamma': 0.3174993914304544, 'threshold': 0.36557610167492716}. Best is trial 22 with value: 0.9569187169109787.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:18:26] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:18:28,777] Trial 40 finished with value: 0.9066436339309178 and parameters: {'colsample_bytree': 0.9222866158548935, 'n_estimators': 628, 'learning_rate': 0.04320458894655607, 'reg_lambda': 2.193900030556421, 'reg_alpha': 0.8886915020255799, 'max_depth': 8, 'num_leaves': 226, 'gamma': 0.07337984157067887, 'threshold': 0.1899006193336144}. Best is trial 22 with value: 0.9569187169109787.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:18:28] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:18:31,519] Trial 41 finished with value: 0.8938196574691413 and parameters: {'colsample_bytree': 0.9009120570790246, 'n_estimators': 815, 'learning_rate': 0.04802692758903312, 'reg_lambda': 0.6424255224772348, 'reg_alpha': 1.993034429059428, 'max_depth': 10, 'num_leaves': 167, 'gamma': 0.09873304063822734, 'threshold': 0.11470543236640407}. Best is trial 22 with value: 0.9569187169109787.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:18:31] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:18:34,104] Trial 42 finished with value: 0.9520768047820095 and parameters: {'colsample_bytree': 0.8361378319061881, 'n_estimators': 788, 'learning_rate': 0.05055155562984463, 'reg_lambda': 0.5870815623165446, 'reg_alpha': 2.1649722507589226, 'max_depth': 10, 'num_leaves': 170, 'gamma': 0.0798114438950388, 'threshold': 0.4502096491576639}. Best is trial 22 with value: 0.9569187169109787.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:18:34] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:18:37,084] Trial 43 finished with value: 0.9343728767317032 and parameters: {'colsample_bytree': 0.8359968891604402, 'n_estimators': 707, 'learning_rate': 0.030537015523609178, 'reg_lambda': 1.1141021082040323, 'reg_alpha': 2.2173601417537547, 'max_depth': 9, 'num_leaves': 157, 'gamma': 0.07598152500025446, 'threshold': 0.4301442398204427}. Best is trial 22 with value: 0.9569187169109787.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:18:37] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:18:40,866] Trial 44 finished with value: 0.9610010983467435 and parameters: {'colsample_bytree': 0.7555420026410113, 'n_estimators': 785, 'learning_rate': 0.051813214916117824, 'reg_lambda': 0.2817358088751194, 'reg_alpha': 2.5024466141968533, 'max_depth': 10, 'num_leaves': 179, 'gamma': 0.030485612758325384, 'threshold': 0.5112582347233021}. Best is trial 44 with value: 0.9610010983467435.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:18:40] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:18:44,394] Trial 45 finished with value: 0.961562393409189 and parameters: {'colsample_bytree': 0.7527796619608157, 'n_estimators': 785, 'learning_rate': 0.06506454595661652, 'reg_lambda': 0.3249164498962406, 'reg_alpha': 2.52176887536818, 'max_depth': 10, 'num_leaves': 256, 'gamma': 0.030639620918430623, 'threshold': 0.5265995390797443}. Best is trial 45 with value: 0.961562393409189.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:18:44] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:18:46,098] Trial 46 finished with value: 0.8966175468421977 and parameters: {'colsample_bytree': 0.565013600746861, 'n_estimators': 747, 'learning_rate': 0.07248200585329831, 'reg_lambda': 0.26514732071573355, 'reg_alpha': 2.517366779503207, 'max_depth': 5, 'num_leaves': 23, 'gamma': 0.02423654822092613, 'threshold': 0.6114360702589776}. Best is trial 45 with value: 0.961562393409189.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:18:46] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:18:48,414] Trial 47 finished with value: 0.9358217750373423 and parameters: {'colsample_bytree': 0.6707168278823226, 'n_estimators': 400, 'learning_rate': 0.07749370309013853, 'reg_lambda': 0.28464796081483534, 'reg_alpha': 2.944869568431206, 'max_depth': 10, 'num_leaves': 256, 'gamma': 0.02870697925715085, 'threshold': 0.6557966033016274}. Best is trial 45 with value: 0.961562393409189.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:18:48] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:18:49,799] Trial 48 finished with value: 0.8940194120922094 and parameters: {'colsample_bytree': 0.7332071154669971, 'n_estimators': 785, 'learning_rate': 0.06703003564194336, 'reg_lambda': 0.583903740455888, 'reg_alpha': 3.2484569125260228, 'max_depth': 3, 'num_leaves': 8, 'gamma': 0.07444121066889647, 'threshold': 0.5273894132756031}. Best is trial 45 with value: 0.961562393409189.
+/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/xgboost/training.py:199: UserWarning: [14:18:49] WARNING: /Users/runner/work/xgboost/xgboost/src/learner.cc:790:
+Parameters: { "num_leaves" } are not used.
+
+  bst.update(dtrain, iteration=i, fobj=obj)
+[I 2025-11-27 14:18:51,336] Trial 49 finished with value: 0.9354459174497338 and parameters: {'colsample_bytree': 0.6292169451454659, 'n_estimators': 667, 'learning_rate': 0.08151851554572996, 'reg_lambda': 0.8136796665383941, 'reg_alpha': 2.6456633723045453, 'max_depth': 10, 'num_leaves': 201, 'gamma': 0.12370516061835078, 'threshold': 0.4919833635363581}. Best is trial 45 with value: 0.961562393409189.

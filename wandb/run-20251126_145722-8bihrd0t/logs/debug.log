@@ -1,0 +1,96 @@
+2025-11-26 14:57:22,240 INFO    MainThread:19353 [wandb_setup.py:_flush():80] Current SDK version is 0.23.0
+2025-11-26 14:57:22,241 INFO    MainThread:19353 [wandb_setup.py:_flush():80] Configure stats pid to 19353
+2025-11-26 14:57:22,241 INFO    MainThread:19353 [wandb_setup.py:_flush():80] Loading settings from /Users/conquerormikrokosmos/.config/wandb/settings
+2025-11-26 14:57:22,241 INFO    MainThread:19353 [wandb_setup.py:_flush():80] Loading settings from /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/wandb/settings
+2025-11-26 14:57:22,241 INFO    MainThread:19353 [wandb_setup.py:_flush():80] Loading settings from environment variables
+2025-11-26 14:57:22,241 INFO    MainThread:19353 [wandb_init.py:setup_run_log_directory():713] Logging user logs to /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/wandb/run-20251126_145722-8bihrd0t/logs/debug.log
+2025-11-26 14:57:22,241 INFO    MainThread:19353 [wandb_init.py:setup_run_log_directory():714] Logging internal logs to /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/wandb/run-20251126_145722-8bihrd0t/logs/debug-internal.log
+2025-11-26 14:57:22,241 INFO    MainThread:19353 [wandb_init.py:monkeypatch_ipython():632] configuring jupyter hooks <wandb.sdk.wandb_init._WandbInit object at 0x118155db0>
+2025-11-26 14:57:22,241 INFO    MainThread:19353 [wandb_init.py:init():840] calling init triggers
+2025-11-26 14:57:22,241 INFO    MainThread:19353 [wandb_init.py:init():845] wandb.init called with sweep_config: {}
+config: {'_wandb': {}}
+2025-11-26 14:57:22,241 INFO    MainThread:19353 [wandb_init.py:init():888] starting backend
+2025-11-26 14:57:22,506 INFO    MainThread:19353 [wandb_init.py:init():891] sending inform_init request
+2025-11-26 14:57:22,536 INFO    MainThread:19353 [wandb_init.py:init():899] backend started and connected
+2025-11-26 14:57:22,558 INFO    MainThread:19353 [wandb_run.py:_label_probe_notebook():1323] probe notebook
+2025-11-26 14:57:22,559 INFO    MainThread:19353 [wandb_init.py:init():969] updated telemetry
+2025-11-26 14:57:22,691 INFO    MainThread:19353 [wandb_init.py:init():993] communicating run to backend with 90.0 second timeout
+2025-11-26 14:57:23,509 INFO    MainThread:19353 [wandb_init.py:init():1040] starting run threads in backend
+2025-11-26 14:57:23,597 INFO    MainThread:19353 [wandb_run.py:_console_start():2504] atexit reg
+2025-11-26 14:57:23,597 INFO    MainThread:19353 [wandb_run.py:_redirect():2352] redirect: wrap_raw
+2025-11-26 14:57:23,597 INFO    MainThread:19353 [wandb_run.py:_redirect():2421] Wrapping output streams.
+2025-11-26 14:57:23,597 INFO    MainThread:19353 [wandb_run.py:_redirect():2444] Redirects installed.
+2025-11-26 14:57:23,599 INFO    MainThread:19353 [wandb_init.py:init():1080] run started, returning control to user process
+2025-11-26 14:57:23,600 INFO    MainThread:19353 [wandb_init.py:_post_run_cell_hook():602] [no run ID] resuming backend
+2025-11-26 14:57:23,607 INFO    MainThread:19353 [jupyter.py:save_ipynb():359] [no run ID] not saving jupyter notebook
+2025-11-26 14:57:23,607 INFO    MainThread:19353 [wandb_init.py:_pre_run_cell_hook():591] [no run ID] pausing backend
+2025-11-26 14:57:23,609 INFO    MainThread:19353 [wandb_init.py:_post_run_cell_hook():602] [no run ID] resuming backend
+2025-11-26 14:57:23,614 INFO    MainThread:19353 [jupyter.py:save_ipynb():359] [no run ID] not saving jupyter notebook
+2025-11-26 14:57:23,614 INFO    MainThread:19353 [wandb_init.py:_pre_run_cell_hook():591] [no run ID] pausing backend
+2025-11-26 14:57:23,616 INFO    MainThread:19353 [wandb_init.py:_post_run_cell_hook():602] [no run ID] resuming backend
+2025-11-26 14:57:23,620 INFO    MainThread:19353 [jupyter.py:save_ipynb():359] [no run ID] not saving jupyter notebook
+2025-11-26 14:57:23,621 INFO    MainThread:19353 [wandb_init.py:_pre_run_cell_hook():591] [no run ID] pausing backend
+2025-11-26 14:57:24,244 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 14:57:49,643 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 14:57:51,793 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 14:58:02,686 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 14:58:03,755 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 14:58:05,606 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 14:58:06,518 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 14:58:16,672 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 14:58:32,703 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 14:58:57,436 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 14:59:00,886 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 14:59:03,940 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 14:59:07,545 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 14:59:11,084 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 14:59:14,198 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 14:59:17,382 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 14:59:24,125 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 14:59:30,567 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 14:59:32,620 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 14:59:33,898 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 14:59:47,611 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 14:59:50,881 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 14:59:54,370 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 14:59:56,552 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 15:00:01,042 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 15:00:04,149 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 15:00:05,530 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 15:00:12,960 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 15:00:14,074 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 15:00:14,654 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 15:00:19,024 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 15:00:22,085 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 15:00:24,141 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 15:00:26,415 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 15:00:27,466 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 15:00:31,701 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 15:00:38,160 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 15:00:39,080 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 15:00:43,485 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 15:00:48,370 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 15:00:48,738 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 15:00:51,812 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 15:00:56,688 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 15:00:58,740 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 15:01:00,526 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 15:01:02,169 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 15:01:02,977 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 15:01:11,484 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 15:01:13,793 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 15:01:15,322 INFO    MainThread:19353 [wandb_run.py:_config_callback():1385] config_cb None None {'direction': ['MAXIMIZE']}
+2025-11-26 15:01:15,323 INFO    MainThread:19353 [wandb_init.py:_post_run_cell_hook():602] [no run ID] resuming backend
+2025-11-26 15:04:03,301 INFO    MainThread:19353 [jupyter.py:save_ipynb():359] [no run ID] not saving jupyter notebook
+2025-11-26 15:04:03,303 INFO    MainThread:19353 [wandb_init.py:_pre_run_cell_hook():591] [no run ID] pausing backend
+2025-11-26 15:04:03,308 INFO    MainThread:19353 [wandb_init.py:_post_run_cell_hook():602] [no run ID] resuming backend
+2025-11-26 15:04:29,919 INFO    MainThread:19353 [jupyter.py:save_ipynb():359] [no run ID] not saving jupyter notebook
+2025-11-26 15:04:29,920 INFO    MainThread:19353 [wandb_init.py:_pre_run_cell_hook():591] [no run ID] pausing backend
+2025-11-26 15:04:29,932 INFO    MainThread:19353 [wandb_run.py:_finish():2270] finishing run team-csc17001-ida/depression-detection/8bihrd0t
+2025-11-26 15:04:30,828 INFO    MainThread:19353 [jupyter.py:save_history():435] not saving jupyter history
+2025-11-26 15:04:30,828 INFO    MainThread:19353 [jupyter.py:save_ipynb():359] not saving jupyter notebook
+2025-11-26 15:04:30,828 INFO    MainThread:19353 [wandb_init.py:_jupyter_teardown():617] cleaning up jupyter logic
+2025-11-26 15:04:30,828 INFO    MainThread:19353 [wandb_run.py:_atexit_cleanup():2469] got exitcode: 0
+2025-11-26 15:04:30,828 INFO    MainThread:19353 [wandb_run.py:_restore():2451] restore
+2025-11-26 15:04:30,828 INFO    MainThread:19353 [wandb_run.py:_restore():2457] restore done
+2025-11-26 15:04:34,552 INFO    MainThread:19353 [wandb_run.py:_footer_sync_info():3853] logging synced files

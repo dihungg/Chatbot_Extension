@@ -1,0 +1,2 @@
+/var/folders/yf/bvb_cdgn46s4l8cp8l3wd_nc0000gn/T/ipykernel_19353/2835986638.py:7: ExperimentalWarning: WeightsAndBiasesCallback is experimental (supported from v2.9.0). The interface can change in the future.
+  wandb_callback = WeightsAndBiasesCallback(

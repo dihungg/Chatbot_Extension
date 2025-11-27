@@ -1,0 +1,8 @@
+{"time":"2025-11-26T14:56:00.188943+07:00","level":"INFO","msg":"stream: starting","core version":"0.23.0"}
+{"time":"2025-11-26T14:56:00.659351+07:00","level":"INFO","msg":"stream: created new stream","id":"e79q57n6"}
+{"time":"2025-11-26T14:56:00.659411+07:00","level":"INFO","msg":"handler: started","stream_id":"e79q57n6"}
+{"time":"2025-11-26T14:56:00.660519+07:00","level":"INFO","msg":"stream: started","id":"e79q57n6"}
+{"time":"2025-11-26T14:56:00.66053+07:00","level":"INFO","msg":"writer: started","stream_id":"e79q57n6"}
+{"time":"2025-11-26T14:56:00.660546+07:00","level":"INFO","msg":"sender: started","stream_id":"e79q57n6"}
+{"time":"2025-11-26T14:57:03.264486+07:00","level":"ERROR","msg":"HTTP error","status":404,"method":"POST","url":"https://api.wandb.ai/files/team-csc17001-ida/depression-detection/e79q57n6/file_stream"}
+{"time":"2025-11-26T14:57:03.266658+07:00","level":"ERROR+4","msg":"filestream: fatal error: filestream: failed to upload: 404 Not Found path=files/team-csc17001-ida/depression-detection/e79q57n6/file_stream: {\"error\":\"run depression-detection/e79q57n6 not found while streaming file\"}"}

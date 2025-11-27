@@ -1,0 +1,641 @@
+/var/folders/yf/bvb_cdgn46s4l8cp8l3wd_nc0000gn/T/ipykernel_68074/1629602241.py:1: ExperimentalWarning: optuna_integration.wandb.wandb.WeightsAndBiasesCallback.track_in_wandb is experimental (supported from v3.0.0). The interface can change in the future.
+  @wandb_callback.track_in_wandb()
+[I 2025-11-27 20:20:48,643] A new study created in memory with name: no-name-04646dda-29e3-45f7-b94f-83018162453a
+0:	learn: 0.8816017	total: 15.8ms	remaining: 39.4s
+200:	learn: 0.9221593	total: 1.47s	remaining: 16.8s
+400:	learn: 0.9245577	total: 2.85s	remaining: 14.9s
+600:	learn: 0.9265829	total: 4.12s	remaining: 13s
+800:	learn: 0.9275523	total: 5.39s	remaining: 11.4s
+1000:	learn: 0.9281147	total: 6.69s	remaining: 10s
+1200:	learn: 0.9290595	total: 8.07s	remaining: 8.73s
+1400:	learn: 0.9296460	total: 9.53s	remaining: 7.47s
+1600:	learn: 0.9306423	total: 11.1s	remaining: 6.25s
+1800:	learn: 0.9313049	total: 12.7s	remaining: 4.93s
+2000:	learn: 0.9320052	total: 14.2s	remaining: 3.55s
+2200:	learn: 0.9327167	total: 15.8s	remaining: 2.14s
+2400:	learn: 0.9332270	total: 17.4s	remaining: 717ms
+2499:	learn: 0.9335282	total: 18.1s	remaining: 0us
+[W 2025-11-27 20:21:07,051] Trial 0 failed with parameters: {'iterations': 2500, 'learning_rate': 0.05, 'depth': 4, 'threshold': 0.46677686005616004} because of the following error: NameError("name 'X_valid' is not defined").
+Traceback (most recent call last):
+  File "/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/optuna/study/_optimize.py", line 205, in _run_trial
+    value_or_values = func(trial)
+  File "/Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/.venv/lib/python3.10/site-packages/optuna_integration/wandb/wandb.py", line 233, in wrapper
+    return func(trial)
+  File "/var/folders/yf/bvb_cdgn46s4l8cp8l3wd_nc0000gn/T/ipykernel_68074/1629602241.py", line 25, in objective
+    y_pred_probs = model.predict_proba(X_valid)[:, 1]
+NameError: name 'X_valid' is not defined. Did you mean: 'X_val'?
+[W 2025-11-27 20:21:07,053] Trial 0 failed with value None.
+/var/folders/yf/bvb_cdgn46s4l8cp8l3wd_nc0000gn/T/ipykernel_68074/2779495875.py:1: ExperimentalWarning: optuna_integration.wandb.wandb.WeightsAndBiasesCallback.track_in_wandb is experimental (supported from v3.0.0). The interface can change in the future.
+  @wandb_callback.track_in_wandb()
+[I 2025-11-27 20:22:32,246] A new study created in memory with name: no-name-c07c205d-7d96-40bb-98e8-09bc03ca0b71
+0:	learn: 0.9016107	total: 29.6ms	remaining: 29.5s
+200:	learn: 0.9517491	total: 4.15s	remaining: 16.5s
+400:	learn: 0.9705066	total: 7.98s	remaining: 11.9s
+600:	learn: 0.9795547	total: 11.3s	remaining: 7.53s
+800:	learn: 0.9849190	total: 15.1s	remaining: 3.75s
+999:	learn: 0.9862795	total: 18.4s	remaining: 0us
+[I 2025-11-27 20:22:50,811] Trial 0 finished with value: 0.8564499789244575 and parameters: {'iterations': 1000, 'learning_rate': 0.08, 'depth': 10, 'threshold': 0.19546658011391305}. Best is trial 0 with value: 0.8564499789244575.
+0:	learn: 0.8941478	total: 13.2ms	remaining: 26.3s
+200:	learn: 0.9237322	total: 1.58s	remaining: 14.1s
+400:	learn: 0.9273406	total: 3.34s	remaining: 13.3s
+600:	learn: 0.9290760	total: 5.08s	remaining: 11.8s
+800:	learn: 0.9312559	total: 6.91s	remaining: 10.3s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 0 that is less than the current step 1. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+1000:	learn: 0.9329636	total: 8.88s	remaining: 8.87s
+1200:	learn: 0.9345789	total: 10.8s	remaining: 7.19s
+1400:	learn: 0.9360154	total: 12.8s	remaining: 5.46s
+1600:	learn: 0.9373649	total: 14.6s	remaining: 3.64s
+1800:	learn: 0.9386952	total: 16.5s	remaining: 1.82s
+1999:	learn: 0.9401720	total: 18.2s	remaining: 0us
+[I 2025-11-27 20:23:09,233] Trial 1 finished with value: 0.8924486088753357 and parameters: {'iterations': 2000, 'learning_rate': 0.060000000000000005, 'depth': 5, 'threshold': 0.6490232828176747}. Best is trial 1 with value: 0.8924486088753357.
+0:	learn: 0.8962157	total: 11.4ms	remaining: 11.4s
+200:	learn: 0.9271534	total: 1.87s	remaining: 7.43s
+400:	learn: 0.9322743	total: 3.87s	remaining: 5.78s
+600:	learn: 0.9365962	total: 5.69s	remaining: 3.78s
+800:	learn: 0.9400960	total: 7.53s	remaining: 1.87s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 1 that is less than the current step 2. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+999:	learn: 0.9432483	total: 9.42s	remaining: 0us
+[I 2025-11-27 20:23:18,785] Trial 2 finished with value: 0.7919635691566491 and parameters: {'iterations': 1000, 'learning_rate': 0.08, 'depth': 6, 'threshold': 0.13545553125381424}. Best is trial 1 with value: 0.8924486088753357.
+0:	learn: 0.9016107	total: 24.7ms	remaining: 1m 14s
+200:	learn: 0.9376196	total: 3.61s	remaining: 50.3s
+400:	learn: 0.9519934	total: 7.49s	remaining: 48.6s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 2 that is less than the current step 3. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+600:	learn: 0.9628784	total: 11.4s	remaining: 45.4s
+800:	learn: 0.9695127	total: 15.1s	remaining: 41.4s
+1000:	learn: 0.9750699	total: 19.1s	remaining: 38.2s
+1200:	learn: 0.9792967	total: 23.4s	remaining: 35.1s
+1400:	learn: 0.9823740	total: 27.4s	remaining: 31.3s
+1600:	learn: 0.9847288	total: 31.2s	remaining: 27.3s
+1800:	learn: 0.9870155	total: 35.1s	remaining: 23.4s
+2000:	learn: 0.9887262	total: 39.1s	remaining: 19.5s
+2200:	learn: 0.9901489	total: 43.5s	remaining: 15.8s
+2400:	learn: 0.9917073	total: 47.3s	remaining: 11.8s
+2600:	learn: 0.9927986	total: 51.4s	remaining: 7.89s
+2800:	learn: 0.9936619	total: 55.2s	remaining: 3.92s
+2999:	learn: 0.9945577	total: 58.7s	remaining: 0us
+[I 2025-11-27 20:24:18,077] Trial 3 finished with value: 0.8877696003834441 and parameters: {'iterations': 3000, 'learning_rate': 0.04, 'depth': 10, 'threshold': 0.7211484209260602}. Best is trial 1 with value: 0.8924486088753357.
+0:	learn: 0.8941478	total: 8.47ms	remaining: 12.7s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 3 that is less than the current step 4. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+200:	learn: 0.9245605	total: 1.69s	remaining: 10.9s
+400:	learn: 0.9282991	total: 3.31s	remaining: 9.07s
+600:	learn: 0.9302812	total: 4.96s	remaining: 7.41s
+800:	learn: 0.9323772	total: 6.59s	remaining: 5.75s
+1000:	learn: 0.9344596	total: 8.18s	remaining: 4.08s
+1200:	learn: 0.9358744	total: 9.81s	remaining: 2.44s
+1400:	learn: 0.9375847	total: 11.5s	remaining: 809ms
+1499:	learn: 0.9384212	total: 12.3s	remaining: 0us
+[I 2025-11-27 20:24:30,530] Trial 4 finished with value: 0.8826570885338922 and parameters: {'iterations': 1500, 'learning_rate': 0.06999999999999999, 'depth': 5, 'threshold': 0.8909353309459043}. Best is trial 1 with value: 0.8924486088753357.
+0:	learn: 0.8965430	total: 9.56ms	remaining: 19.1s
+200:	learn: 0.9182609	total: 2.02s	remaining: 18.1s
+400:	learn: 0.9218307	total: 4.06s	remaining: 16.2s
+600:	learn: 0.9241715	total: 5.99s	remaining: 13.9s
+800:	learn: 0.9257845	total: 8.02s	remaining: 12s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 4 that is less than the current step 5. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+1000:	learn: 0.9271586	total: 9.94s	remaining: 9.92s
+1200:	learn: 0.9282313	total: 11.8s	remaining: 7.87s
+1400:	learn: 0.9291925	total: 13.7s	remaining: 5.87s
+1600:	learn: 0.9304877	total: 15.7s	remaining: 3.9s
+1800:	learn: 0.9314652	total: 17.6s	remaining: 1.94s
+1999:	learn: 0.9325295	total: 19.6s	remaining: 0us
+[I 2025-11-27 20:24:50,392] Trial 5 finished with value: 0.8969673418577537 and parameters: {'iterations': 2000, 'learning_rate': 0.01, 'depth': 7, 'threshold': 0.77312897607623}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8816017	total: 8.31ms	remaining: 8.3s
+200:	learn: 0.9201454	total: 1.62s	remaining: 6.45s
+400:	learn: 0.9227187	total: 3.14s	remaining: 4.69s
+600:	learn: 0.9240170	total: 4.66s	remaining: 3.1s
+800:	learn: 0.9254345	total: 6.25s	remaining: 1.55s
+999:	learn: 0.9263714	total: 7.79s	remaining: 0us
+[I 2025-11-27 20:24:58,308] Trial 6 finished with value: 0.8862606608650009 and parameters: {'iterations': 1000, 'learning_rate': 0.03, 'depth': 4, 'threshold': 0.8797357408093223}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8965430	total: 9.54ms	remaining: 14.3s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 5 that is less than the current step 6. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 6 that is less than the current step 7. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+200:	learn: 0.9279163	total: 2.02s	remaining: 13.1s
+400:	learn: 0.9339655	total: 4.32s	remaining: 11.8s
+600:	learn: 0.9388499	total: 6.37s	remaining: 9.52s
+800:	learn: 0.9436364	total: 8.47s	remaining: 7.39s
+1000:	learn: 0.9475408	total: 10.3s	remaining: 5.13s
+1200:	learn: 0.9515403	total: 12.4s	remaining: 3.08s
+1400:	learn: 0.9554118	total: 14.9s	remaining: 1.06s
+1499:	learn: 0.9571010	total: 15.9s	remaining: 0us
+[I 2025-11-27 20:25:14,432] Trial 7 finished with value: 0.8566046350942551 and parameters: {'iterations': 1500, 'learning_rate': 0.060000000000000005, 'depth': 7, 'threshold': 0.3173345730911106}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8962157	total: 9.11ms	remaining: 27.3s
+200:	learn: 0.9254778	total: 1.86s	remaining: 25.9s
+400:	learn: 0.9299663	total: 3.59s	remaining: 23.3s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 7 that is less than the current step 8. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+600:	learn: 0.9330559	total: 5.33s	remaining: 21.3s
+800:	learn: 0.9361102	total: 7.4s	remaining: 20.3s
+1000:	learn: 0.9388933	total: 9.34s	remaining: 18.7s
+1200:	learn: 0.9418119	total: 11.1s	remaining: 16.7s
+1400:	learn: 0.9443289	total: 12.9s	remaining: 14.7s
+1600:	learn: 0.9464087	total: 14.6s	remaining: 12.7s
+1800:	learn: 0.9482226	total: 16.3s	remaining: 10.9s
+2000:	learn: 0.9503241	total: 18s	remaining: 9.01s
+2200:	learn: 0.9523521	total: 19.8s	remaining: 7.19s
+2400:	learn: 0.9537805	total: 21.6s	remaining: 5.4s
+2600:	learn: 0.9552200	total: 23.4s	remaining: 3.58s
+2800:	learn: 0.9566020	total: 25.1s	remaining: 1.78s
+2999:	learn: 0.9582502	total: 26.8s	remaining: 0us
+[I 2025-11-27 20:25:41,569] Trial 8 finished with value: 0.84449231379361 and parameters: {'iterations': 3000, 'learning_rate': 0.060000000000000005, 'depth': 6, 'threshold': 0.24461782093421702}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8816017	total: 10.6ms	remaining: 5.29s
+200:	learn: 0.9089479	total: 1.56s	remaining: 2.32s
+400:	learn: 0.9174905	total: 3.04s	remaining: 751ms
+499:	learn: 0.9189229	total: 3.78s	remaining: 0us
+[I 2025-11-27 20:25:45,422] Trial 9 finished with value: 0.8435386749259733 and parameters: {'iterations': 500, 'learning_rate': 0.01, 'depth': 4, 'threshold': 0.37939936601774776}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8978533	total: 12.4ms	remaining: 30.9s
+200:	learn: 0.9374082	total: 2.18s	remaining: 24.9s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 8 that is less than the current step 9. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 9 that is less than the current step 10. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+400:	learn: 0.9497746	total: 4.34s	remaining: 22.7s
+600:	learn: 0.9595365	total: 6.86s	remaining: 21.7s
+800:	learn: 0.9672840	total: 9.03s	remaining: 19.1s
+1000:	learn: 0.9730205	total: 11.2s	remaining: 16.7s
+1200:	learn: 0.9763557	total: 13.3s	remaining: 14.3s
+1400:	learn: 0.9796040	total: 15.4s	remaining: 12.1s
+1600:	learn: 0.9831727	total: 17.5s	remaining: 9.85s
+1800:	learn: 0.9854811	total: 19.8s	remaining: 7.68s
+2000:	learn: 0.9874011	total: 21.9s	remaining: 5.47s
+2200:	learn: 0.9888728	total: 24.1s	remaining: 3.27s
+2400:	learn: 0.9905345	total: 26.2s	remaining: 1.08s
+2499:	learn: 0.9908602	total: 27.2s	remaining: 0us
+[I 2025-11-27 20:26:12,960] Trial 10 finished with value: 0.8852911203206739 and parameters: {'iterations': 2500, 'learning_rate': 0.09999999999999999, 'depth': 8, 'threshold': 0.5148505623418264}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8978533	total: 15ms	remaining: 30s
+200:	learn: 0.9196055	total: 2.34s	remaining: 20.9s
+400:	learn: 0.9240492	total: 4.58s	remaining: 18.3s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 10 that is less than the current step 11. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+600:	learn: 0.9263356	total: 6.79s	remaining: 15.8s
+800:	learn: 0.9285484	total: 8.99s	remaining: 13.5s
+1000:	learn: 0.9297732	total: 11.2s	remaining: 11.2s
+1200:	learn: 0.9314108	total: 13.4s	remaining: 8.91s
+1400:	learn: 0.9335422	total: 15.6s	remaining: 6.67s
+1600:	learn: 0.9352660	total: 17.8s	remaining: 4.43s
+1800:	learn: 0.9366154	total: 20s	remaining: 2.21s
+1999:	learn: 0.9381061	total: 22.1s	remaining: 0us
+[I 2025-11-27 20:26:35,349] Trial 11 finished with value: 0.8905842048758127 and parameters: {'iterations': 2000, 'learning_rate': 0.01, 'depth': 8, 'threshold': 0.636325033390635}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8962157	total: 9.1ms	remaining: 18.2s
+200:	learn: 0.9235150	total: 1.88s	remaining: 16.8s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 11 that is less than the current step 12. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+400:	learn: 0.9273108	total: 3.67s	remaining: 14.6s
+600:	learn: 0.9301428	total: 5.45s	remaining: 12.7s
+800:	learn: 0.9323063	total: 7.23s	remaining: 10.8s
+1000:	learn: 0.9342991	total: 9.02s	remaining: 9s
+1200:	learn: 0.9362185	total: 10.8s	remaining: 7.19s
+1400:	learn: 0.9379022	total: 12.6s	remaining: 5.4s
+1600:	learn: 0.9395640	total: 14.6s	remaining: 3.63s
+1800:	learn: 0.9412446	total: 16.3s	remaining: 1.8s
+1999:	learn: 0.9428276	total: 18.1s	remaining: 0us
+[I 2025-11-27 20:26:53,696] Trial 12 finished with value: 0.8958780718314214 and parameters: {'iterations': 2000, 'learning_rate': 0.04, 'depth': 6, 'threshold': 0.7242554778144741}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8978533	total: 12.1ms	remaining: 30.3s
+200:	learn: 0.9263735	total: 2.21s	remaining: 25.3s
+400:	learn: 0.9316605	total: 4.4s	remaining: 23s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 12 that is less than the current step 13. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+600:	learn: 0.9366532	total: 6.51s	remaining: 20.6s
+800:	learn: 0.9402703	total: 8.69s	remaining: 18.4s
+1000:	learn: 0.9441634	total: 10.9s	remaining: 16.3s
+1200:	learn: 0.9480647	total: 13s	remaining: 14.1s
+1400:	learn: 0.9513906	total: 15.2s	remaining: 11.9s
+1600:	learn: 0.9544668	total: 17.3s	remaining: 9.72s
+1800:	learn: 0.9570083	total: 19.5s	remaining: 7.55s
+2000:	learn: 0.9595228	total: 21.6s	remaining: 5.39s
+2200:	learn: 0.9616087	total: 23.8s	remaining: 3.23s
+2400:	learn: 0.9636045	total: 25.9s	remaining: 1.07s
+2499:	learn: 0.9644954	total: 27s	remaining: 0us
+[I 2025-11-27 20:27:20,975] Trial 13 finished with value: 0.8921408592369895 and parameters: {'iterations': 2500, 'learning_rate': 0.03, 'depth': 8, 'threshold': 0.757708424656158}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8965430	total: 15.9ms	remaining: 39.7s
+200:	learn: 0.9255132	total: 1.98s	remaining: 22.6s
+400:	learn: 0.9304143	total: 3.96s	remaining: 20.7s
+600:	learn: 0.9340961	total: 5.84s	remaining: 18.4s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 13 that is less than the current step 14. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+800:	learn: 0.9371856	total: 7.74s	remaining: 16.4s
+1000:	learn: 0.9409105	total: 10s	remaining: 15s
+1200:	learn: 0.9438754	total: 12.1s	remaining: 13.1s
+1400:	learn: 0.9467591	total: 14.3s	remaining: 11.2s
+1600:	learn: 0.9494388	total: 16.9s	remaining: 9.52s
+1800:	learn: 0.9519230	total: 20.4s	remaining: 7.92s
+2000:	learn: 0.9545157	total: 22.8s	remaining: 5.68s
+2200:	learn: 0.9566146	total: 24.9s	remaining: 3.39s
+2400:	learn: 0.9580539	total: 27s	remaining: 1.11s
+2499:	learn: 0.9589257	total: 28.1s	remaining: 0us
+[I 2025-11-27 20:27:49,465] Trial 14 finished with value: 0.8833573715328833 and parameters: {'iterations': 2500, 'learning_rate': 0.04, 'depth': 7, 'threshold': 0.5161139640292851}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8962157	total: 12.6ms	remaining: 25.1s
+200:	learn: 0.9208144	total: 2.02s	remaining: 18.1s
+400:	learn: 0.9237973	total: 5.15s	remaining: 20.5s
+600:	learn: 0.9257523	total: 6.96s	remaining: 16.2s
+800:	learn: 0.9271344	total: 8.68s	remaining: 13s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 14 that is less than the current step 15. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+1000:	learn: 0.9289021	total: 10.7s	remaining: 10.7s
+1200:	learn: 0.9298878	total: 12.8s	remaining: 8.49s
+1400:	learn: 0.9311421	total: 14.7s	remaining: 6.29s
+1600:	learn: 0.9320868	total: 16.8s	remaining: 4.18s
+1800:	learn: 0.9331754	total: 19s	remaining: 2.1s
+1999:	learn: 0.9340471	total: 21s	remaining: 0us
+[I 2025-11-27 20:28:10,787] Trial 15 finished with value: 0.8960839399104065 and parameters: {'iterations': 2000, 'learning_rate': 0.02, 'depth': 6, 'threshold': 0.7982291655458553}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8980886	total: 17.4ms	remaining: 26.1s
+200:	learn: 0.9261701	total: 2.71s	remaining: 17.5s
+400:	learn: 0.9319236	total: 5.46s	remaining: 15s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 15 that is less than the current step 16. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+600:	learn: 0.9371421	total: 7.93s	remaining: 11.9s
+800:	learn: 0.9421867	total: 10.7s	remaining: 9.31s
+1000:	learn: 0.9464494	total: 13.4s	remaining: 6.68s
+1200:	learn: 0.9503693	total: 16.1s	remaining: 4s
+1400:	learn: 0.9535786	total: 18.8s	remaining: 1.33s
+1499:	learn: 0.9552184	total: 20.1s	remaining: 0us
+[I 2025-11-27 20:28:31,189] Trial 16 finished with value: 0.8919594620879072 and parameters: {'iterations': 1500, 'learning_rate': 0.02, 'depth': 9, 'threshold': 0.8176315657158627}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8941478	total: 10.7ms	remaining: 26.7s
+200:	learn: 0.9194045	total: 1.7s	remaining: 19.5s
+400:	learn: 0.9225154	total: 3.45s	remaining: 18.1s
+600:	learn: 0.9237702	total: 5.13s	remaining: 16.2s
+800:	learn: 0.9252040	total: 6.89s	remaining: 14.6s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 16 that is less than the current step 17. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+1000:	learn: 0.9264583	total: 8.63s	remaining: 12.9s
+1200:	learn: 0.9272511	total: 10.4s	remaining: 11.2s
+1400:	learn: 0.9280711	total: 12.1s	remaining: 9.48s
+1600:	learn: 0.9286442	total: 13.8s	remaining: 7.76s
+1800:	learn: 0.9294695	total: 15.5s	remaining: 6.02s
+2000:	learn: 0.9301862	total: 17.1s	remaining: 4.26s
+2200:	learn: 0.9308161	total: 18.6s	remaining: 2.53s
+2400:	learn: 0.9311094	total: 20.1s	remaining: 831ms
+2499:	learn: 0.9313944	total: 20.9s	remaining: 0us
+[I 2025-11-27 20:28:52,451] Trial 17 finished with value: 0.8889511124343759 and parameters: {'iterations': 2500, 'learning_rate': 0.02, 'depth': 5, 'threshold': 0.6108782439073233}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8965430	total: 13.5ms	remaining: 27.1s
+200:	learn: 0.9182609	total: 2.03s	remaining: 18.1s
+400:	learn: 0.9218307	total: 4.42s	remaining: 17.6s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 17 that is less than the current step 18. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+600:	learn: 0.9241715	total: 6.49s	remaining: 15.1s
+800:	learn: 0.9257845	total: 8.81s	remaining: 13.2s
+1000:	learn: 0.9271586	total: 11s	remaining: 11s
+1200:	learn: 0.9282313	total: 13.1s	remaining: 8.69s
+1400:	learn: 0.9291925	total: 15.1s	remaining: 6.46s
+1600:	learn: 0.9304877	total: 17.3s	remaining: 4.32s
+1800:	learn: 0.9314652	total: 19.8s	remaining: 2.19s
+1999:	learn: 0.9325295	total: 22s	remaining: 0us
+[I 2025-11-27 20:29:14,739] Trial 18 finished with value: 0.866389994892695 and parameters: {'iterations': 2000, 'learning_rate': 0.01, 'depth': 7, 'threshold': 0.43336085997589074}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8965430	total: 19.2ms	remaining: 28.8s
+200:	learn: 0.9223818	total: 2.3s	remaining: 14.9s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 18 that is less than the current step 19. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+400:	learn: 0.9257032	total: 4.4s	remaining: 12.1s
+600:	learn: 0.9281249	total: 6.45s	remaining: 9.65s
+800:	learn: 0.9303326	total: 8.38s	remaining: 7.31s
+1000:	learn: 0.9322632	total: 10.6s	remaining: 5.29s
+1200:	learn: 0.9341748	total: 12.8s	remaining: 3.19s
+1400:	learn: 0.9355948	total: 15s	remaining: 1.06s
+1499:	learn: 0.9365232	total: 16s	remaining: 0us
+[I 2025-11-27 20:29:31,002] Trial 19 finished with value: 0.8851797793655858 and parameters: {'iterations': 1500, 'learning_rate': 0.02, 'depth': 7, 'threshold': 0.5694374838345175}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8980886	total: 26.7ms	remaining: 13.3s
+200:	learn: 0.9291703	total: 2.83s	remaining: 4.22s
+400:	learn: 0.9373562	total: 5.66s	remaining: 1.4s
+499:	learn: 0.9408617	total: 7.06s	remaining: 0us
+[I 2025-11-27 20:29:38,189] Trial 20 finished with value: 0.8951248707333285 and parameters: {'iterations': 500, 'learning_rate': 0.03, 'depth': 9, 'threshold': 0.7949073677254986}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8962157	total: 8.5ms	remaining: 17s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 19 that is less than the current step 20. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 20 that is less than the current step 21. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+200:	learn: 0.9235150	total: 2.02s	remaining: 18s
+400:	learn: 0.9273108	total: 3.98s	remaining: 15.9s
+600:	learn: 0.9301428	total: 6s	remaining: 14s
+800:	learn: 0.9323063	total: 7.98s	remaining: 11.9s
+1000:	learn: 0.9342991	total: 9.83s	remaining: 9.81s
+1200:	learn: 0.9362185	total: 11.8s	remaining: 7.84s
+1400:	learn: 0.9379022	total: 13.7s	remaining: 5.87s
+1600:	learn: 0.9395640	total: 15.6s	remaining: 3.89s
+1800:	learn: 0.9412446	total: 17.7s	remaining: 1.96s
+1999:	learn: 0.9428276	total: 19.8s	remaining: 0us
+[I 2025-11-27 20:29:58,226] Trial 21 finished with value: 0.8949192280875866 and parameters: {'iterations': 2000, 'learning_rate': 0.04, 'depth': 6, 'threshold': 0.7090585049744497}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8962157	total: 12.2ms	remaining: 24.4s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 21 that is less than the current step 22. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+200:	learn: 0.9247416	total: 2.52s	remaining: 22.5s
+400:	learn: 0.9285816	total: 4.42s	remaining: 17.6s
+600:	learn: 0.9315491	total: 6.36s	remaining: 14.8s
+800:	learn: 0.9340712	total: 8.33s	remaining: 12.5s
+1000:	learn: 0.9364308	total: 10.2s	remaining: 10.2s
+1200:	learn: 0.9386491	total: 12.1s	remaining: 8.02s
+1400:	learn: 0.9407614	total: 14s	remaining: 5.99s
+1600:	learn: 0.9427597	total: 15.8s	remaining: 3.95s
+1800:	learn: 0.9448149	total: 17.8s	remaining: 1.97s
+1999:	learn: 0.9465964	total: 19.6s	remaining: 0us
+[I 2025-11-27 20:30:18,119] Trial 22 finished with value: 0.8912037501274627 and parameters: {'iterations': 2000, 'learning_rate': 0.05, 'depth': 6, 'threshold': 0.83892540565219}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8962157	total: 12.7ms	remaining: 31.7s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 22 that is less than the current step 23. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+200:	learn: 0.9208144	total: 2.06s	remaining: 23.6s
+400:	learn: 0.9237973	total: 4s	remaining: 21s
+600:	learn: 0.9257523	total: 5.87s	remaining: 18.5s
+800:	learn: 0.9271344	total: 7.78s	remaining: 16.5s
+1000:	learn: 0.9289021	total: 9.75s	remaining: 14.6s
+1200:	learn: 0.9298878	total: 11.7s	remaining: 12.6s
+1400:	learn: 0.9311421	total: 13.7s	remaining: 10.8s
+1600:	learn: 0.9320868	total: 15.7s	remaining: 8.81s
+1800:	learn: 0.9331754	total: 17.7s	remaining: 6.88s
+2000:	learn: 0.9340335	total: 19.8s	remaining: 4.93s
+2200:	learn: 0.9350516	total: 21.9s	remaining: 2.98s
+2400:	learn: 0.9359367	total: 23.9s	remaining: 987ms
+2499:	learn: 0.9364036	total: 25s	remaining: 0us
+[I 2025-11-27 20:30:43,452] Trial 23 finished with value: 0.8947274601724864 and parameters: {'iterations': 2500, 'learning_rate': 0.02, 'depth': 6, 'threshold': 0.6941924410700733}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8941478	total: 10.9ms	remaining: 21.7s
+200:	learn: 0.9216674	total: 1.73s	remaining: 15.5s
+400:	learn: 0.9239250	total: 3.49s	remaining: 13.9s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 23 that is less than the current step 24. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+600:	learn: 0.9259341	total: 5.34s	remaining: 12.4s
+800:	learn: 0.9271941	total: 7s	remaining: 10.5s
+1000:	learn: 0.9283833	total: 8.89s	remaining: 8.88s
+1200:	learn: 0.9294178	total: 10.8s	remaining: 7.2s
+1400:	learn: 0.9305582	total: 12.7s	remaining: 5.42s
+1600:	learn: 0.9313889	total: 14.6s	remaining: 3.63s
+1800:	learn: 0.9320868	total: 16.5s	remaining: 1.82s
+1999:	learn: 0.9329148	total: 18.4s	remaining: 0us
+[I 2025-11-27 20:31:02,082] Trial 24 finished with value: 0.8966403960187839 and parameters: {'iterations': 2000, 'learning_rate': 0.03, 'depth': 5, 'threshold': 0.7777884058708878}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8941478	total: 9.94ms	remaining: 14.9s
+200:	learn: 0.9136036	total: 1.79s	remaining: 11.6s
+400:	learn: 0.9192625	total: 3.6s	remaining: 9.86s
+600:	learn: 0.9213549	total: 5.36s	remaining: 8.02s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 24 that is less than the current step 25. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+800:	learn: 0.9226127	total: 7.1s	remaining: 6.2s
+1000:	learn: 0.9230640	total: 8.88s	remaining: 4.43s
+1200:	learn: 0.9237428	total: 10.7s	remaining: 2.67s
+1400:	learn: 0.9244192	total: 12.6s	remaining: 893ms
+1499:	learn: 0.9248347	total: 13.6s	remaining: 0us
+[I 2025-11-27 20:31:15,900] Trial 25 finished with value: 0.8959220719927132 and parameters: {'iterations': 1500, 'learning_rate': 0.01, 'depth': 5, 'threshold': 0.7845771634051019}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8816017	total: 10.3ms	remaining: 25.7s
+200:	learn: 0.9201454	total: 1.68s	remaining: 19.2s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 25 that is less than the current step 26. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+400:	learn: 0.9227187	total: 3.33s	remaining: 17.4s
+600:	learn: 0.9240170	total: 5.04s	remaining: 15.9s
+800:	learn: 0.9254345	total: 6.7s	remaining: 14.2s
+1000:	learn: 0.9263442	total: 8.41s	remaining: 12.6s
+1200:	learn: 0.9270149	total: 10.1s	remaining: 10.9s
+1400:	learn: 0.9276365	total: 11.7s	remaining: 9.18s
+1600:	learn: 0.9280899	total: 13.4s	remaining: 7.51s
+1800:	learn: 0.9285896	total: 15.1s	remaining: 5.87s
+2000:	learn: 0.9288693	total: 16.8s	remaining: 4.19s
+2200:	learn: 0.9292170	total: 18.4s	remaining: 2.5s
+2400:	learn: 0.9296866	total: 20s	remaining: 824ms
+2499:	learn: 0.9300504	total: 20.8s	remaining: 0us
+[I 2025-11-27 20:31:36,980] Trial 26 finished with value: 0.8944259593832925 and parameters: {'iterations': 2500, 'learning_rate': 0.03, 'depth': 4, 'threshold': 0.8323332982690229}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8941478	total: 6.73ms	remaining: 13.5s
+200:	learn: 0.9194045	total: 1.73s	remaining: 15.5s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 26 that is less than the current step 27. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+400:	learn: 0.9225154	total: 3.47s	remaining: 13.8s
+600:	learn: 0.9237702	total: 5.28s	remaining: 12.3s
+800:	learn: 0.9252040	total: 7.06s	remaining: 10.6s
+1000:	learn: 0.9264583	total: 8.93s	remaining: 8.91s
+1200:	learn: 0.9272511	total: 10.7s	remaining: 7.13s
+1400:	learn: 0.9280711	total: 12.5s	remaining: 5.36s
+1600:	learn: 0.9286442	total: 14.3s	remaining: 3.57s
+1800:	learn: 0.9294695	total: 16.2s	remaining: 1.79s
+1999:	learn: 0.9301808	total: 18s	remaining: 0us
+[I 2025-11-27 20:31:55,277] Trial 27 finished with value: 0.8860006888836242 and parameters: {'iterations': 2000, 'learning_rate': 0.02, 'depth': 5, 'threshold': 0.5854759071437245}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8978533	total: 13.8ms	remaining: 41.2s
+200:	learn: 0.9296890	total: 2.32s	remaining: 32.4s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 27 that is less than the current step 28. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+400:	learn: 0.9378182	total: 4.74s	remaining: 30.7s
+600:	learn: 0.9444781	total: 7.14s	remaining: 28.5s
+800:	learn: 0.9501849	total: 9.4s	remaining: 25.8s
+1000:	learn: 0.9555907	total: 11.7s	remaining: 23.4s
+1200:	learn: 0.9598215	total: 14s	remaining: 21s
+1400:	learn: 0.9636805	total: 16.3s	remaining: 18.6s
+1600:	learn: 0.9670779	total: 18.6s	remaining: 16.2s
+1800:	learn: 0.9700980	total: 21s	remaining: 14s
+2000:	learn: 0.9729794	total: 23.3s	remaining: 11.6s
+2200:	learn: 0.9751251	total: 25.7s	remaining: 9.32s
+2400:	learn: 0.9771215	total: 28.1s	remaining: 7s
+2600:	learn: 0.9788489	total: 30.4s	remaining: 4.66s
+2800:	learn: 0.9804324	total: 32.7s	remaining: 2.32s
+2999:	learn: 0.9819913	total: 35s	remaining: 0us
+[I 2025-11-27 20:32:30,750] Trial 28 finished with value: 0.888152982739074 and parameters: {'iterations': 3000, 'learning_rate': 0.05, 'depth': 8, 'threshold': 0.7564230096878267}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8965430	total: 14.9ms	remaining: 14.9s
+200:	learn: 0.9182609	total: 2.05s	remaining: 8.16s
+400:	learn: 0.9218307	total: 4.14s	remaining: 6.18s
+600:	learn: 0.9241715	total: 6.24s	remaining: 4.14s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 28 that is less than the current step 29. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+800:	learn: 0.9257845	total: 8.37s	remaining: 2.08s
+999:	learn: 0.9271532	total: 10.5s	remaining: 0us
+[I 2025-11-27 20:32:41,408] Trial 29 finished with value: 0.8931110309463686 and parameters: {'iterations': 1000, 'learning_rate': 0.01, 'depth': 7, 'threshold': 0.6720271482045953}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8941478	total: 8.93ms	remaining: 13.4s
+200:	learn: 0.9216674	total: 1.86s	remaining: 12s
+400:	learn: 0.9239250	total: 3.69s	remaining: 10.1s
+600:	learn: 0.9259341	total: 5.57s	remaining: 8.33s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 29 that is less than the current step 30. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+800:	learn: 0.9271941	total: 7.45s	remaining: 6.5s
+1000:	learn: 0.9283833	total: 9.31s	remaining: 4.64s
+1200:	learn: 0.9294178	total: 11.1s	remaining: 2.76s
+1400:	learn: 0.9305582	total: 13s	remaining: 917ms
+1499:	learn: 0.9308488	total: 13.9s	remaining: 0us
+[I 2025-11-27 20:32:55,522] Trial 30 finished with value: 0.8676907302531596 and parameters: {'iterations': 1500, 'learning_rate': 0.03, 'depth': 5, 'threshold': 0.44549695074550233}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8941478	total: 8.79ms	remaining: 13.2s
+200:	learn: 0.9136036	total: 1.79s	remaining: 11.6s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 30 that is less than the current step 31. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+400:	learn: 0.9192625	total: 3.49s	remaining: 9.56s
+600:	learn: 0.9213549	total: 5.39s	remaining: 8.06s
+800:	learn: 0.9226127	total: 7.19s	remaining: 6.28s
+1000:	learn: 0.9230640	total: 8.98s	remaining: 4.47s
+1200:	learn: 0.9237428	total: 10.8s	remaining: 2.68s
+1400:	learn: 0.9244192	total: 12.7s	remaining: 896ms
+1499:	learn: 0.9248347	total: 13.7s	remaining: 0us
+[I 2025-11-27 20:33:09,424] Trial 31 finished with value: 0.895928209022254 and parameters: {'iterations': 1500, 'learning_rate': 0.01, 'depth': 5, 'threshold': 0.7781219276647391}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8816017	total: 8.33ms	remaining: 16.7s
+200:	learn: 0.9172548	total: 1.71s	remaining: 15.3s
+400:	learn: 0.9213929	total: 3.32s	remaining: 13.2s
+600:	learn: 0.9225124	total: 5.04s	remaining: 11.7s
+800:	learn: 0.9236724	total: 6.8s	remaining: 10.2s
+1000:	learn: 0.9245438	total: 8.47s	remaining: 8.46s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 31 that is less than the current step 32. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+1200:	learn: 0.9255103	total: 10.1s	remaining: 6.7s
+1400:	learn: 0.9262787	total: 11.7s	remaining: 5.01s
+1600:	learn: 0.9267323	total: 13.3s	remaining: 3.31s
+1800:	learn: 0.9271532	total: 14.8s	remaining: 1.64s
+1999:	learn: 0.9274194	total: 16.4s	remaining: 0us
+[I 2025-11-27 20:33:26,128] Trial 32 finished with value: 0.8902334968997161 and parameters: {'iterations': 2000, 'learning_rate': 0.02, 'depth': 4, 'threshold': 0.8655271888950684}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8941478	total: 9.06ms	remaining: 13.6s
+200:	learn: 0.9136036	total: 1.81s	remaining: 11.7s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 32 that is less than the current step 33. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+400:	learn: 0.9192625	total: 3.53s	remaining: 9.67s
+600:	learn: 0.9213549	total: 5.34s	remaining: 7.99s
+800:	learn: 0.9226127	total: 7.17s	remaining: 6.26s
+1000:	learn: 0.9230640	total: 8.91s	remaining: 4.44s
+1200:	learn: 0.9237428	total: 10.5s	remaining: 2.63s
+1400:	learn: 0.9244192	total: 12.3s	remaining: 868ms
+1499:	learn: 0.9248347	total: 13.2s	remaining: 0us
+[I 2025-11-27 20:33:39,565] Trial 33 finished with value: 0.8959220767026826 and parameters: {'iterations': 1500, 'learning_rate': 0.01, 'depth': 5, 'threshold': 0.7718854969182279}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8962157	total: 9.77ms	remaining: 19.5s
+200:	learn: 0.9288477	total: 1.92s	remaining: 17.2s
+400:	learn: 0.9341858	total: 3.66s	remaining: 14.6s
+600:	learn: 0.9386003	total: 5.5s	remaining: 12.8s
+800:	learn: 0.9429090	total: 7.21s	remaining: 10.8s
+1000:	learn: 0.9458792	total: 9.06s	remaining: 9.04s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 33 that is less than the current step 34. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+1200:	learn: 0.9493414	total: 11s	remaining: 7.33s
+1400:	learn: 0.9527244	total: 12.9s	remaining: 5.5s
+1600:	learn: 0.9556978	total: 14.8s	remaining: 3.68s
+1800:	learn: 0.9579135	total: 16.6s	remaining: 1.83s
+1999:	learn: 0.9609763	total: 18.5s	remaining: 0us
+[I 2025-11-27 20:33:58,326] Trial 34 finished with value: 0.8901321971512917 and parameters: {'iterations': 2000, 'learning_rate': 0.09999999999999999, 'depth': 6, 'threshold': 0.6677789036325209}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8962157	total: 7.88ms	remaining: 7.87s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 34 that is less than the current step 35. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+200:	learn: 0.9208144	total: 1.94s	remaining: 7.71s
+400:	learn: 0.9237973	total: 3.84s	remaining: 5.73s
+600:	learn: 0.9257523	total: 6s	remaining: 3.98s
+800:	learn: 0.9271344	total: 8.21s	remaining: 2.04s
+999:	learn: 0.9289536	total: 10.6s	remaining: 0us
+[I 2025-11-27 20:34:09,100] Trial 35 finished with value: 0.8939981844203998 and parameters: {'iterations': 1000, 'learning_rate': 0.02, 'depth': 6, 'threshold': 0.8355830361018503}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8941478	total: 14.8ms	remaining: 22.2s
+200:	learn: 0.9136036	total: 1.88s	remaining: 12.1s
+400:	learn: 0.9192625	total: 3.5s	remaining: 9.6s
+600:	learn: 0.9213549	total: 5.12s	remaining: 7.66s
+800:	learn: 0.9226127	total: 6.59s	remaining: 5.75s
+1000:	learn: 0.9230640	total: 8.07s	remaining: 4.02s
+1200:	learn: 0.9237428	total: 9.57s	remaining: 2.38s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 35 that is less than the current step 36. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+1400:	learn: 0.9244192	total: 11.2s	remaining: 788ms
+1499:	learn: 0.9248347	total: 11.9s	remaining: 0us
+[I 2025-11-27 20:34:21,239] Trial 36 finished with value: 0.8955888561088703 and parameters: {'iterations': 1500, 'learning_rate': 0.01, 'depth': 5, 'threshold': 0.7358312128202198}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8816017	total: 6.83ms	remaining: 13.7s
+200:	learn: 0.9243513	total: 1.45s	remaining: 13s
+400:	learn: 0.9265128	total: 3s	remaining: 12s
+600:	learn: 0.9284433	total: 4.65s	remaining: 10.8s
+800:	learn: 0.9296652	total: 6.39s	remaining: 9.57s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 36 that is less than the current step 37. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+1000:	learn: 0.9314270	total: 8.05s	remaining: 8.03s
+1200:	learn: 0.9328277	total: 9.65s	remaining: 6.42s
+1400:	learn: 0.9340574	total: 11s	remaining: 4.72s
+1600:	learn: 0.9349158	total: 12.6s	remaining: 3.13s
+1800:	learn: 0.9355242	total: 14.1s	remaining: 1.55s
+1999:	learn: 0.9364554	total: 15.6s	remaining: 0us
+[I 2025-11-27 20:34:37,066] Trial 37 finished with value: 0.8870751727986207 and parameters: {'iterations': 2000, 'learning_rate': 0.09, 'depth': 4, 'threshold': 0.8758375284664784}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8941478	total: 13.3ms	remaining: 13.3s
+200:	learn: 0.9245605	total: 1.71s	remaining: 6.79s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 37 that is less than the current step 38. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+400:	learn: 0.9282991	total: 3.6s	remaining: 5.38s
+600:	learn: 0.9302812	total: 5.42s	remaining: 3.6s
+800:	learn: 0.9323772	total: 7.21s	remaining: 1.79s
+999:	learn: 0.9343592	total: 8.91s	remaining: 0us
+[I 2025-11-27 20:34:46,129] Trial 38 finished with value: 0.880911231485024 and parameters: {'iterations': 1000, 'learning_rate': 0.06999999999999999, 'depth': 5, 'threshold': 0.898337194889306}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8965430	total: 9.59ms	remaining: 14.4s
+200:	learn: 0.9240603	total: 2.06s	remaining: 13.3s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 38 that is less than the current step 39. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+400:	learn: 0.9283261	total: 4.14s	remaining: 11.3s
+600:	learn: 0.9314382	total: 6.41s	remaining: 9.58s
+800:	learn: 0.9343297	total: 8.53s	remaining: 7.44s
+1000:	learn: 0.9366862	total: 10.9s	remaining: 5.44s
+1200:	learn: 0.9393957	total: 13.1s	remaining: 3.25s
+1400:	learn: 0.9415110	total: 15.3s	remaining: 1.08s
+1499:	learn: 0.9428306	total: 16.3s	remaining: 0us
+[I 2025-11-27 20:35:02,649] Trial 39 finished with value: 0.8106322493308351 and parameters: {'iterations': 1500, 'learning_rate': 0.03, 'depth': 7, 'threshold': 0.1798006702562011}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8962157	total: 14.3ms	remaining: 28.5s
+200:	learn: 0.9235150	total: 2.01s	remaining: 18s
+400:	learn: 0.9273108	total: 3.98s	remaining: 15.9s
+600:	learn: 0.9301428	total: 5.96s	remaining: 13.9s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 39 that is less than the current step 40. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+800:	learn: 0.9323063	total: 7.93s	remaining: 11.9s
+1000:	learn: 0.9342991	total: 9.89s	remaining: 9.87s
+1200:	learn: 0.9362185	total: 11.8s	remaining: 7.88s
+1400:	learn: 0.9379022	total: 13.8s	remaining: 5.9s
+1600:	learn: 0.9395640	total: 15.8s	remaining: 3.93s
+1800:	learn: 0.9412446	total: 17.7s	remaining: 1.96s
+1999:	learn: 0.9428276	total: 19.6s	remaining: 0us
+[I 2025-11-27 20:35:22,559] Trial 40 finished with value: 0.8907008890063266 and parameters: {'iterations': 2000, 'learning_rate': 0.04, 'depth': 6, 'threshold': 0.6325431601181772}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8941478	total: 9.74ms	remaining: 14.6s
+200:	learn: 0.9136036	total: 1.88s	remaining: 12.2s
+400:	learn: 0.9192625	total: 3.83s	remaining: 10.5s
+600:	learn: 0.9213549	total: 5.79s	remaining: 8.66s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 40 that is less than the current step 41. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+800:	learn: 0.9226127	total: 7.65s	remaining: 6.68s
+1000:	learn: 0.9230640	total: 9.41s	remaining: 4.69s
+1200:	learn: 0.9237428	total: 11.2s	remaining: 2.8s
+1400:	learn: 0.9244192	total: 13s	remaining: 919ms
+1499:	learn: 0.9248347	total: 13.8s	remaining: 0us
+[I 2025-11-27 20:35:36,622] Trial 41 finished with value: 0.8958129869708784 and parameters: {'iterations': 1500, 'learning_rate': 0.01, 'depth': 5, 'threshold': 0.7790753855018223}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8816017	total: 6.17ms	remaining: 9.25s
+200:	learn: 0.9089479	total: 1.69s	remaining: 10.9s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 41 that is less than the current step 42. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+400:	learn: 0.9174905	total: 3.19s	remaining: 8.73s
+600:	learn: 0.9201702	total: 4.78s	remaining: 7.16s
+800:	learn: 0.9214719	total: 6.37s	remaining: 5.56s
+1000:	learn: 0.9223656	total: 7.99s	remaining: 3.98s
+1200:	learn: 0.9225533	total: 9.67s	remaining: 2.41s
+1400:	learn: 0.9231347	total: 11.3s	remaining: 801ms
+1499:	learn: 0.9234280	total: 12.2s	remaining: 0us
+[I 2025-11-27 20:35:48,976] Trial 42 finished with value: 0.8955775107380872 and parameters: {'iterations': 1500, 'learning_rate': 0.01, 'depth': 4, 'threshold': 0.8051305102416174}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8941478	total: 10.6ms	remaining: 10.6s
+200:	learn: 0.9194045	total: 1.97s	remaining: 7.81s
+400:	learn: 0.9225154	total: 3.85s	remaining: 5.75s
+600:	learn: 0.9237702	total: 5.64s	remaining: 3.75s
+800:	learn: 0.9252040	total: 7.43s	remaining: 1.85s
+999:	learn: 0.9263932	total: 9.26s	remaining: 0us
+[I 2025-11-27 20:35:58,396] Trial 43 finished with value: 0.8956575249160175 and parameters: {'iterations': 1000, 'learning_rate': 0.02, 'depth': 5, 'threshold': 0.749056922977481}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8962157	total: 10.1ms	remaining: 20.3s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 42 that is less than the current step 43. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 43 that is less than the current step 44. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+200:	learn: 0.9159795	total: 1.99s	remaining: 17.8s
+400:	learn: 0.9207166	total: 3.81s	remaining: 15.2s
+600:	learn: 0.9228841	total: 5.51s	remaining: 12.8s
+800:	learn: 0.9235908	total: 7.53s	remaining: 11.3s
+1000:	learn: 0.9247964	total: 9.44s	remaining: 9.42s
+1200:	learn: 0.9256301	total: 11.3s	remaining: 7.51s
+1400:	learn: 0.9265780	total: 13.2s	remaining: 5.64s
+1600:	learn: 0.9271319	total: 15.3s	remaining: 3.81s
+1800:	learn: 0.9279084	total: 17.2s	remaining: 1.9s
+1999:	learn: 0.9286632	total: 19.2s	remaining: 0us
+[I 2025-11-27 20:36:17,886] Trial 44 finished with value: 0.894067625210714 and parameters: {'iterations': 2000, 'learning_rate': 0.01, 'depth': 6, 'threshold': 0.6911547413525816}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8816017	total: 9.86ms	remaining: 14.8s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 44 that is less than the current step 45. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+200:	learn: 0.9172548	total: 1.65s	remaining: 10.6s
+400:	learn: 0.9213929	total: 3.32s	remaining: 9.1s
+600:	learn: 0.9225124	total: 4.96s	remaining: 7.41s
+800:	learn: 0.9236724	total: 6.64s	remaining: 5.79s
+1000:	learn: 0.9245438	total: 8.26s	remaining: 4.12s
+1200:	learn: 0.9255103	total: 9.89s	remaining: 2.46s
+1400:	learn: 0.9262787	total: 11.5s	remaining: 813ms
+1499:	learn: 0.9266073	total: 12.3s	remaining: 0us
+[I 2025-11-27 20:36:30,403] Trial 45 finished with value: 0.8963328875087101 and parameters: {'iterations': 1500, 'learning_rate': 0.02, 'depth': 4, 'threshold': 0.7734209601085109}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8816017	total: 8.03ms	remaining: 16s
+200:	learn: 0.9201454	total: 1.6s	remaining: 14.3s
+400:	learn: 0.9227187	total: 3.11s	remaining: 12.4s
+600:	learn: 0.9240170	total: 4.71s	remaining: 11s
+800:	learn: 0.9254345	total: 6.17s	remaining: 9.24s
+1000:	learn: 0.9263442	total: 7.65s	remaining: 7.64s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 45 that is less than the current step 46. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+1200:	learn: 0.9270149	total: 9.23s	remaining: 6.14s
+1400:	learn: 0.9276365	total: 10.9s	remaining: 4.64s
+1600:	learn: 0.9280899	total: 12.5s	remaining: 3.12s
+1800:	learn: 0.9285896	total: 14.2s	remaining: 1.57s
+1999:	learn: 0.9288639	total: 15.8s	remaining: 0us
+[I 2025-11-27 20:36:46,416] Trial 46 finished with value: 0.7527912376869419 and parameters: {'iterations': 2000, 'learning_rate': 0.03, 'depth': 4, 'threshold': 0.10025956277642478}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8816017	total: 8.63ms	remaining: 21.6s
+200:	learn: 0.9172548	total: 1.67s	remaining: 19.1s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 46 that is less than the current step 47. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+400:	learn: 0.9213929	total: 3.67s	remaining: 19.2s
+600:	learn: 0.9225124	total: 5.46s	remaining: 17.3s
+800:	learn: 0.9236724	total: 7.13s	remaining: 15.1s
+1000:	learn: 0.9245438	total: 8.78s	remaining: 13.1s
+1200:	learn: 0.9255103	total: 10.4s	remaining: 11.3s
+1400:	learn: 0.9262787	total: 12s	remaining: 9.44s
+1600:	learn: 0.9267323	total: 13.7s	remaining: 7.71s
+1800:	learn: 0.9271532	total: 15.3s	remaining: 5.96s
+2000:	learn: 0.9274140	total: 17s	remaining: 4.24s
+2200:	learn: 0.9277805	total: 18.6s	remaining: 2.52s
+2400:	learn: 0.9282420	total: 20.2s	remaining: 833ms
+2499:	learn: 0.9284374	total: 21s	remaining: 0us
+[I 2025-11-27 20:37:07,702] Trial 47 finished with value: 0.8912584355575878 and parameters: {'iterations': 2500, 'learning_rate': 0.02, 'depth': 4, 'threshold': 0.8615490875988293}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8965430	total: 9.71ms	remaining: 14.6s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 47 that is less than the current step 48. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+200:	learn: 0.9268734	total: 2.06s	remaining: 13.3s
+400:	learn: 0.9324071	total: 4.14s	remaining: 11.3s
+600:	learn: 0.9361458	total: 6.15s	remaining: 9.2s
+800:	learn: 0.9403457	total: 8.24s	remaining: 7.19s
+1000:	learn: 0.9442935	total: 10.3s	remaining: 5.12s
+1200:	learn: 0.9483172	total: 12.4s	remaining: 3.08s
+1400:	learn: 0.9512793	total: 14.5s	remaining: 1.02s
+1499:	learn: 0.9529029	total: 15.5s	remaining: 0us
+[I 2025-11-27 20:37:23,456] Trial 48 finished with value: 0.8929143183834092 and parameters: {'iterations': 1500, 'learning_rate': 0.05, 'depth': 7, 'threshold': 0.7214383566646064}. Best is trial 5 with value: 0.8969673418577537.
+0:	learn: 0.8816017	total: 7.1ms	remaining: 17.7s
+200:	learn: 0.9172548	total: 1.55s	remaining: 17.8s
+400:	learn: 0.9213929	total: 3.14s	remaining: 16.5s
+600:	learn: 0.9225124	total: 4.8s	remaining: 15.2s
+[34m[1mwandb[0m: [33mWARNING[0m Tried to log to step 48 that is less than the current step 49. Steps must be monotonically increasing, so this data will be ignored. See https://wandb.me/define-metric to log data out of order.
+800:	learn: 0.9236724	total: 6.42s	remaining: 13.6s
+1000:	learn: 0.9245438	total: 8.07s	remaining: 12.1s
+1200:	learn: 0.9255103	total: 9.67s	remaining: 10.5s
+1400:	learn: 0.9262787	total: 11.3s	remaining: 8.83s
+1600:	learn: 0.9267323	total: 13s	remaining: 7.28s
+1800:	learn: 0.9271532	total: 14.7s	remaining: 5.69s
+2000:	learn: 0.9274140	total: 16.3s	remaining: 4.08s
+2200:	learn: 0.9277805	total: 18s	remaining: 2.44s
+2400:	learn: 0.9282420	total: 19.6s	remaining: 807ms
+2499:	learn: 0.9284374	total: 20.4s	remaining: 0us
+[I 2025-11-27 20:37:44,128] Trial 49 finished with value: 0.8378892903767872 and parameters: {'iterations': 2500, 'learning_rate': 0.02, 'depth': 4, 'threshold': 0.29523640029487563}. Best is trial 5 with value: 0.8969673418577537.

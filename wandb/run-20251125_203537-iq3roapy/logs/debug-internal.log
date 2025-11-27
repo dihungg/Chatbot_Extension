@@ -1,0 +1,12 @@
+{"time":"2025-11-25T20:35:41.167907+07:00","level":"INFO","msg":"stream: starting","core version":"0.23.0"}
+{"time":"2025-11-25T20:35:41.624297+07:00","level":"INFO","msg":"stream: created new stream","id":"iq3roapy"}
+{"time":"2025-11-25T20:35:41.624371+07:00","level":"INFO","msg":"handler: started","stream_id":"iq3roapy"}
+{"time":"2025-11-25T20:35:41.624612+07:00","level":"INFO","msg":"stream: started","id":"iq3roapy"}
+{"time":"2025-11-25T20:35:41.624616+07:00","level":"INFO","msg":"writer: started","stream_id":"iq3roapy"}
+{"time":"2025-11-25T20:35:41.624645+07:00","level":"INFO","msg":"sender: started","stream_id":"iq3roapy"}
+{"time":"2025-11-25T20:35:52.339997+07:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2025-11-25T20:35:52.80902+07:00","level":"INFO","msg":"handler: operation stats","stats":{}}
+{"time":"2025-11-25T20:35:52.815531+07:00","level":"INFO","msg":"stream: closing","id":"iq3roapy"}
+{"time":"2025-11-25T20:35:52.815559+07:00","level":"INFO","msg":"handler: closed","stream_id":"iq3roapy"}
+{"time":"2025-11-25T20:35:52.81566+07:00","level":"INFO","msg":"sender: closed","stream_id":"iq3roapy"}
+{"time":"2025-11-25T20:35:52.815675+07:00","level":"INFO","msg":"stream: closed","id":"iq3roapy"}

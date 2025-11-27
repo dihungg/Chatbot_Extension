@@ -1,0 +1,3 @@
+[I 2025-11-25 20:22:03,069] A new study created in memory with name: no-name-1c817d08-c034-494f-b7a6-4cecef8137ce
+/var/folders/yf/bvb_cdgn46s4l8cp8l3wd_nc0000gn/T/ipykernel_92147/68078517.py:7: ExperimentalWarning: WeightsAndBiasesCallback is experimental (supported from v2.9.0). The interface can change in the future.
+  wandb_callback = WeightsAndBiasesCallback(

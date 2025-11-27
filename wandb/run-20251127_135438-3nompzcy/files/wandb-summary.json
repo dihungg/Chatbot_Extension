@@ -1,0 +1,1 @@
+{"_runtime":429,"_timestamp":1.764226982301429e+09,"valid_ap":0.9065591315749291,"_step":49,"_wandb":{"runtime":429},"threshold":0.5032159096761946,"valid_f1_macro":0.892472413482048,"valid_accuracy":0.9377043354655294,"valid_auc":0.9749848751548524}
