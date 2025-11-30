@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { RxDiscordLogo } from 'react-icons/rx';
+// import { RxDiscordLogo } from 'react-icons/rx';
 import { FiSettings } from 'react-icons/fi';
 import { PiPlusBold } from 'react-icons/pi';
 import { GrHistory } from 'react-icons/gr';
@@ -13,6 +13,24 @@ import ChatHistoryList from './components/ChatHistoryList';
 import BookmarkList from './components/BookmarkList';
 import { EventType, type AgentEvent, ExecutionState } from './types/event';
 import './SidePanel.css';
+
+const platformPrompts = [
+  { 
+    id: 1, 
+    title: 'Tìm sản phẩm trên Shopee', 
+    content: 'Hãy tìm kiếm sản phẩm [NHẬP SẢN PHẨM] trên trang Shopee.vn với tiêu chí: [NHẬP YÊU CẦU].' 
+  },
+  { 
+    id: 2, 
+    title: 'Tìm sản phẩm trên Lazada', 
+    content: 'Hãy tìm kiếm sản phẩm [NHẬP SẢN PHẨM] trên trang Lazada.vn với tiêu chí: [NHẬP YÊU CẦU].' 
+  },
+  { 
+    id: 3, 
+    title: 'Tìm sản phẩm trên Tiki', 
+    content: 'Hãy tìm kiếm sản phẩm [NHẬP SẢN PHẨM] trên trang Tiki.vn với tiêu chí: [NHẬP YÊU CẦU].' 
+  },
+];
 
 // Declare chrome API types
 declare global {
@@ -1040,13 +1058,13 @@ const SidePanel = () => {
                 </button>
               </>
             )}
-            <a
+            {/* <a
               href="https://discord.gg/NN3ABHggMK"
               target="_blank"
               rel="noopener noreferrer"
               className={`header-icon ${isDarkMode ? 'text-sky-400 hover:text-sky-300' : 'text-sky-400 hover:text-sky-500'}`}>
               <RxDiscordLogo size={20} />
-            </a>
+            </a> */}
             <button
               type="button"
               onClick={() => chrome.runtime.openOptionsPage()}
@@ -1145,13 +1163,25 @@ const SidePanel = () => {
                     </div>
                     <div className="flex-1 overflow-y-auto">
                       <BookmarkList
-                        bookmarks={favoritePrompts}
+                        bookmarks={[
+                          { id: 1, title: 'Tìm iPhone 15 trên Shopee', content: 'Hãy tìm kiếm sản phẩm iPhone 15 Pro Max trên trang Shopee.vn và liệt kê 3 shop có giá tốt nhất.' },
+                          { id: 2, title: 'So sánh giá Laptop', content: 'So sánh giá Macbook Air M2 giữa FPTShop và CellphoneS.' },
+                          { id: 3, title: 'Săn sale tai nghe', content: 'Tìm các loại tai nghe bluetooth đang giảm giá trên CellphoneS.' },
+                        ]}
                         onBookmarkSelect={handleBookmarkSelect}
                         onBookmarkUpdateTitle={handleBookmarkUpdateTitle}
                         onBookmarkDelete={handleBookmarkDelete}
                         onBookmarkReorder={handleBookmarkReorder}
                         isDarkMode={isDarkMode}
                       />
+
+                      <BookmarkList
+                        title="Tìm theo trang web"
+                        bookmarks={platformPrompts}
+                        onBookmarkSelect={handleBookmarkSelect}
+                        isDarkMode={isDarkMode}
+                      />
+
                     </div>
                   </>
                 )}

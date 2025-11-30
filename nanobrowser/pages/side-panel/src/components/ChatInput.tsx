@@ -56,7 +56,7 @@ export default function ChatInput({
     const textarea = textareaRef.current;
     if (textarea) {
       textarea.style.height = 'auto';
-      textarea.style.height = `${Math.min(textarea.scrollHeight, 100)}px`;
+      textarea.style.height = `${Math.min(textarea.scrollHeight, 300)}px`;
     }
   };
 
@@ -72,7 +72,7 @@ export default function ChatInput({
     const textarea = textareaRef.current;
     if (textarea) {
       textarea.style.height = 'auto';
-      textarea.style.height = `${Math.min(textarea.scrollHeight, 100)}px`;
+      textarea.style.height = `${Math.min(textarea.scrollHeight, 300)}px`;
     }
   }, []);
 
@@ -223,8 +223,8 @@ export default function ChatInput({
           onKeyDown={handleKeyDown}
           disabled={disabled}
           aria-disabled={disabled}
-          rows={5}
-          className={`w-full resize-none border-none p-2 focus:outline-none ${
+          rows={10}
+          className={`w-full resize-none border-none p-2 text-base focus:outline-none ${
             disabled
               ? isDarkMode
                 ? 'cursor-not-allowed bg-slate-800 text-gray-400'
@@ -233,7 +233,7 @@ export default function ChatInput({
                 ? 'bg-slate-800 text-gray-200'
                 : 'bg-white'
           }`}
-          placeholder={attachedFiles.length > 0 ? 'Add a message (optional)...' : t('chat_input_placeholder')}
+          placeholder={attachedFiles.length > 0 ? 'Thêm tin nhắn (tùy chọn)...' : 'Bạn cần giúp gì không?'}
           aria-label={t('chat_input_editor')}
         />
 
@@ -321,8 +321,8 @@ export default function ChatInput({
               type="submit"
               disabled={isSendButtonDisabled}
               aria-disabled={isSendButtonDisabled}
-              className={`rounded-md bg-[#19C2FF] px-3 py-1 text-white transition-colors hover:enabled:bg-[#0073DC] ${isSendButtonDisabled ? 'cursor-not-allowed opacity-50' : ''}`}>
-              {t('chat_buttons_send')}
+              className={`rounded-md bg-[#19C2FF] px-3 py-1 text-base text-white transition-colors hover:enabled:bg-[#0073DC] ${isSendButtonDisabled ? 'cursor-not-allowed opacity-50' : ''}`}>
+              {'Gửi'}
             </button>
           )}
         </div>
