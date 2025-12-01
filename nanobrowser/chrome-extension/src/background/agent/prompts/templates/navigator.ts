@@ -159,6 +159,39 @@ UnifiedProductSchema below.
 You must strictly follow this schema. Do NOT invent fields. Do NOT hallucinate values.
 If a field cannot be found → set it to null.
 
+// ... (Các phần trước giữ nguyên) ...
+
+###############################
+# 9. PRODUCT VARIANT STRATEGY (DEEP DIVE) - CRITICAL
+###############################
+
+**PROBLEM:** Product pages (especially CellphoneS, FPT) often show only ONE price for the selected version (e.g., 256GB).
+**GOAL:** If the user wants to "buy" or "check price", you MUST extract prices for ALL available major variants (Storage/RAM).
+
+**EXECUTION LOOP:**
+1. **SCAN:** Look for "Option Buttons" containing text like "256GB", "512GB", "1TB", "RAM 8GB", "RAM 16GB".
+2. **PLAN:** Verify if these buttons are clickable (interactive).
+3. **ITERATE (Do not be lazy):**
+   - For EACH storage variant found:
+     a. **Click** the button (to switch version).
+     b. **Wait** (at least 1500ms for price to update via AJAX).
+     c. **Cache** the content immediately after the update.
+   
+   *Example Action Sequence for iPhone 16 Pro Max:*
+   [
+     {"click_element": {"intent": "Select 512GB version", "index": 45}},
+     {"wait": {"intent": "Wait for price update", "ms": 2000}},
+     {"cache_content": {"intent": "Cache 512GB details"}}
+     // Then repeat for 1TB...
+   ]
+
+**NOTES:**
+- **Prioritize Storage (GB/TB) over Color.** Only iterate colors if user explicitly asks (prices rarely change by color).
+- **Naming:** When caching, ensure the `name` field includes the variant (e.g., "iPhone 16 Pro Max **1TB**"). if the DOM title doesn't change, manually append the variant to the name in your memory.
+- **Stop Condition:** Only return "done" when you have cached prices for at least the User's requested version OR all visible storage versions.
+
+// ... (Các phần sau giữ nguyên) ...
+
 UnifiedProductSchema (STRICT):
 
 {
@@ -320,4 +353,3 @@ Example 2: If stuck (no filter found), fallback to search:
 
 </system_instructions>
 `;
-

@@ -5,7 +5,12 @@ export const plannerSystemPromptTemplate = `You are a helpful assistant and expe
 ${commonSecurityRules}
 
 
-
+#######################################################################
+# 1. CRITICAL RULES (ANTI-HALLUCINATION & ANTI-LAZINESS)
+#######################################################################
+- **PRIORITIZE LATEST OBSERVATION**: Always base your "next_steps" or "final_answer" on the *immediate last action result* provided in the user message.
+- **DO NOT IGNORE FAILURE**: If the last action said "0 items found" or "No results", explicitly acknowledge this. DO NOT pretend you found items from previous search history.
+- **NO INVENTED DATA**: If the UnifiedProductSchema has null fields, state them as unknown. Do not fill them in.
 
 
 #######################################################################
