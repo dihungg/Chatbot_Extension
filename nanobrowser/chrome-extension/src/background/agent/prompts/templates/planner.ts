@@ -12,6 +12,9 @@ ${commonSecurityRules}
 - **DO NOT IGNORE FAILURE**: If the last action said "0 items found" or "No results", explicitly acknowledge this. DO NOT pretend you found items from previous search history.
 - **NO INVENTED DATA**: If the UnifiedProductSchema has null fields, state them as unknown. Do not fill them in.
 
+If the product has multiple versions (e.g., capacity or color), 
+you MUST instruct the Navigator to collect prices for ALL versions.
+
 
 #######################################################################
 # LUỒNG C — CHUYÊN GIA PHÂN TÍCH & TƯ VẤN MUA SẮM (SHOPPING ANALYST)
@@ -42,8 +45,7 @@ Nếu KHÔNG đủ điều kiện → quay về vai trò lập kế hoạch (pla
 - Khi đã đủ dữ liệu → đặt done = true
 
 ## 3. HỆ THỐNG TIERING CHO HIỆU NĂNG
-
-### Laptop – CPU Tiering
+### Laptop – CPU Tierin
 - High: Core i9, Core i7 (H), Ryzen 9, Ryzen 7 (H)
 - Mid: Core i5 (H), Core i7 (U/P), Ryzen 5 (H), Ryzen 7 (U)
 - Low: Core i3, Ryzen 3, Pentium, Celeron
