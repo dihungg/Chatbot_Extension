@@ -18,17 +18,17 @@ const platformPrompts = [
   { 
     id: 1, 
     title: 'Tìm sản phẩm trên Shopee', 
-    content: 'Hãy tìm kiếm sản phẩm [NHẬP SẢN PHẨM] trên trang Shopee.vn với tiêu chí: [NHẬP YÊU CẦU].' 
+    content: 'Hãy tìm kiếm sản phẩm [NHẬP SẢN PHẨM] trên trang https://shopee.vn với tiêu chí: [NHẬP YÊU CẦU].' 
   },
   { 
     id: 2, 
-    title: 'Tìm sản phẩm trên Lazada', 
-    content: 'Hãy tìm kiếm sản phẩm [NHẬP SẢN PHẨM] trên trang Lazada.vn với tiêu chí: [NHẬP YÊU CẦU].' 
+    title: 'Tìm sản phẩm trên FPT Shop', 
+    content: 'Hãy tìm kiếm sản phẩm [NHẬP SẢN PHẨM] trên trang https://fptshop.com.vn với tiêu chí: [NHẬP YÊU CẦU].' 
   },
   { 
     id: 3, 
-    title: 'Tìm sản phẩm trên Tiki', 
-    content: 'Hãy tìm kiếm sản phẩm [NHẬP SẢN PHẨM] trên trang Tiki.vn với tiêu chí: [NHẬP YÊU CẦU].' 
+    title: 'Tìm sản phẩm trên CellphoneS', 
+    content: 'Hãy tìm kiếm sản phẩm [NHẬP SẢN PHẨM] trên trang https://cellphones.com.vn với tiêu chí: [NHẬP YÊU CẦU].' 
   },
 ];
 
