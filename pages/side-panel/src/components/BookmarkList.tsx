@@ -10,6 +10,7 @@ interface Bookmark {
 }
 
 interface BookmarkListProps {
+  title?: string;
   bookmarks: Bookmark[];
   onBookmarkSelect: (content: string) => void;
   onBookmarkUpdateTitle?: (id: number, title: string) => void;
@@ -19,6 +20,7 @@ interface BookmarkListProps {
 }
 
 const BookmarkList: React.FC<BookmarkListProps> = ({
+  title = 'Gợi Ý',
   bookmarks,
   onBookmarkSelect,
   onBookmarkUpdateTitle,
@@ -82,18 +84,16 @@ const BookmarkList: React.FC<BookmarkListProps> = ({
 
   return (
     <div className="p-2">
-      <h3 className={`mb-3 text-sm font-medium ${isDarkMode ? 'text-gray-200' : 'text-gray-700'}`}>
-        {t('chat_bookmarks_header')}
-      </h3>
+      <h3 className={`mb-3 text-base font-medium ${isDarkMode ? 'text-gray-200' : 'text-gray-700'}`}>{title}</h3>
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
         {bookmarks.map(bookmark => (
           <div
             key={bookmark.id}
-            draggable={editingId !== bookmark.id}
-            onDragStart={e => handleDragStart(e, bookmark.id)}
-            onDragEnd={handleDragEnd}
-            onDragOver={handleDragOver}
-            onDrop={e => handleDrop(e, bookmark.id)}
+            draggable={Boolean(onBookmarkReorder) && editingId !== bookmark.id}
+            onDragStart={onBookmarkReorder ? e => handleDragStart(e, bookmark.id) : undefined}
+            onDragEnd={onBookmarkReorder ? handleDragEnd : undefined}
+            onDragOver={onBookmarkReorder ? handleDragOver : undefined}
+            onDrop={onBookmarkReorder ? e => handleDrop(e, bookmark.id) : undefined}
             className={`group relative rounded-lg p-3 ${
               isDarkMode ? 'bg-slate-800 hover:bg-slate-700' : 'bg-white hover:bg-sky-50'
             } border ${isDarkMode ? 'border-slate-700' : 'border-sky-100'}`}>
@@ -154,39 +154,40 @@ const BookmarkList: React.FC<BookmarkListProps> = ({
 
             {editingId !== bookmark.id && (
               <>
-                {/* Edit button - top right */}
-                <button
-                  onClick={e => {
-                    e.stopPropagation();
-                    handleEditClick(bookmark);
-                  }}
-                  className={`absolute right-[28px] top-1/2 z-10 -translate-y-1/2 rounded p-1 opacity-0 transition-opacity duration-200 group-hover:opacity-100 ${
-                    isDarkMode
-                      ? 'bg-slate-700 text-sky-400 hover:bg-slate-600'
-                      : 'bg-white text-sky-500 hover:bg-gray-100'
-                  }`}
-                  aria-label={t('chat_bookmarks_edit')}
-                  type="button">
-                  <FaPen size={14} />
-                </button>
+                {onBookmarkUpdateTitle && (
+                  <button
+                    onClick={e => {
+                      e.stopPropagation();
+                      handleEditClick(bookmark);
+                    }}
+                    className={`absolute right-[28px] top-1/2 z-10 -translate-y-1/2 rounded p-1 opacity-0 transition-opacity duration-200 group-hover:opacity-100 ${
+                      isDarkMode
+                        ? 'bg-slate-700 text-sky-400 hover:bg-slate-600'
+                        : 'bg-white text-sky-500 hover:bg-gray-100'
+                    }`}
+                    aria-label={t('chat_bookmarks_edit')}
+                    type="button">
+                    <FaPen size={14} />
+                  </button>
+                )}
 
                 {/* Delete button - bottom right */}
-                <button
-                  onClick={e => {
-                    e.stopPropagation();
-                    if (onBookmarkDelete) {
+                {onBookmarkDelete && (
+                  <button
+                    onClick={e => {
+                      e.stopPropagation();
                       onBookmarkDelete(bookmark.id);
-                    }
-                  }}
-                  className={`absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded p-1 opacity-0 transition-opacity duration-200 group-hover:opacity-100 ${
-                    isDarkMode
-                      ? 'bg-slate-700 text-gray-400 hover:bg-slate-600'
-                      : 'bg-white text-gray-500 hover:bg-gray-100'
-                  }`}
-                  aria-label={t('chat_bookmarks_delete')}
-                  type="button">
-                  <FaTrash size={14} />
-                </button>
+                    }}
+                    className={`absolute right-2 top-1/2 z-10 -translate-y-1/2 rounded p-1 opacity-0 transition-opacity duration-200 group-hover:opacity-100 ${
+                      isDarkMode
+                        ? 'bg-slate-700 text-gray-400 hover:bg-slate-600'
+                        : 'bg-white text-gray-500 hover:bg-gray-100'
+                    }`}
+                    aria-label={t('chat_bookmarks_delete')}
+                    type="button">
+                    <FaTrash size={14} />
+                  </button>
+                )}
               </>
             )}
           </div>

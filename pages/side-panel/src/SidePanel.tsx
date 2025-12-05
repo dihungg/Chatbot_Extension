@@ -1,18 +1,62 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { RxDiscordLogo } from 'react-icons/rx';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
+// import { RxDiscordLogo } from 'react-icons/rx';
 import { FiSettings } from 'react-icons/fi';
 import { PiPlusBold } from 'react-icons/pi';
 import { GrHistory } from 'react-icons/gr';
 import { type Message, Actors, chatHistoryStore, agentModelStore, generalSettingsStore } from '@extension/storage';
 import favoritesStorage, { type FavoritePrompt } from '@extension/storage/lib/prompt/favorites';
 import { t } from '@extension/i18n';
+import {
+  loadClarificationCache,
+  persistClarificationCacheToStorage,
+  mergeClarificationAnswers,
+  clearClarificationCacheFromStorage,
+} from '@extension/shared/lib/utils/clarification-cache';
 import MessageList from './components/MessageList';
 import ChatInput from './components/ChatInput';
 import ChatHistoryList from './components/ChatHistoryList';
 import BookmarkList from './components/BookmarkList';
+import ClarificationForm from './components/ClarificationForm';
 import { EventType, type AgentEvent, ExecutionState } from './types/event';
+import type { RequirementClarificationPayload } from './types/requirement';
 import './SidePanel.css';
+
+const quickPrompts = [
+  {
+    id: 1,
+    title: 'Tìm iPhone 15 trên Shopee',
+    content: 'Hãy tìm kiếm sản phẩm iPhone 15 Pro Max trên trang Shopee.vn và liệt kê 3 shop có giá tốt nhất.',
+  },
+  {
+    id: 2,
+    title: 'So sánh giá Laptop',
+    content: 'So sánh giá Macbook Air M2 giữa FPTShop và CellphoneS.',
+  },
+  {
+    id: 3,
+    title: 'Săn sale tai nghe',
+    content: 'Tìm các loại tai nghe bluetooth đang giảm giá trên CellphoneS.',
+  },
+];
+
+const platformPrompts = [
+  {
+    id: 1,
+    title: 'Tìm sản phẩm trên Shopee',
+    content: 'Hãy tìm kiếm sản phẩm [NHẬP SẢN PHẨM] trên trang Shopee.vn với tiêu chí: [NHẬP YÊU CẦU].',
+  },
+  {
+    id: 2,
+    title: 'Tìm sản phẩm trên Lazada',
+    content: 'Hãy tìm kiếm sản phẩm [NHẬP SẢN PHẨM] trên trang Lazada.vn với tiêu chí: [NHẬP YÊU CẦU].',
+  },
+  {
+    id: 3,
+    title: 'Tìm sản phẩm trên Tiki',
+    content: 'Hãy tìm kiếm sản phẩm [NHẬP SẢN PHẨM] trên trang Tiki.vn với tiêu chí: [NHẬP YÊU CẦU].',
+  },
+];
 
 // Declare chrome API types
 declare global {
@@ -38,6 +82,9 @@ const SidePanel = () => {
   const [isProcessingSpeech, setIsProcessingSpeech] = useState(false);
   const [isReplaying, setIsReplaying] = useState(false);
   const [replayEnabled, setReplayEnabled] = useState(false);
+  const [pendingClarification, setPendingClarification] = useState<RequirementClarificationPayload | null>(null);
+  const [clarificationSubmitting, setClarificationSubmitting] = useState(false);
+  const [clarificationCacheVersion, setClarificationCacheVersion] = useState(0);
   const sessionIdRef = useRef<string | null>(null);
   const isReplayingRef = useRef<boolean>(false);
   const portRef = useRef<chrome.runtime.Port | null>(null);
@@ -47,6 +94,29 @@ const SidePanel = () => {
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const recordingTimerRef = useRef<number | null>(null);
+  const clarificationCacheRef = useRef<Record<string, string>>(loadClarificationCache());
+  // Keep cache helpers scoped to the component so they honor the Side Panel state model (see architecture doc).
+  const persistClarificationCache = useCallback(() => {
+    persistClarificationCacheToStorage(clarificationCacheRef.current);
+  }, []);
+
+  const updateClarificationCache = useCallback(
+    (answers: Record<string, string>) => {
+      const { cache, changed } = mergeClarificationAnswers(clarificationCacheRef.current, answers);
+      if (changed) {
+        clarificationCacheRef.current = cache;
+        persistClarificationCache();
+        setClarificationCacheVersion(v => v + 1);
+      }
+    },
+    [persistClarificationCache],
+  );
+
+  const clearClarificationCache = useCallback(() => {
+    clarificationCacheRef.current = {};
+    clearClarificationCacheFromStorage();
+    setClarificationCacheVersion(v => v + 1);
+  }, []);
 
   // Check for dark mode preference
   useEffect(() => {
@@ -333,6 +403,28 @@ const SidePanel = () => {
             timestamp: Date.now(),
           });
           setIsProcessingSpeech(false);
+        } else if (message && message.type === 'requirement_clarification' && message.payload) {
+          const payload = message.payload as RequirementClarificationPayload;
+          const cachedAnswers: Record<string, string> = {};
+          let hasMissing = false;
+          payload.questions.forEach(question => {
+            const cached = clarificationCacheRef.current[question.id];
+            if (cached && cached.trim()) {
+              cachedAnswers[question.id] = cached;
+            } else {
+              hasMissing = true;
+            }
+          });
+
+          if (!hasMissing) {
+            void autoSubmitClarificationAnswers(payload, cachedAnswers);
+            return;
+          }
+
+          setPendingClarification(payload);
+          setClarificationSubmitting(false);
+          setInputEnabled(false);
+          setShowStopButton(false);
         } else if (message && message.type === 'heartbeat_ack') {
           console.log('Heartbeat acknowledged');
         }
@@ -670,6 +762,8 @@ const SidePanel = () => {
     setShowStopButton(false);
     setIsFollowUpMode(false);
     setIsHistoricalSession(false);
+    setPendingClarification(null);
+    setClarificationSubmitting(false);
 
     // Disconnect any existing connection
     stopConnection();
@@ -798,6 +892,64 @@ const SidePanel = () => {
       console.error('Failed to reorder favorite prompts:', error);
     }
   };
+
+  const handleClarificationSubmit = useCallback(
+    async (answers: Record<string, string>) => {
+      if (!pendingClarification) {
+        return;
+      }
+      try {
+        setClarificationSubmitting(true);
+        await sendMessage({
+          type: 'requirement_answers',
+          sessionId: pendingClarification.sessionId,
+          answers,
+        });
+        setPendingClarification(null);
+        setShowStopButton(true);
+        updateClarificationCache(answers);
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        appendMessage({
+          actor: Actors.SYSTEM,
+          content: errorMessage,
+          timestamp: Date.now(),
+        });
+      } finally {
+        setClarificationSubmitting(false);
+      }
+    },
+    [pendingClarification, sendMessage, appendMessage, updateClarificationCache],
+  );
+
+  const autoSubmitClarificationAnswers = useCallback(
+    async (request: RequirementClarificationPayload, answers: Record<string, string>) => {
+      try {
+        setInputEnabled(false);
+        setShowStopButton(false);
+        setClarificationSubmitting(true);
+        await sendMessage({
+          type: 'requirement_answers',
+          sessionId: request.sessionId,
+          answers,
+        });
+        setPendingClarification(null);
+        setShowStopButton(true);
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        appendMessage({
+          actor: Actors.SYSTEM,
+          content: errorMessage,
+          timestamp: Date.now(),
+        });
+        setPendingClarification(request);
+        setInputEnabled(true);
+      } finally {
+        setClarificationSubmitting(false);
+      }
+    },
+    [appendMessage, sendMessage],
+  );
 
   // Load favorite prompts from storage
   useEffect(() => {
@@ -999,6 +1151,25 @@ const SidePanel = () => {
     }
   };
 
+  const hasCustomFavoritePrompts = favoritePrompts.length > 0;
+  const quickPromptList = hasCustomFavoritePrompts ? favoritePrompts : quickPrompts;
+  const hasSavedClarificationAnswers = useMemo(
+    () => Object.keys(clarificationCacheRef.current).length > 0,
+    [clarificationCacheVersion],
+  );
+
+  const savedAnswersForPendingClarification = useMemo(() => {
+    if (!pendingClarification) return {};
+    const cache = clarificationCacheRef.current;
+    const prefill: Record<string, string> = {};
+    pendingClarification.questions.forEach(question => {
+      if (cache[question.id]) {
+        prefill[question.id] = cache[question.id];
+      }
+    });
+    return prefill;
+  }, [pendingClarification, clarificationCacheVersion]);
+
   return (
     <div>
       <div
@@ -1040,13 +1211,13 @@ const SidePanel = () => {
                 </button>
               </>
             )}
-            <a
+            {/* <a
               href="https://discord.gg/NN3ABHggMK"
               target="_blank"
               rel="noopener noreferrer"
               className={`header-icon ${isDarkMode ? 'text-sky-400 hover:text-sky-300' : 'text-sky-400 hover:text-sky-500'}`}>
               <RxDiscordLogo size={20} />
-            </a>
+            </a> */}
             <button
               type="button"
               onClick={() => chrome.runtime.openOptionsPage()}
@@ -1123,6 +1294,19 @@ const SidePanel = () => {
             {/* Show normal chat interface when models are configured */}
             {hasConfiguredModels === true && (
               <>
+                {pendingClarification && (
+                  <div className="max-h-[70vh] overflow-y-auto px-2 pb-3">
+                    <ClarificationForm
+                      request={pendingClarification}
+                      onSubmit={handleClarificationSubmit}
+                      isSubmitting={clarificationSubmitting}
+                      isDarkMode={isDarkMode}
+                      initialAnswers={savedAnswersForPendingClarification}
+                      onClearSavedAnswers={hasSavedClarificationAnswers ? clearClarificationCache : undefined}
+                      hasSavedAnswers={hasSavedClarificationAnswers}
+                    />
+                  </div>
+                )}
                 {messages.length === 0 && (
                   <>
                     <div
@@ -1145,11 +1329,19 @@ const SidePanel = () => {
                     </div>
                     <div className="flex-1 overflow-y-auto">
                       <BookmarkList
-                        bookmarks={favoritePrompts}
+                        title="Gợi ý nhanh"
+                        bookmarks={quickPromptList}
                         onBookmarkSelect={handleBookmarkSelect}
-                        onBookmarkUpdateTitle={handleBookmarkUpdateTitle}
-                        onBookmarkDelete={handleBookmarkDelete}
-                        onBookmarkReorder={handleBookmarkReorder}
+                        onBookmarkUpdateTitle={hasCustomFavoritePrompts ? handleBookmarkUpdateTitle : undefined}
+                        onBookmarkDelete={hasCustomFavoritePrompts ? handleBookmarkDelete : undefined}
+                        onBookmarkReorder={hasCustomFavoritePrompts ? handleBookmarkReorder : undefined}
+                        isDarkMode={isDarkMode}
+                      />
+
+                      <BookmarkList
+                        title="Tìm theo trang web"
+                        bookmarks={platformPrompts}
+                        onBookmarkSelect={handleBookmarkSelect}
                         isDarkMode={isDarkMode}
                       />
                     </div>

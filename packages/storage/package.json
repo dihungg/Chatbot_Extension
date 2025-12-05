@@ -1,6 +1,6 @@
 {
   "name": "@extension/storage",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "chrome extension - storage",
   "private": true,
   "sideEffects": false,
@@ -19,6 +19,9 @@
     "lint:fix": "pnpm lint --fix",
     "prettier": "prettier . --write --ignore-path ../../.prettierignore",
     "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@extension/shared": "workspace:*"
   },
   "devDependencies": {
     "@extension/tsconfig": "workspace:*"

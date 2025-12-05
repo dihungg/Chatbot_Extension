@@ -6,7 +6,9 @@ import {
   generalSettingsStore,
   llmProviderStore,
   analyticsSettingsStore,
+  targetProductProfileRepository,
 } from '@extension/storage';
+import type { TargetProductProfile } from '@extension/shared';
 import { t } from '@extension/i18n';
 import BrowserContext from './browser/context';
 import { Executor } from './agent/executor';
@@ -18,12 +20,40 @@ import { DEFAULT_AGENT_OPTIONS } from './agent/types';
 import { SpeechToTextService } from './services/speechToText';
 import { injectBuildDomTreeScripts } from './browser/dom/service';
 import { analytics } from './services/analytics';
+import {
+  RequirementInterpreterService,
+  type QuestionAnswerMap,
+  type RequirementClarificationRequest,
+} from './agent/requirement-interpreter';
 
 const logger = createLogger('background');
+
+const requirementInterpreter = new RequirementInterpreterService({
+  repository: targetProductProfileRepository,
+});
 
 const browserContext = new BrowserContext({});
 let currentExecutor: Executor | null = null;
 let currentPort: chrome.runtime.Port | null = null;
+const SIDE_PANEL_URL = chrome.runtime.getURL('side-panel/index.html');
+
+type PendingRequirement =
+  | {
+      type: 'new_task';
+      taskId: string;
+      task: string;
+      tabId: number;
+    }
+  | {
+      type: 'replay';
+      taskId: string;
+      task: string;
+      tabId: number;
+      historySessionId: string;
+    };
+
+const pendingRequirementSessions = new Map<string, PendingRequirement>();
+// Map trong TypeScript được lưu trong RAM.
 
 // Setup side panel behavior
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true }).catch(error => console.error(error));
@@ -66,22 +96,42 @@ analyticsSettingsStore.subscribe(() => {
 });
 
 // Listen for simple messages (e.g., from options page)
-chrome.runtime.onMessage.addListener(() => {
+chrome.runtime.onMessage.addListener((message, sender) => {
+  logger.info('runtime.onMessage received', { message, sender });
   // Handle other message types if needed in the future
   // Return false if response is not sent asynchronously
-  // return false;
+  return false;
 });
 
 // Setup connection listener for long-lived connections (e.g., side panel)
 chrome.runtime.onConnect.addListener(port => {
   if (port.name === 'side-panel-connection') {
+    const senderUrl = port.sender?.url;
+    const senderId = port.sender?.id;
+
+    logger.info('Incoming side-panel connection', {
+      senderId,
+      senderUrl,
+    });
+
+    // Side panel pages run in the extension process so chrome.runtime doesn't populate sender metadata.
+    // Only block the connection if we receive explicit evidence that this isn't our extension/page.
+    if ((senderId && senderId !== chrome.runtime.id) || (senderUrl && !senderUrl.startsWith(SIDE_PANEL_URL))) {
+      logger.warning('Blocked unauthorized side-panel-connection', senderId, senderUrl);
+      port.disconnect();
+      return;
+    }
+
     currentPort = port;
+    logger.info('Side-panel connection established');
 
     port.onMessage.addListener(async message => {
+      logger.debug('Message received from side panel', message);
       try {
         switch (message.type) {
           case 'heartbeat':
             // Acknowledge heartbeat
+            logger.debug('Responding to heartbeat');
             port.postMessage({ type: 'heartbeat_ack' });
             break;
 
@@ -90,11 +140,18 @@ chrome.runtime.onConnect.addListener(port => {
             if (!message.tabId) return port.postMessage({ type: 'error', error: t('bg_errors_noTabId') });
 
             logger.info('new_task', message.tabId, message.task);
-            currentExecutor = await setupExecutor(message.taskId, message.task, browserContext);
-            subscribeToExecutorEvents(currentExecutor);
-
-            const result = await currentExecutor.execute();
-            logger.info('new_task execution result', message.tabId, result);
+            const profileResult = await requirementInterpreter.ensureProfile(message.taskId, message.task);
+            if (profileResult.status === 'needs_clarification') {
+              pendingRequirementSessions.set(message.taskId, {
+                type: 'new_task',
+                taskId: message.taskId,
+                task: message.task,
+                tabId: message.tabId,
+              });
+              sendClarification(profileResult.request);
+              break;
+            }
+            await startNewTask(message.taskId, message.task, message.tabId, profileResult.profile);
             break;
           }
 
@@ -207,23 +264,70 @@ chrome.runtime.onConnect.addListener(port => {
             }
           }
 
+          case 'requirement_answers': {
+            if (!message.sessionId) return port.postMessage({ type: 'error', error: t('bg_errors_noTaskId') });
+            if (!message.answers || typeof message.answers !== 'object') {
+              return port.postMessage({ type: 'error', error: t('bg_cmd_newTask_noTask') });
+            }
+
+            const result = await requirementInterpreter.submitAnswers(
+              message.sessionId,
+              message.answers as QuestionAnswerMap,
+            );
+
+            if (result.status === 'needs_clarification') {
+              sendClarification(result.request);
+              break;
+            }
+
+            const pending = pendingRequirementSessions.get(message.sessionId);
+            pendingRequirementSessions.delete(message.sessionId);
+
+            if (!pending) {
+              logger.info('Received requirement answers but no pending session found');
+              break;
+            }
+
+            if (pending.type === 'new_task') {
+              await startNewTask(pending.taskId, pending.task, pending.tabId, result.profile);
+            } else {
+              await startReplayTask(pending, result.profile);
+            }
+
+            break;
+          }
+
           case 'replay': {
             if (!message.tabId) return port.postMessage({ type: 'error', error: t('bg_errors_noTabId') });
             if (!message.taskId) return port.postMessage({ type: 'error', error: t('bg_errors_noTaskId') });
             if (!message.historySessionId)
               return port.postMessage({ type: 'error', error: t('bg_cmd_replay_noHistory') });
+            if (!message.task) return port.postMessage({ type: 'error', error: t('bg_cmd_newTask_noTask') });
             logger.info('replay', message.tabId, message.taskId, message.historySessionId);
 
             try {
-              // Switch to the specified tab
-              await browserContext.switchTab(message.tabId);
-              // Setup executor with the new taskId and a dummy task description
-              currentExecutor = await setupExecutor(message.taskId, message.task, browserContext);
-              subscribeToExecutorEvents(currentExecutor);
-
-              // Run replayHistory with the history session ID
-              const result = await currentExecutor.replayHistory(message.historySessionId);
-              logger.debug('replay execution result', message.tabId, result);
+              const profileResult = await requirementInterpreter.ensureProfile(message.taskId, message.task);
+              if (profileResult.status === 'needs_clarification') {
+                pendingRequirementSessions.set(message.taskId, {
+                  type: 'replay',
+                  taskId: message.taskId,
+                  task: message.task,
+                  tabId: message.tabId,
+                  historySessionId: message.historySessionId,
+                });
+                sendClarification(profileResult.request);
+                break;
+              }
+              await startReplayTask(
+                {
+                  type: 'replay',
+                  taskId: message.taskId,
+                  task: message.task,
+                  tabId: message.tabId,
+                  historySessionId: message.historySessionId,
+                },
+                profileResult.profile,
+              );
             } catch (error) {
               logger.error('Replay failed:', error);
               return port.postMessage({
@@ -248,14 +352,55 @@ chrome.runtime.onConnect.addListener(port => {
 
     port.onDisconnect.addListener(() => {
       // this event is also triggered when the side panel is closed, so we need to cancel the task
-      console.log('Side panel disconnected');
+      logger.warning('Side panel disconnected');
       currentPort = null;
       currentExecutor?.cancel();
     });
   }
 });
 
-async function setupExecutor(taskId: string, task: string, browserContext: BrowserContext) {
+function sendClarification(request: RequirementClarificationRequest) {
+  if (!currentPort) return;
+  logger.info('Sending clarification request to side panel', {
+    sessionId: request.sessionId,
+    questionCount: request.questions.length,
+  });
+  currentPort.postMessage({
+    type: 'requirement_clarification',
+    payload: request,
+  });
+}
+
+async function startNewTask(taskId: string, task: string, tabId: number, profile: TargetProductProfile) {
+  logger.info('startNewTask invoked', { taskId, tabId, hasProfile: Boolean(profile) });
+  currentExecutor = await setupExecutor(taskId, task, browserContext, profile);
+  subscribeToExecutorEvents(currentExecutor);
+  const result = await currentExecutor.execute();
+  logger.info('new_task execution result', tabId, result);
+}
+
+async function startReplayTask(
+  context: Extract<PendingRequirement, { type: 'replay' }>,
+  profile: TargetProductProfile,
+) {
+  logger.info('startReplayTask invoked', {
+    taskId: context.taskId,
+    historySessionId: context.historySessionId,
+    tabId: context.tabId,
+  });
+  await browserContext.switchTab(context.tabId);
+  currentExecutor = await setupExecutor(context.taskId, context.task, browserContext, profile);
+  subscribeToExecutorEvents(currentExecutor);
+  const replayResult = await currentExecutor.replayHistory(context.historySessionId);
+  logger.debug('replay execution result', context.tabId, replayResult);
+}
+
+async function setupExecutor(
+  taskId: string,
+  task: string,
+  browserContext: BrowserContext,
+  profile?: TargetProductProfile,
+) {
   const providers = await llmProviderStore.getAllProviders();
   // if no providers, need to display the options page
   if (Object.keys(providers).length === 0) {
@@ -320,6 +465,7 @@ async function setupExecutor(taskId: string, task: string, browserContext: Brows
       planningInterval: generalSettings.planningInterval,
     },
     generalSettings: generalSettings,
+    targetProductProfile: profile,
   });
 
   return executor;
@@ -332,6 +478,7 @@ async function subscribeToExecutorEvents(executor: Executor) {
 
   // Subscribe to new events
   executor.subscribeExecutionEvents(async event => {
+    logger.debug('Executor event emitted', event);
     try {
       if (currentPort) {
         currentPort.postMessage(event);

@@ -41,12 +41,22 @@ export class EventManager {
 
   async emit(event: AgentEvent): Promise<void> {
     const callbacks = this._subscribers.get(event.type);
-    if (callbacks) {
+    logger.debug('Emitting event', {
+      type: event.type,
+      actor: event.actor,
+      state: event.state,
+      details: event.data?.details,
+      taskId: event.data?.taskId,
+      subscriberCount: callbacks?.length ?? 0,
+    });
+    if (callbacks && callbacks.length > 0) {
       try {
         await Promise.all(callbacks.map(async callback => await callback(event)));
       } catch (error) {
         logger.error('Error executing event callbacks:', error);
       }
+    } else {
+      logger.debug('No subscribers for event type', event.type);
     }
   }
 }

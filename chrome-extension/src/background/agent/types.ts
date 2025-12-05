@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import type { TargetProductProfile } from '@extension/shared';
 import type BrowserContext from '../browser/context';
 import { DEFAULT_INCLUDE_ATTRIBUTES } from '../browser/dom/views';
 import type { DOMHistoryElement } from '../browser/dom/history/view';
@@ -49,6 +50,7 @@ export class AgentContext {
   stateMessageAdded: boolean;
   history: AgentStepHistory;
   finalAnswer: string | null;
+  targetProductProfile?: TargetProductProfile;
 
   constructor(
     taskId: string,
@@ -73,6 +75,7 @@ export class AgentContext {
     this.stateMessageAdded = false;
     this.history = new AgentStepHistory();
     this.finalAnswer = null;
+    this.targetProductProfile = undefined;
   }
 
   async emitEvent(actor: Actors, state: ExecutionState, eventDetails: string) {

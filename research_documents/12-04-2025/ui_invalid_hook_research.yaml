@@ -1,0 +1,61 @@
+ui_invalid_hook_research:
+  summary: >
+    Investigated the “Invalid hook call / Cannot read properties of null
+    (reading 'useCallback')” errors affecting the side panel UI. Guided by
+    research_documents/codebase_architecture.yaml (Side Panel State Model at
+    line 181), traced component boundaries and build outputs. Failure stems
+    from clarification cache helpers that call React hooks at module scope
+    after the component export, violating the Rules of Hooks and accessing
+    SidePanel-only state outside React's dispatcher context.
+  relevant_architecture_refs:
+    - path: research_documents/codebase_architecture.yaml:181
+      note: Side panel keeps clarification cache state inside the SidePanel component; helpers must stay within that state model.
+  findings:
+    - id: hooks_invoked_outside_component
+      description: >
+        `persistClarificationCache`, `updateClarificationCache`, and
+        `clearClarificationCache` are declared after `export default SidePanel;`
+        yet still call `useCallback`. These execute during module evaluation,
+        before any React component renders, so React's dispatcher is null and
+        the runtime throws the observed invalid hook call warning.
+      evidence:
+        - path: pages/side-panel/src/SidePanel.tsx:1372
+          snippet: |
+            export default SidePanel;
+              const persistClarificationCache = useCallback(() => {
+                try {
+                  localStorage.setItem(CLARIFICATION_CACHE_KEY, JSON.stringify(clarificationCacheRef.current));
+        - path: dist/side-panel/assets/index-BFZhViP1.js:30452
+          snippet: |
+            const persistClarificationCache = reactExports.useCallback(() => {
+              try {
+                localStorage.setItem(CLARIFICATION_CACHE_KEY, JSON.stringify(clarificationCacheRef.current));
+    - id: orphaned_state_references
+      description: >
+        The same helpers reference `clarificationCacheRef` and
+        `setClarificationCacheVersion` even though they now live outside the
+        component, so they no longer share the SidePanel instance state. This
+        breaks the requirement clarification loop described in the architecture
+        document and would throw or write stale data even if hooks succeeded.
+      evidence:
+        - path: pages/side-panel/src/SidePanel.tsx:1374
+          snippet: |
+            localStorage.setItem(CLARIFICATION_CACHE_KEY, JSON.stringify(clarificationCacheRef.current));
+        - path: pages/side-panel/src/SidePanel.tsx:1395
+          snippet: |
+            setClarificationCacheVersion(v => v + 1);
+  implications:
+    - Top-level hook calls stop the SidePanel tree from rendering, so chat UI,
+      quick prompts, and requirement forms never mount.
+    - Cache helpers detached from component state prevent the requirement
+      clarification loop from persisting answers consistently.
+  recommended_next_steps:
+    - Move the clarification cache helpers back inside `SidePanel` (or wrap
+      them in a custom hook) so they run within React’s dispatcher and share
+      component state—the architecture doc’s Side Panel State Model depends on
+      that coupling.
+    - Rebuild the side panel (`pnpm -F pages/side-panel build`) and verify the
+      generated bundle no longer contains top-level hook calls.
+    - Add a targeted test or Storybook scenario to ensure the clarification
+      cache flow remains functional after the fix, aligning with the documented
+      requirement interpreter loop.

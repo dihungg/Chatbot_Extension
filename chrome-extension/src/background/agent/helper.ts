@@ -8,58 +8,8 @@ import { ChatCerebras } from '@langchain/cerebras';
 import type { BaseChatModel } from '@langchain/core/language_models/chat_models';
 import { ChatOllama } from '@langchain/ollama';
 import { ChatDeepSeek } from '@langchain/deepseek';
-import { AIMessage } from '@langchain/core/messages';
-import type { BaseMessage } from '@langchain/core/messages';
 
 const maxTokens = 1024 * 4;
-
-// Custom ChatLlama class to handle Llama API response format
-class ChatLlama extends ChatOpenAI {
-  constructor(args: any) {
-    super(args);
-  }
-
-  // Override the completionWithRetry method to intercept and transform the response
-  async completionWithRetry(request: any, options?: any): Promise<any> {
-    try {
-      // Make the request using the parent's implementation
-      const response = await super.completionWithRetry(request, options);
-
-      // Check if this is a Llama API response format
-      if (response?.completion_message?.content?.text) {
-        // Transform Llama API response to OpenAI format
-        const transformedResponse = {
-          id: response.id || 'llama-response',
-          object: 'chat.completion',
-          created: Date.now(),
-          model: request.model,
-          choices: [
-            {
-              index: 0,
-              message: {
-                role: 'assistant',
-                content: response.completion_message.content.text,
-              },
-              finish_reason: response.completion_message.stop_reason || 'stop',
-            },
-          ],
-          usage: {
-            prompt_tokens: response.metrics?.find((m: any) => m.metric === 'num_prompt_tokens')?.value || 0,
-            completion_tokens: response.metrics?.find((m: any) => m.metric === 'num_completion_tokens')?.value || 0,
-            total_tokens: response.metrics?.find((m: any) => m.metric === 'num_total_tokens')?.value || 0,
-          },
-        };
-
-        return transformedResponse;
-      }
-
-      return response;
-    } catch (error: any) {
-      console.error(`[ChatLlama] Error during API call:`, error);
-      throw error;
-    }
-  }
-}
 
 // O series models or GPT-5 models that support reasoning
 function isOpenAIReasoningModel(modelName: string): boolean {
@@ -83,6 +33,17 @@ function isAnthropicOpusModel(modelName: string): boolean {
   return modelNameWithoutProvider.startsWith('claude-opus');
 }
 
+// check if a model is sonnet-4-5 or haiku-4-5
+function isAnthropic4_5Model(modelName: string): boolean {
+  let modelNameWithoutProvider = modelName;
+  if (modelName.startsWith('anthropic/')) {
+    modelNameWithoutProvider = modelName.substring(10);
+  }
+  return (
+    modelNameWithoutProvider.startsWith('claude-sonnet-4-5') || modelNameWithoutProvider.startsWith('claude-haiku-4-5')
+  );
+}
+
 function createOpenAIChatModel(
   providerConfig: ProviderConfig,
   modelConfig: ModelConfig,
@@ -96,7 +57,7 @@ function createOpenAIChatModel(
     configuration?: Record<string, unknown>;
     modelKwargs?: {
       max_completion_tokens: number;
-      reasoning_effort?: 'minimal' | 'low' | 'medium' | 'high';
+      reasoning_effort?: 'none' | 'minimal' | 'low' | 'medium' | 'high';
     };
     topP?: number;
     temperature?: number;
@@ -128,7 +89,12 @@ function createOpenAIChatModel(
 
     // Add reasoning_effort parameter for o-series models if specified
     if (modelConfig.reasoningEffort) {
-      args.modelKwargs.reasoning_effort = modelConfig.reasoningEffort;
+      // if it's gpt-5.1, we need to convert minimal to none, it doesn't support minimal
+      if (modelConfig.modelName.includes('gpt-5.1') && modelConfig.reasoningEffort === 'minimal') {
+        args.modelKwargs.reasoning_effort = 'none';
+      } else {
+        args.modelKwargs.reasoning_effort = modelConfig.reasoningEffort;
+      }
     }
   } else {
     args.topP = (modelConfig.parameters?.topP ?? 0.1) as number;
@@ -246,23 +212,15 @@ export function createChatModel(providerConfig: ProviderConfig, modelConfig: Mod
       return createOpenAIChatModel(providerConfig, modelConfig, undefined);
     }
     case ProviderTypeEnum.Anthropic: {
-      // For Opus models, only include temperature, not topP
-      const args = isAnthropicOpusModel(modelConfig.modelName)
-        ? {
-            model: modelConfig.modelName,
-            apiKey: providerConfig.apiKey,
-            maxTokens,
-            temperature,
-            clientOptions: {},
-          }
-        : {
-            model: modelConfig.modelName,
-            apiKey: providerConfig.apiKey,
-            maxTokens,
-            temperature,
-            topP,
-            clientOptions: {},
-          };
+      // For Opus models, only support temperature, not topP
+      // For 4.5 models, only support either temperature or topP, not both, so we only use temperature to align with Opus
+      const args = {
+        model: modelConfig.modelName,
+        apiKey: providerConfig.apiKey,
+        maxTokens,
+        temperature,
+        clientOptions: {},
+      };
       return new ChatAnthropic(args);
     }
     case ProviderTypeEnum.DeepSeek: {
@@ -351,29 +309,8 @@ export function createChatModel(providerConfig: ProviderConfig, modelConfig: Mod
       });
     }
     case ProviderTypeEnum.Llama: {
-      // Llama API has a different response format, use custom ChatLlama class
-      const args: {
-        model: string;
-        apiKey?: string;
-        configuration?: Record<string, unknown>;
-        topP?: number;
-        temperature?: number;
-        maxTokens?: number;
-      } = {
-        model: modelConfig.modelName,
-        apiKey: providerConfig.apiKey,
-        topP: (modelConfig.parameters?.topP ?? 0.1) as number,
-        temperature: (modelConfig.parameters?.temperature ?? 0.1) as number,
-        maxTokens,
-      };
-
-      const configuration: Record<string, unknown> = {};
-      if (providerConfig.baseUrl) {
-        configuration.baseURL = providerConfig.baseUrl;
-      }
-      args.configuration = configuration;
-
-      return new ChatLlama(args);
+      // Llama API is OpenAI-compatible, reuse the OpenAI helper with custom base URL if provided
+      return createOpenAIChatModel(providerConfig, modelConfig, undefined);
     }
     default: {
       // by default, we think it's a openai-compatible provider

@@ -1,5 +1,10 @@
 import { useSyncExternalStore } from 'react';
-import type { BaseStorage } from '@extension/storage';
+
+type BaseStorage<Data> = {
+  get: () => Promise<Data>;
+  getSnapshot: () => Data | null;
+  subscribe: (listener: () => void) => () => void;
+};
 
 type WrappedPromise = ReturnType<typeof wrapPromise>;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

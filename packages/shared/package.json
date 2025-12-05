@@ -1,6 +1,6 @@
 {
   "name": "@extension/shared",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "chrome extension - shared code",
   "private": true,
   "sideEffects": false,
@@ -21,7 +21,6 @@
     "type-check": "tsc --noEmit"
   },
   "devDependencies": {
-    "@extension/storage": "workspace:*",
     "@extension/tsconfig": "workspace:*"
   }
 }
