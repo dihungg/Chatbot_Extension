@@ -28,18 +28,18 @@ import './SidePanel.css';
 const quickPrompts = [
   {
     id: 1,
-    title: 'Tìm iPhone 15 trên Shopee',
-    content: 'Hãy tìm kiếm sản phẩm iPhone 15 Pro Max trên trang Shopee.vn và liệt kê 3 shop có giá tốt nhất.',
+    title: 'Tìm sản phẩm trên Shopee',
+    content: 'Hãy tìm kiếm sản phẩm [NHẬP SẢN PHẨM] trên trang Shopee.vn với tiêu chí: [NHẬP YÊU CẦU].',
   },
   {
     id: 2,
-    title: 'So sánh giá Laptop',
-    content: 'So sánh giá Macbook Air M2 giữa FPTShop và CellphoneS.',
+    title: 'Tìm sản phẩm trên Lazada',
+    content: 'Hãy tìm kiếm sản phẩm [NHẬP SẢN PHẨM] trên trang Lazada.vn với tiêu chí: [NHẬP YÊU CẦU].',
   },
   {
     id: 3,
-    title: 'Săn sale tai nghe',
-    content: 'Tìm các loại tai nghe bluetooth đang giảm giá trên CellphoneS.',
+    title: 'Tìm sản phẩm trên Tiki',
+    content: 'Hãy tìm kiếm sản phẩm [NHẬP SẢN PHẨM] trên trang Tiki.vn với tiêu chí: [NHẬP YÊU CẦU].',
   },
 ];
 

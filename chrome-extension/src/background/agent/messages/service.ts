@@ -77,33 +77,18 @@ export default class MessageManager {
       this.addMessageWithTokens(infoMessage, 'init');
     }
 
-    // Add example output
-    const placeholderMessage = new HumanMessage({
-      content: 'Example output:',
-    });
-    this.addMessageWithTokens(placeholderMessage, 'init');
-
+    // Add neutral example output (avoid seeding navigation actions)
     const toolCallId = this.nextToolId();
     const toolCalls = [
       {
         name: 'AgentOutput',
         args: {
           current_state: {
-            evaluation_previous_goal:
-              `Success - I successfully clicked on the 'Apple' link from the Google Search results page, 
-              which directed me to the 'Apple' company homepage. This is a good start toward finding 
-              the best place to buy a new iPhone as the Apple website often list iPhones for sale.`.trim(),
-            memory: `I searched for 'iPhone retailers' on Google. From the Google Search results page, 
-              I used the 'click_element' tool to click on a element labelled 'Best Buy' but calling 
-              the tool did not direct me to a new page. I then used the 'click_element' tool to click 
-              on a element labelled 'Apple' which redirected me to the 'Apple' company homepage. 
-              Currently at step 3/15.`.trim(),
-            next_goal: `Looking at reported structure of the current page, I can see the item '[127]<h3 iPhone/>' 
-              in the content. I think this button will lead to more information and potentially prices 
-              for iPhones. I'll click on the link to 'iPhone' at index [127] using the 'click_element' 
-              tool and hope to see prices on the next page.`.trim(),
+            evaluation_previous_goal: `No previous goal.`,
+            memory: `No memory seeded.`,
+            next_goal: `Decide next steps based on last observation.`,
           },
-          action: [{ click_element: { index: 127 } }],
+          action: [],
         },
         id: String(toolCallId),
         type: 'tool_call' as const,
@@ -177,7 +162,8 @@ export default class MessageManager {
 
     // Filter and wrap user text
     const cleanedTask = filterExternalContent(userText);
-    const content = `Your new ultimate task is: """${cleanedTask}""". This is a follow-up of the previous tasks. Make sure to take all of the previous context into account and finish your new ultimate task.`;
+    // NOTE: change wording: explicitly instruct agent this is a NEW independent task
+    const content = `Your NEW ultimate task is: """${cleanedTask}""". THIS IS A FRESH TASK — DO NOT REPEAT OR RESUME A PREVIOUS TASK unless explicitly asked. Start planning based on the latest browser state and the immediate last observation.`;
     const wrappedUser = wrapUserRequest(content, false);
 
     // Filter and wrap attachments as untrusted content
@@ -243,6 +229,34 @@ export default class MessageManager {
    */
   public removeLastStateMessage(): void {
     this.history.removeLastStateMessage();
+  }
+
+  /**
+   * Return the last user (HumanMessage) content string, or null if none.
+   * Planner uses this to seed current user message for correct planning.
+   */
+  public getLastUserMessage(): string | null {
+    for (let i = this.history.messages.length - 1; i >= 0; i--) {
+      const entry = this.history.messages[i];
+      if (entry && entry.message && entry.message.constructor && entry.message.constructor.name === 'HumanMessage') {
+        const content = entry.message.content;
+        if (typeof content === 'string' && content.trim().length > 0) {
+          // If the message was wrapped via wrapUserRequest, it's fine to return as-is.
+          return content;
+        }
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Marks the history so that subsequent planning treats next task as new.
+   * Simple helper - can be called by higher-level code when user explicitly starts new task.
+   */
+  public markNewTask(): void {
+    // Add a small marker so planner can detect that a new task was started explicitly
+    const marker = new HumanMessage({ content: '[[NEW_TASK_MARKER]]' });
+    this.addMessageWithTokens(marker);
   }
 
   public getMessages(): BaseMessage[] {

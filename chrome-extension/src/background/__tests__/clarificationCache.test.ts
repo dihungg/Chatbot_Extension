@@ -60,7 +60,7 @@ describe('clarification cache helpers', () => {
 
   it('clears persisted cache entries from storage', () => {
     const storage = createMockStorage();
-    persistClarificationCacheToStorage({ foo: 'bar' }, storage);
+    persistClarificationCacheToStorage({ foo: { q: 'bar' } }, storage);
     clearClarificationCacheFromStorage(storage);
 
     expect(storage.peek()[CLARIFICATION_CACHE_KEY]).toBeUndefined();

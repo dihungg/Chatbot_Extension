@@ -29,9 +29,15 @@ Dưới đây là các chiến lược có thể dùng để customize lại nan
 
 ---
 
-3. **DOM \+ multi-modal interaction strategies**  
+3. **DOM \+ multi-modal interaction strategies & Safeguards**  
      
-   * Enable **vision** for the Navigator and (optionally) the Planner. Navigator system message: “Inspect DOM text first; when ambiguous, use the screenshot to interpret icons, badges, filters, and category-specific UI elements (e.g., camera badges on phones, ANC tags on headphones).”  
+   * **Real-time Truth Rule (Critical):** The agent must prioritize website data over internal training knowledge. It must verify existence/price on-site before answering.
+   * **Anti-loop & Hard Stops:** 
+     * Stop if login/2FA/payment is requested.
+     * Stop if captcha appears (unless screenshot provided).
+     * Prevent repetitive actions (same action twice = loop).
+   * **DOM-First / Vision-Second:** 
+     * Navigator system message: “Inspect DOM text first; when ambiguous, use the screenshot to interpret icons, badges, filters, and category-specific UI elements (e.g., camera badges on phones, ANC tags on headphones).”  
        
    * **Robust DOM heuristics** (category‑aware):  
        

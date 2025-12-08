@@ -1,3 +1,15 @@
+# Execution Plan: Feature Integration & Upgrade
+
+This plan details the steps to integrate advanced agent capabilities, Llama model support, and UI enhancements from external branches into the current codebase *without* altering the project structure.
+
+## Phase 1: Agent Intelligence Upgrade
+
+### Step 1.1: Update Navigator Agent Safeguards
+**Target File:** `chrome-extension/src/background/agent/prompts/templates/navigator.ts`
+**Goal:** Implement strict "Real-time Truth", "Anti-loop", and "DOM-First" rules to prevent hallucinations and infinite loops.
+**Action:** Replace the entire file content with the following:
+
+```typescript
 import { commonSecurityRules } from './common';
 
 export const navigatorSystemPromptTemplate = `
@@ -124,3 +136,70 @@ Definition "noise":
 Forbidden interactions (MUST NOT click or interact with):
 - Elements that look like ads or are inside known ad containers.
 `;
+```
+
+### Step 1.2: Update Auxiliary Agents
+**Target Files:**
+1.  `chrome-extension/src/background/agent/prompts/refiner.ts`
+2.  `chrome-extension/src/background/agent/prompts/strategist.ts`
+
+**Action:** Update the prompt construction logic to align with improved prompt engineering (removing double quotes in `import`, etc. and cleaning up prompt structure).
+
+## Phase 2: Model & Backend Enhancements
+
+### Step 2.1: Add Llama Model Support
+**Target File:** `chrome-extension/src/background/agent/helper.ts`
+**Goal:** Enable use of local Llama models via an OpenAI-compatible interface but with specific response handling.
+**Action:**
+1.  Add the `ChatLlama` class definition:
+```typescript
+class ChatLlama extends ChatOpenAI {
+  constructor(args: any) {
+    super(args);
+  }
+  // ... (implementation details from research)
+}
+```
+2.  Update `createChatModel` switch case to handle `ProviderTypeEnum.Llama` by instantiating `ChatLlama`.
+
+### Step 2.2: Improve Message Handling
+**Target File:** `chrome-extension/src/background/agent/messages/service.ts`
+**Goal:** Better task context management to avoid "seeding" false memories/goals.
+**Action:**
+1.  Update `initTaskMessages`: Change the example output to be neutral (`No previous goal`, `No memory seeded`).
+2.  Update `addNewTask`: Change the prompt to explicitly mark the task as NEW (`THIS IS A FRESH TASK`).
+3.  Add `getLastUserMessage` and `markNewTask` methods.
+
+## Phase 3: UI Enhancements
+
+### Step 3.1: Update Side Panel Prompts
+**Target File:** `pages/side-panel/src/SidePanel.tsx`
+**Goal:** Replace specific/hardcoded prompts with generic platform templates.
+**Action:** Replace the `quickPrompts` array with the `platformPrompts` array:
+```typescript
+const platformPrompts = [
+  { 
+    id: 1, 
+    title: 'Tìm sản phẩm trên Shopee', 
+    content: 'Hãy tìm kiếm sản phẩm [NHẬP SẢN PHẨM] trên trang Shopee.vn với tiêu chí: [NHẬP YÊU CẦU].' 
+  },
+  { 
+    id: 2, 
+    title: 'Tìm sản phẩm trên Lazada', 
+    content: 'Hãy tìm kiếm sản phẩm [NHẬP SẢN PHẨM] trên trang Lazada.vn với tiêu chí: [NHẬP YÊU CẦU].' 
+  },
+  { 
+    id: 3, 
+    title: 'Tìm sản phẩm trên Tiki', 
+    content: 'Hãy tìm kiếm sản phẩm [NHẬP SẢN PHẨM] trên trang Tiki.vn với tiêu chí: [NHẬP YÊU CẦU].' 
+  },
+];
+```
+
+## Phase 4: Verification
+
+**Action:**
+1.  Run `pnpm -F chrome-extension type-check` to ensure no TS errors in the new classes/methods.
+2.  Run `pnpm -F pages/side-panel build` to verify UI changes build correctly.
+
+```

@@ -22,17 +22,6 @@ const BRAND_KEYWORDS: Record<string, string[]> = {
   beats: ['beats'],
 };
 
-const USE_CASE_KEYWORDS: Record<string, string[]> = {
-  gaming: ['gaming', 'chơi game', 'game', 'esport', 'fps'],
-  programming: ['lập trình', 'code', 'coding', 'developer'],
-  streaming: ['streaming', 'stream', 'youtube', 'twitch', 'vlog'],
-  photography: ['chụp ảnh', 'camera', 'nhiếp ảnh', 'chụp đêm'],
-  video_editing: ['quay video', 'dựng video', 'edit video'],
-  work: ['làm việc', 'office', 'văn phòng'],
-  study: ['học tập', 'sinh viên', 'học online', 'bài giảng'],
-  travel: ['di chuyển', 'du lịch', 'công tác'],
-};
-
 const BRAND_QUESTION_IDS = new Set(['laptop_brands', 'phone_brands', 'headphones_brands']);
 
 const QUESTION_TEXTS: Record<string, string> = {
@@ -308,19 +297,6 @@ export class ProfileParser {
     const parsedBudget = parseBudget(task);
     if (parsedBudget) {
       extracted.budget_vnd = parsedBudget;
-    }
-
-    // 3. Auto-detect Use Case to skip questions
-    for (const keywords of Object.values(USE_CASE_KEYWORDS)) {
-      if (includesAny(normalized, keywords)) {
-        // Mark use case questions as resolved for the relevant product type
-        const questionId = `${productType}_use_case`;
-        extracted.clarification_opt_outs = {
-          ...(extracted.clarification_opt_outs ?? {}),
-          [questionId]: true,
-        };
-        break;
-      }
     }
 
     return extracted;
