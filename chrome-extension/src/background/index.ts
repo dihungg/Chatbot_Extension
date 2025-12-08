@@ -25,6 +25,11 @@ import {
   type QuestionAnswerMap,
   type RequirementClarificationRequest,
 } from './agent/requirement-interpreter';
+import {
+  applyPendingRequirementSnapshot,
+  type PendingRequirement,
+  snapshotPendingRequirementSessions,
+} from './pendingSessionsUtils';
 
 const logger = createLogger('background');
 
@@ -37,23 +42,52 @@ let currentExecutor: Executor | null = null;
 let currentPort: chrome.runtime.Port | null = null;
 const SIDE_PANEL_URL = chrome.runtime.getURL('side-panel/index.html');
 
-type PendingRequirement =
-  | {
-      type: 'new_task';
-      taskId: string;
-      task: string;
-      tabId: number;
-    }
-  | {
-      type: 'replay';
-      taskId: string;
-      task: string;
-      tabId: number;
-      historySessionId: string;
-    };
-
 const pendingRequirementSessions = new Map<string, PendingRequirement>();
 // Map trong TypeScript được lưu trong RAM.
+const storageWithSession = chrome.storage as typeof chrome.storage & { session?: chrome.storage.StorageArea };
+const pendingSessionsStorageArea: chrome.storage.StorageArea = storageWithSession.session ?? chrome.storage.local;
+const PENDING_REQUIREMENT_SESSIONS_KEY = 'pendingRequirementSessions';
+
+const persistPendingRequirementSessions = async () => {
+  const serialized = snapshotPendingRequirementSessions(pendingRequirementSessions);
+  try {
+    await new Promise<void>((resolve, reject) => {
+      pendingSessionsStorageArea.set({ [PENDING_REQUIREMENT_SESSIONS_KEY]: serialized }, () => {
+        const error = chrome.runtime.lastError;
+        if (error) {
+          reject(error);
+          return;
+        }
+        resolve();
+      });
+    });
+  } catch (error) {
+    logger.error('Failed to persist pending requirement sessions', error);
+  }
+};
+
+const restorePendingRequirementSessions = async () => {
+  try {
+    const stored = await new Promise<unknown>((resolve, reject) => {
+      pendingSessionsStorageArea.get(PENDING_REQUIREMENT_SESSIONS_KEY, items => {
+        const error = chrome.runtime.lastError;
+        if (error) {
+          reject(error);
+          return;
+        }
+        resolve(items[PENDING_REQUIREMENT_SESSIONS_KEY]);
+      });
+    });
+    applyPendingRequirementSnapshot(pendingRequirementSessions, stored);
+    if (pendingRequirementSessions.size > 0) {
+      logger.info('Restored pending requirement sessions', { count: pendingRequirementSessions.size });
+    }
+  } catch (error) {
+    logger.error('Failed to restore pending requirement sessions', error);
+  }
+};
+
+const pendingRequirementSessionsReady = restorePendingRequirementSessions();
 
 // Setup side panel behavior
 chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true }).catch(error => console.error(error));
@@ -126,6 +160,7 @@ chrome.runtime.onConnect.addListener(port => {
     logger.info('Side-panel connection established');
 
     port.onMessage.addListener(async message => {
+      await pendingRequirementSessionsReady;
       logger.debug('Message received from side panel', message);
       try {
         switch (message.type) {
@@ -141,6 +176,10 @@ chrome.runtime.onConnect.addListener(port => {
 
             logger.info('new_task', message.tabId, message.task);
             const profileResult = await requirementInterpreter.ensureProfile(message.taskId, message.task);
+            if (profileResult.status === 'error') {
+              port.postMessage({ type: 'error', error: profileResult.error });
+              break;
+            }
             if (profileResult.status === 'needs_clarification') {
               pendingRequirementSessions.set(message.taskId, {
                 type: 'new_task',
@@ -148,6 +187,7 @@ chrome.runtime.onConnect.addListener(port => {
                 task: message.task,
                 tabId: message.tabId,
               });
+              await persistPendingRequirementSessions();
               sendClarification(profileResult.request);
               break;
             }
@@ -275,6 +315,11 @@ chrome.runtime.onConnect.addListener(port => {
               message.answers as QuestionAnswerMap,
             );
 
+            if (result.status === 'error') {
+              port.postMessage({ type: 'error', error: result.error });
+              break;
+            }
+
             if (result.status === 'needs_clarification') {
               sendClarification(result.request);
               break;
@@ -282,9 +327,11 @@ chrome.runtime.onConnect.addListener(port => {
 
             const pending = pendingRequirementSessions.get(message.sessionId);
             pendingRequirementSessions.delete(message.sessionId);
+            await persistPendingRequirementSessions();
 
             if (!pending) {
               logger.info('Received requirement answers but no pending session found');
+              port.postMessage({ type: 'requirement_session_missing' });
               break;
             }
 
@@ -307,6 +354,10 @@ chrome.runtime.onConnect.addListener(port => {
 
             try {
               const profileResult = await requirementInterpreter.ensureProfile(message.taskId, message.task);
+              if (profileResult.status === 'error') {
+                port.postMessage({ type: 'error', error: profileResult.error });
+                break;
+              }
               if (profileResult.status === 'needs_clarification') {
                 pendingRequirementSessions.set(message.taskId, {
                   type: 'replay',
@@ -315,6 +366,7 @@ chrome.runtime.onConnect.addListener(port => {
                   tabId: message.tabId,
                   historySessionId: message.historySessionId,
                 });
+                await persistPendingRequirementSessions();
                 sendClarification(profileResult.request);
                 break;
               }

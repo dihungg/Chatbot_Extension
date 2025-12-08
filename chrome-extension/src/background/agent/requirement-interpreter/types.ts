@@ -1,4 +1,4 @@
-import type { ProductType, TargetProductProfile } from '@extension/shared';
+import type { ClarificationQuestionUiVariant, ProductType, TargetProductProfile } from '@extension/shared';
 
 export interface ClarificationQuestion {
   id: string;
@@ -6,6 +6,7 @@ export interface ClarificationQuestion {
   text: string;
   fieldHints: string[];
   isCore: boolean;
+  uiVariant?: ClarificationQuestionUiVariant;
 }
 
 export interface RequirementClarificationRequest {
@@ -23,6 +24,10 @@ export type RequirementInterpreterResult =
   | {
       status: 'needs_clarification';
       request: RequirementClarificationRequest;
+    }
+  | {
+      status: 'error';
+      error: string;
     };
 
 export type QuestionAnswerMap = Record<string, string>;

@@ -1,5 +1,3 @@
-# CLAUDE.md
-
 This file provides guidance to AI coding assistants (e.g., Claude Code, GitHub Copilot, Cursor) when working with this repository.
 
 ## Project Overview

@@ -79,6 +79,15 @@
   "chat_history_empty": {
     "message": "No chat history available"
   },
+  "chat_connection_lost": {
+    "message": "Connection to the agent was lost. We'll retry automatically, or you can try again now."
+  },
+  "chat_connection_retry": {
+    "message": "Reconnect"
+  },
+  "chat_clarification_sessionMissing": {
+    "message": "The previous clarification session expired. Please send your task again."
+  },
   "chat_history_bookmark": {
     "message": "Bookmark session"
   },
@@ -261,6 +270,12 @@
   },
   "options_general_replayHistoricalTasks_desc": {
     "message": "Enable storing and replaying of agent step history (experimental, may have issues)"
+  },
+  "options_general_llmPreferenceExtraction": {
+    "message": "LLM preference extraction"
+  },
+  "options_general_llmPreferenceExtraction_desc": {
+    "message": "Use a structured-output LLM to interpret clarification answers. Disable to fall back to keyword heuristics."
   },
 
   "options_models_providers_header": {

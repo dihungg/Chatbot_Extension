@@ -1,4 +1,8 @@
-export type ClarificationCache = Record<string, string>;
+import type { ClarificationAnswerValue } from '../types/clarification';
+
+export type ClarificationCache = Record<string, Record<string, ClarificationAnswerValue>>;
+
+export const LEGACY_SESSION_CACHE_KEY = '__legacy__';
 
 export interface ClarificationCacheStorage {
   getItem: (key: string) => string | null;
@@ -32,9 +36,15 @@ export const loadClarificationCache = (storage?: ClarificationCacheStorage): Cla
     if (!raw) {
       return {};
     }
-    const parsed = JSON.parse(raw) as ClarificationCache;
+    const parsed = JSON.parse(raw);
     if (parsed && typeof parsed === 'object') {
-      return parsed;
+      const values = Object.values(parsed as Record<string, unknown>);
+      if (values.every(value => typeof value === 'string')) {
+        return {
+          [LEGACY_SESSION_CACHE_KEY]: parsed as Record<string, string>,
+        };
+      }
+      return parsed as ClarificationCache;
     }
   } catch {
     // ignore malformed cache payloads
@@ -70,26 +80,65 @@ export const clearClarificationCacheFromStorage = (storage?: ClarificationCacheS
   }
 };
 
+const normalizeAnswerValue = (value: ClarificationAnswerValue): ClarificationAnswerValue => {
+  if (typeof value === 'string') {
+    return value.trim();
+  }
+  return {
+    pref: value.pref.trim(),
+    avoid: value.avoid.trim(),
+  };
+};
+
+const hasAnswerContent = (value: ClarificationAnswerValue): boolean => {
+  if (typeof value === 'string') {
+    return Boolean(value);
+  }
+  return Boolean(value.pref || value.avoid);
+};
+
+const answersAreEqual = (a: ClarificationAnswerValue | undefined, b: ClarificationAnswerValue): boolean => {
+  if (typeof a !== typeof b) {
+    return false;
+  }
+  if (typeof a === 'string' && typeof b === 'string') {
+    return a === b;
+  }
+  if (typeof a === 'object' && typeof b === 'object' && a && b) {
+    return a.pref === b.pref && a.avoid === b.avoid;
+  }
+  return false;
+};
+
 export const mergeClarificationAnswers = (
   current: ClarificationCache,
-  answers: Record<string, string>,
+  sessionId: string,
+  answers: Record<string, ClarificationAnswerValue>,
 ): { cache: ClarificationCache; changed: boolean } => {
-  const next = { ...current };
+  const key = sessionId || LEGACY_SESSION_CACHE_KEY;
+  const bucket = { ...(current[key] ?? {}) };
   let changed = false;
 
-  Object.entries(answers).forEach(([key, value]) => {
-    const trimmed = value.trim();
-    if (!trimmed) {
+  Object.entries(answers).forEach(([questionId, value]) => {
+    const normalized = normalizeAnswerValue(value);
+    if (!hasAnswerContent(normalized)) {
       return;
     }
-    if (next[key] !== trimmed) {
-      next[key] = trimmed;
+    if (!answersAreEqual(bucket[questionId], normalized)) {
+      bucket[questionId] = normalized;
       changed = true;
     }
   });
 
+  if (!changed) {
+    return { cache: current, changed };
+  }
+
   return {
-    cache: changed ? next : current,
+    cache: {
+      ...current,
+      [key]: bucket,
+    },
     changed,
   };
 };

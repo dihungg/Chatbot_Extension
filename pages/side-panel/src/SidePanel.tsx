@@ -4,14 +4,17 @@ import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { FiSettings } from 'react-icons/fi';
 import { PiPlusBold } from 'react-icons/pi';
 import { GrHistory } from 'react-icons/gr';
+import type { ClarificationAnswerValue } from '@extension/shared';
 import { type Message, Actors, chatHistoryStore, agentModelStore, generalSettingsStore } from '@extension/storage';
 import favoritesStorage, { type FavoritePrompt } from '@extension/storage/lib/prompt/favorites';
 import { t } from '@extension/i18n';
 import {
-  loadClarificationCache,
-  persistClarificationCacheToStorage,
-  mergeClarificationAnswers,
+  LEGACY_SESSION_CACHE_KEY,
   clearClarificationCacheFromStorage,
+  loadClarificationCache,
+  mergeClarificationAnswers,
+  persistClarificationCacheToStorage,
+  type ClarificationCache,
 } from '@extension/shared/lib/utils/clarification-cache';
 import MessageList from './components/MessageList';
 import ChatInput from './components/ChatInput';
@@ -19,7 +22,7 @@ import ChatHistoryList from './components/ChatHistoryList';
 import BookmarkList from './components/BookmarkList';
 import ClarificationForm from './components/ClarificationForm';
 import { EventType, type AgentEvent, ExecutionState } from './types/event';
-import type { RequirementClarificationPayload } from './types/requirement';
+import type { ClarificationQuestion, RequirementClarificationPayload } from './types/requirement';
 import './SidePanel.css';
 
 const quickPrompts = [
@@ -65,6 +68,75 @@ declare global {
   }
 }
 
+const resolveClarificationCacheKey = (sessionId?: string | null) => sessionId ?? LEGACY_SESSION_CACHE_KEY;
+
+const isBrandSplitQuestion = (question: ClarificationQuestion) => question.uiVariant?.type === 'brand_split';
+
+const ensureBrandAnswerValue = (value?: ClarificationAnswerValue) => {
+  if (!value) {
+    return { pref: '', avoid: '' };
+  }
+  if (typeof value === 'string') {
+    return { pref: value, avoid: '' };
+  }
+  return {
+    pref: value.pref ?? '',
+    avoid: value.avoid ?? '',
+  };
+};
+
+const normalizeAnswerForQuestion = (
+  question: ClarificationQuestion,
+  value?: ClarificationAnswerValue,
+): ClarificationAnswerValue => {
+  if (isBrandSplitQuestion(question)) {
+    return ensureBrandAnswerValue(value);
+  }
+  if (typeof value === 'string') {
+    return value;
+  }
+  return '';
+};
+
+const hasQuestionAnswer = (question: ClarificationQuestion, value?: ClarificationAnswerValue): boolean => {
+  if (!value) {
+    return false;
+  }
+  if (isBrandSplitQuestion(question)) {
+    const brand = ensureBrandAnswerValue(value);
+    return Boolean(brand.pref.trim() || brand.avoid.trim());
+  }
+  return typeof value === 'string' ? Boolean(value.trim()) : false;
+};
+
+const serializeAnswerValue = (value: ClarificationAnswerValue): string => {
+  if (typeof value === 'string') {
+    return value;
+  }
+  return JSON.stringify({ pref: value.pref, avoid: value.avoid });
+};
+
+const serializeAnswerMap = (answers: Record<string, ClarificationAnswerValue>): Record<string, string> =>
+  Object.fromEntries(Object.entries(answers).map(([key, value]) => [key, serializeAnswerValue(value)]));
+
+const buildClarificationSignature = (
+  payload: RequirementClarificationPayload,
+  answers: Record<string, ClarificationAnswerValue>,
+) => {
+  const fragments = payload.questions.map(question => {
+    const value = answers[question.id];
+    if (!value) {
+      return `${question.id}:`;
+    }
+    if (isBrandSplitQuestion(question)) {
+      const brand = ensureBrandAnswerValue(value);
+      return `${question.id}:${brand.pref.trim()}|${brand.avoid.trim()}`;
+    }
+    return `${question.id}:${typeof value === 'string' ? value.trim() : ''}`;
+  });
+  return `${payload.sessionId}:${fragments.join('|')}`;
+};
+
 const SidePanel = () => {
   const progressMessage = 'Showing progress...';
   const [messages, setMessages] = useState<Message[]>([]);
@@ -85,38 +157,70 @@ const SidePanel = () => {
   const [pendingClarification, setPendingClarification] = useState<RequirementClarificationPayload | null>(null);
   const [clarificationSubmitting, setClarificationSubmitting] = useState(false);
   const [clarificationCacheVersion, setClarificationCacheVersion] = useState(0);
+  const [connectionLost, setConnectionLost] = useState(false);
+  const [connectionIssue, setConnectionIssue] = useState<string | null>(null);
   const sessionIdRef = useRef<string | null>(null);
   const isReplayingRef = useRef<boolean>(false);
   const portRef = useRef<chrome.runtime.Port | null>(null);
   const heartbeatIntervalRef = useRef<number | null>(null);
+  const reconnectPromiseRef = useRef<Promise<chrome.runtime.Port | null> | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const setInputTextRef = useRef<((text: string) => void) | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
   const recordingTimerRef = useRef<number | null>(null);
-  const clarificationCacheRef = useRef<Record<string, string>>(loadClarificationCache());
+  const clarificationCacheRef = useRef<ClarificationCache>(loadClarificationCache());
+  const autoSubmitClarificationAnswersRef = useRef<
+    | ((request: RequirementClarificationPayload, answers: Record<string, ClarificationAnswerValue>) => Promise<void>)
+    | null
+  >(null);
+  const lastClarificationSignatureRef = useRef<string | null>(null);
   // Keep cache helpers scoped to the component so they honor the Side Panel state model (see architecture doc).
   const persistClarificationCache = useCallback(() => {
     persistClarificationCacheToStorage(clarificationCacheRef.current);
   }, []);
 
   const updateClarificationCache = useCallback(
-    (answers: Record<string, string>) => {
-      const { cache, changed } = mergeClarificationAnswers(clarificationCacheRef.current, answers);
+    (sessionId: string, answers: Record<string, ClarificationAnswerValue>) => {
+      if (!sessionId) {
+        return;
+      }
+      const { cache, changed } = mergeClarificationAnswers(
+        clarificationCacheRef.current,
+        resolveClarificationCacheKey(sessionId),
+        answers,
+      );
       if (changed) {
         clarificationCacheRef.current = cache;
         persistClarificationCache();
         setClarificationCacheVersion(v => v + 1);
+        lastClarificationSignatureRef.current = null;
       }
     },
     [persistClarificationCache],
   );
 
-  const clearClarificationCache = useCallback(() => {
-    clarificationCacheRef.current = {};
-    clearClarificationCacheFromStorage();
-    setClarificationCacheVersion(v => v + 1);
-  }, []);
+  const clearClarificationCache = useCallback(
+    (sessionId?: string | null) => {
+      if (sessionId) {
+        const key = resolveClarificationCacheKey(sessionId);
+        if (clarificationCacheRef.current[key]) {
+          const next = { ...clarificationCacheRef.current };
+          delete next[key];
+          clarificationCacheRef.current = next;
+          persistClarificationCache();
+          setClarificationCacheVersion(v => v + 1);
+          lastClarificationSignatureRef.current = null;
+        }
+        return;
+      }
+      clarificationCacheRef.current = {};
+      clearClarificationCacheFromStorage();
+      setClarificationCacheVersion(v => v + 1);
+      lastClarificationSignatureRef.current = null;
+    },
+    [persistClarificationCache],
+  );
 
   // Check for dark mode preference
   useEffect(() => {
@@ -160,31 +264,6 @@ const SidePanel = () => {
   useEffect(() => {
     checkModelConfiguration();
     loadGeneralSettings();
-  }, [checkModelConfiguration, loadGeneralSettings]);
-
-  // Re-check model configuration when the side panel becomes visible again
-  useEffect(() => {
-    const handleVisibilityChange = () => {
-      if (!document.hidden) {
-        // Panel became visible, re-check configuration and settings
-        checkModelConfiguration();
-        loadGeneralSettings();
-      }
-    };
-
-    const handleFocus = () => {
-      // Panel gained focus, re-check configuration and settings
-      checkModelConfiguration();
-      loadGeneralSettings();
-    };
-
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    window.addEventListener('focus', handleFocus);
-
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('focus', handleFocus);
-    };
   }, [checkModelConfiguration, loadGeneralSettings]);
 
   useEffect(() => {
@@ -353,140 +432,235 @@ const SidePanel = () => {
     [appendMessage],
   );
 
-  // Stop heartbeat and close connection
-  const stopConnection = useCallback(() => {
-    if (heartbeatIntervalRef.current) {
-      clearInterval(heartbeatIntervalRef.current);
-      heartbeatIntervalRef.current = null;
-    }
-    if (portRef.current) {
-      portRef.current.disconnect();
-      portRef.current = null;
-    }
+  const reportConnectionIssue = useCallback((reason?: string | null) => {
+    setConnectionLost(true);
+    setConnectionIssue(reason ?? null);
   }, []);
 
-  // Setup connection management
-  const setupConnection = useCallback(() => {
-    // Only setup if no existing connection
-    if (portRef.current) {
-      return;
-    }
+  const clearConnectionIssue = useCallback(() => {
+    setConnectionLost(false);
+    setConnectionIssue(null);
+  }, []);
 
-    try {
-      portRef.current = chrome.runtime.connect({ name: 'side-panel-connection' });
-
-      // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-      portRef.current.onMessage.addListener((message: any) => {
-        // Add type checking for message
-        if (message && message.type === EventType.EXECUTION) {
-          handleTaskState(message);
-        } else if (message && message.type === 'error') {
-          // Handle error messages from service worker
-          appendMessage({
-            actor: Actors.SYSTEM,
-            content: message.error || t('errors_unknown'),
-            timestamp: Date.now(),
-          });
-          setInputEnabled(true);
-          setShowStopButton(false);
-        } else if (message && message.type === 'speech_to_text_result') {
-          // Handle speech-to-text result
-          if (message.text && setInputTextRef.current) {
-            setInputTextRef.current(message.text);
-          }
-          setIsProcessingSpeech(false);
-        } else if (message && message.type === 'speech_to_text_error') {
-          // Handle speech-to-text error
-          appendMessage({
-            actor: Actors.SYSTEM,
-            content: message.error || t('chat_stt_recognitionFailed'),
-            timestamp: Date.now(),
-          });
-          setIsProcessingSpeech(false);
-        } else if (message && message.type === 'requirement_clarification' && message.payload) {
-          const payload = message.payload as RequirementClarificationPayload;
-          const cachedAnswers: Record<string, string> = {};
-          let hasMissing = false;
-          payload.questions.forEach(question => {
-            const cached = clarificationCacheRef.current[question.id];
-            if (cached && cached.trim()) {
-              cachedAnswers[question.id] = cached;
-            } else {
-              hasMissing = true;
-            }
-          });
-
-          if (!hasMissing) {
-            void autoSubmitClarificationAnswers(payload, cachedAnswers);
-            return;
-          }
-
-          setPendingClarification(payload);
-          setClarificationSubmitting(false);
-          setInputEnabled(false);
-          setShowStopButton(false);
-        } else if (message && message.type === 'heartbeat_ack') {
-          console.log('Heartbeat acknowledged');
-        }
-      });
-
-      portRef.current.onDisconnect.addListener(() => {
-        const error = chrome.runtime.lastError;
-        console.log('Connection disconnected', error ? `Error: ${error.message}` : '');
-        portRef.current = null;
-        if (heartbeatIntervalRef.current) {
-          clearInterval(heartbeatIntervalRef.current);
-          heartbeatIntervalRef.current = null;
-        }
-        setInputEnabled(true);
-        setShowStopButton(false);
-      });
-
-      // Setup heartbeat interval
+  const handlePortDisconnected = useCallback(
+    (reason?: string, silent?: boolean) => {
       if (heartbeatIntervalRef.current) {
         clearInterval(heartbeatIntervalRef.current);
+        heartbeatIntervalRef.current = null;
       }
-
-      heartbeatIntervalRef.current = window.setInterval(() => {
-        if (portRef.current?.name === 'side-panel-connection') {
-          try {
-            portRef.current.postMessage({ type: 'heartbeat' });
-          } catch (error) {
-            console.error('Heartbeat failed:', error);
-            stopConnection(); // Stop connection if heartbeat fails
-          }
-        } else {
-          stopConnection(); // Stop if port is invalid
-        }
-      }, 25000);
-    } catch (error) {
-      console.error('Failed to establish connection:', error);
-      appendMessage({
-        actor: Actors.SYSTEM,
-        content: t('errors_conn_serviceWorker'),
-        timestamp: Date.now(),
-      });
-      // Clear any references since connection failed
       portRef.current = null;
+      reconnectPromiseRef.current = null;
+      setInputEnabled(true);
+      setShowStopButton(false);
+      if (silent) {
+        clearConnectionIssue();
+      } else {
+        reportConnectionIssue(reason);
+      }
+    },
+    [clearConnectionIssue, reportConnectionIssue],
+  );
+
+  // Stop heartbeat and close connection
+  const stopConnection = useCallback(
+    (options?: { silent?: boolean; reason?: string }) => {
+      if (portRef.current) {
+        portRef.current.disconnect();
+      }
+      handlePortDisconnected(options?.reason, options?.silent);
+    },
+    [handlePortDisconnected],
+  );
+
+  // Setup connection management
+  const setupConnection = useCallback(async () => {
+    if (portRef.current?.name === 'side-panel-connection') {
+      clearConnectionIssue();
+      return portRef.current;
     }
-  }, [handleTaskState, appendMessage, stopConnection]);
+
+    if (reconnectPromiseRef.current) {
+      return reconnectPromiseRef.current;
+    }
+
+    const establish = (async () => {
+      try {
+        portRef.current = chrome.runtime.connect({ name: 'side-panel-connection' });
+        clearConnectionIssue();
+
+        // biome-ignore lint/suspicious/noExplicitAny: background messages are typed dynamically
+        portRef.current.onMessage.addListener((message: any) => {
+          if (message && message.type === EventType.EXECUTION) {
+            handleTaskState(message);
+          } else if (message && message.type === 'error') {
+            appendMessage({
+              actor: Actors.SYSTEM,
+              content: message.error || t('errors_unknown'),
+              timestamp: Date.now(),
+            });
+            setInputEnabled(true);
+            setShowStopButton(false);
+          } else if (message && message.type === 'speech_to_text_result') {
+            if (message.text && setInputTextRef.current) {
+              setInputTextRef.current(message.text);
+            }
+            setIsProcessingSpeech(false);
+          } else if (message && message.type === 'speech_to_text_error') {
+            appendMessage({
+              actor: Actors.SYSTEM,
+              content: message.error || t('chat_stt_recognitionFailed'),
+              timestamp: Date.now(),
+            });
+            setIsProcessingSpeech(false);
+          } else if (message && message.type === 'requirement_clarification' && message.payload) {
+            const payload = message.payload as RequirementClarificationPayload;
+            const sessionCacheKey = resolveClarificationCacheKey(payload.sessionId);
+            const sessionCache = clarificationCacheRef.current[sessionCacheKey] ?? {};
+            const cachedAnswers: Record<string, ClarificationAnswerValue> = {};
+            let hasMissing = false;
+            payload.questions.forEach(question => {
+              const normalized = normalizeAnswerForQuestion(question, sessionCache[question.id]);
+              if (hasQuestionAnswer(question, normalized)) {
+                cachedAnswers[question.id] = normalized;
+              } else {
+                hasMissing = true;
+              }
+            });
+
+            if (!hasMissing) {
+              const signature = buildClarificationSignature(payload, cachedAnswers);
+              if (lastClarificationSignatureRef.current === signature) {
+                setPendingClarification(payload);
+                setClarificationSubmitting(false);
+                setInputEnabled(false);
+                setShowStopButton(false);
+                return;
+              }
+              lastClarificationSignatureRef.current = signature;
+              const autoSubmitHandler = autoSubmitClarificationAnswersRef.current;
+              if (autoSubmitHandler) {
+                void autoSubmitHandler(payload, cachedAnswers);
+              } else {
+                console.warn('Auto-submit handler unavailable; skipping cached clarification submission.');
+              }
+              return;
+            }
+
+            lastClarificationSignatureRef.current = null;
+            setPendingClarification(payload);
+            setClarificationSubmitting(false);
+            setInputEnabled(false);
+            setShowStopButton(false);
+          } else if (message && message.type === 'heartbeat_ack') {
+            console.log('Heartbeat acknowledged');
+          } else if (message && message.type === 'requirement_session_missing') {
+            appendMessage({
+              actor: Actors.SYSTEM,
+              content: message.message ?? t('chat_clarification_sessionMissing'),
+              timestamp: Date.now(),
+            });
+            setPendingClarification(null);
+            setInputEnabled(true);
+            setShowStopButton(false);
+          }
+        });
+
+        portRef.current.onDisconnect.addListener(() => {
+          const error = chrome.runtime.lastError;
+          console.log('Connection disconnected', error ? `Error: ${error.message}` : '');
+          handlePortDisconnected(error?.message, false);
+        });
+
+        if (heartbeatIntervalRef.current) {
+          clearInterval(heartbeatIntervalRef.current);
+        }
+
+        heartbeatIntervalRef.current = window.setInterval(() => {
+          if (portRef.current?.name === 'side-panel-connection') {
+            try {
+              portRef.current.postMessage({ type: 'heartbeat' });
+            } catch (error) {
+              console.error('Heartbeat failed:', error);
+              handlePortDisconnected(error instanceof Error ? error.message : 'heartbeat_failed', false);
+            }
+          } else {
+            handlePortDisconnected('heartbeat_invalid_port', false);
+          }
+        }, 25000);
+
+        return portRef.current;
+      } catch (error) {
+        console.error('Failed to establish connection:', error);
+        appendMessage({
+          actor: Actors.SYSTEM,
+          content: t('errors_conn_serviceWorker'),
+          timestamp: Date.now(),
+        });
+        portRef.current = null;
+        reportConnectionIssue(error instanceof Error ? error.message : null);
+        throw error;
+      } finally {
+        reconnectPromiseRef.current = null;
+      }
+    })();
+
+    reconnectPromiseRef.current = establish;
+    return establish;
+  }, [appendMessage, clearConnectionIssue, handlePortDisconnected, handleTaskState, reportConnectionIssue]);
+
+  // Re-check model configuration when the side panel becomes visible again and ensure background connection
+  useEffect(() => {
+    void setupConnection();
+
+    const handleVisibilityChange = () => {
+      if (!document.hidden) {
+        // Panel became visible, re-check configuration and settings
+        checkModelConfiguration();
+        loadGeneralSettings();
+        void setupConnection();
+      }
+    };
+
+    const handleFocus = () => {
+      // Panel gained focus, re-check configuration and settings
+      checkModelConfiguration();
+      loadGeneralSettings();
+      void setupConnection();
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('focus', handleFocus);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('focus', handleFocus);
+    };
+  }, [checkModelConfiguration, loadGeneralSettings, setupConnection]);
+
+  const ensureConnection = useCallback(async () => {
+    const port = await setupConnection();
+    if (port?.name === 'side-panel-connection') {
+      return port;
+    }
+    const error = new Error('No valid connection available');
+    reportConnectionIssue(error.message);
+    throw error;
+  }, [reportConnectionIssue, setupConnection]);
 
   // Add safety check for message sending
   const sendMessage = useCallback(
     // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-    (message: any) => {
-      if (portRef.current?.name !== 'side-panel-connection') {
-        throw new Error('No valid connection available');
-      }
+    async (message: any) => {
+      const port = await ensureConnection();
       try {
-        portRef.current.postMessage(message);
+        port.postMessage(message);
       } catch (error) {
         console.error('Failed to send message:', error);
-        stopConnection(); // Stop connection when message sending fails
+        handlePortDisconnected(error instanceof Error ? error.message : 'send_failed', false);
         throw error;
       }
     },
-    [stopConnection],
+    [ensureConnection, handlePortDisconnected],
   );
 
   // Handle replay command
@@ -551,13 +725,10 @@ const SidePanel = () => {
       // Add the user message to the new session
       appendMessage(userMessage, sessionIdRef.current);
 
-      // Setup connection if not exists
-      if (!portRef.current) {
-        setupConnection();
-      }
+      const port = await ensureConnection();
 
       // Send replay command to background with the task from history
-      portRef.current?.postMessage({
+      port.postMessage({
         type: 'replay',
         taskId: newTaskId,
         tabId: tabId,
@@ -584,29 +755,7 @@ const SidePanel = () => {
   // Handle chat commands that start with /
   const handleCommand = async (command: string): Promise<boolean> => {
     try {
-      // Setup connection if not exists
-      if (!portRef.current) {
-        setupConnection();
-      }
-
-      // Handle different commands
-      if (command === '/state') {
-        portRef.current?.postMessage({
-          type: 'state',
-        });
-        return true;
-      }
-
-      if (command === '/nohighlight') {
-        portRef.current?.postMessage({
-          type: 'nohighlight',
-        });
-        return true;
-      }
-
       if (command.startsWith('/replay ')) {
-        // Parse replay command: /replay <historySessionId>
-        // Handle multiple spaces by filtering out empty strings
         const parts = command.split(' ').filter(part => part.trim() !== '');
         if (parts.length !== 2) {
           appendMessage({
@@ -619,6 +768,23 @@ const SidePanel = () => {
 
         const historySessionId = parts[1];
         await handleReplay(historySessionId);
+        return true;
+      }
+
+      const port = await ensureConnection();
+
+      // Handle different commands
+      if (command === '/state') {
+        port.postMessage({
+          type: 'state',
+        });
+        return true;
+      }
+
+      if (command === '/nohighlight') {
+        port.postMessage({
+          type: 'nohighlight',
+        });
         return true;
       }
 
@@ -696,11 +862,6 @@ const SidePanel = () => {
       // Pass the sessionId directly to appendMessage
       appendMessage(userMessage, sessionIdRef.current);
 
-      // Setup connection if not exists
-      if (!portRef.current) {
-        setupConnection();
-      }
-
       // Send message using the utility function
       if (isFollowUpMode) {
         // Send as follow-up task
@@ -731,13 +892,14 @@ const SidePanel = () => {
       });
       setInputEnabled(true);
       setShowStopButton(false);
-      stopConnection();
+      stopConnection({ reason: errorMessage });
     }
   };
 
   const handleStopTask = async () => {
     try {
-      portRef.current?.postMessage({
+      const port = await ensureConnection();
+      port.postMessage({
         type: 'cancel_task',
       });
     } catch (err) {
@@ -755,6 +917,10 @@ const SidePanel = () => {
 
   const handleNewChat = () => {
     // Clear messages and start a new chat
+    if (sessionIdRef.current) {
+      clearClarificationCache(sessionIdRef.current);
+    }
+    lastClarificationSignatureRef.current = null;
     setMessages([]);
     setCurrentSessionId(null);
     sessionIdRef.current = null;
@@ -766,7 +932,7 @@ const SidePanel = () => {
     setClarificationSubmitting(false);
 
     // Disconnect any existing connection
-    stopConnection();
+    stopConnection({ silent: true });
   };
 
   const loadChatSessions = useCallback(async () => {
@@ -894,7 +1060,7 @@ const SidePanel = () => {
   };
 
   const handleClarificationSubmit = useCallback(
-    async (answers: Record<string, string>) => {
+    async (answers: Record<string, ClarificationAnswerValue>) => {
       if (!pendingClarification) {
         return;
       }
@@ -903,11 +1069,11 @@ const SidePanel = () => {
         await sendMessage({
           type: 'requirement_answers',
           sessionId: pendingClarification.sessionId,
-          answers,
+          answers: serializeAnswerMap(answers),
         });
         setPendingClarification(null);
         setShowStopButton(true);
-        updateClarificationCache(answers);
+        updateClarificationCache(pendingClarification.sessionId, answers);
       } catch (error) {
         const errorMessage = error instanceof Error ? error.message : String(error);
         appendMessage({
@@ -923,7 +1089,7 @@ const SidePanel = () => {
   );
 
   const autoSubmitClarificationAnswers = useCallback(
-    async (request: RequirementClarificationPayload, answers: Record<string, string>) => {
+    async (request: RequirementClarificationPayload, answers: Record<string, ClarificationAnswerValue>) => {
       try {
         setInputEnabled(false);
         setShowStopButton(false);
@@ -931,7 +1097,7 @@ const SidePanel = () => {
         await sendMessage({
           type: 'requirement_answers',
           sessionId: request.sessionId,
-          answers,
+          answers: serializeAnswerMap(answers),
         });
         setPendingClarification(null);
         setShowStopButton(true);
@@ -950,6 +1116,10 @@ const SidePanel = () => {
     },
     [appendMessage, sendMessage],
   );
+
+  useEffect(() => {
+    autoSubmitClarificationAnswersRef.current = autoSubmitClarificationAnswers;
+  }, [autoSubmitClarificationAnswers]);
 
   // Load favorite prompts from storage
   useEffect(() => {
@@ -977,7 +1147,7 @@ const SidePanel = () => {
         clearTimeout(recordingTimerRef.current);
         recordingTimerRef.current = null;
       }
-      stopConnection();
+      stopConnection({ silent: true });
     };
   }, [stopConnection]);
 
@@ -1087,28 +1257,26 @@ const SidePanel = () => {
           reader.onloadend = () => {
             const base64Audio = reader.result as string;
 
-            // Setup connection if not exists
-            if (!portRef.current) {
-              setupConnection();
-            }
-
-            // Send audio to backend for speech-to-text conversion
-            try {
-              setIsProcessingSpeech(true);
-              portRef.current?.postMessage({
-                type: 'speech_to_text',
-                audio: base64Audio,
-              });
-            } catch (error) {
-              console.error('Failed to send audio for speech-to-text:', error);
-              appendMessage({
-                actor: Actors.SYSTEM,
-                content: t('chat_stt_processingFailed'),
-                timestamp: Date.now(),
-              });
-              setIsRecording(false);
-              setIsProcessingSpeech(false);
-            }
+            const sendAudio = async () => {
+              try {
+                const port = await ensureConnection();
+                setIsProcessingSpeech(true);
+                port.postMessage({
+                  type: 'speech_to_text',
+                  audio: base64Audio,
+                });
+              } catch (error) {
+                console.error('Failed to send audio for speech-to-text:', error);
+                appendMessage({
+                  actor: Actors.SYSTEM,
+                  content: t('chat_stt_processingFailed'),
+                  timestamp: Date.now(),
+                });
+                setIsRecording(false);
+                setIsProcessingSpeech(false);
+              }
+            };
+            void sendAudio();
           };
           reader.readAsDataURL(audioBlob);
         }
@@ -1153,19 +1321,22 @@ const SidePanel = () => {
 
   const hasCustomFavoritePrompts = favoritePrompts.length > 0;
   const quickPromptList = hasCustomFavoritePrompts ? favoritePrompts : quickPrompts;
-  const hasSavedClarificationAnswers = useMemo(
-    () => Object.keys(clarificationCacheRef.current).length > 0,
-    [clarificationCacheVersion],
-  );
+  const hasSavedClarificationAnswers = useMemo(() => {
+    if (!pendingClarification) {
+      return false;
+    }
+    const key = resolveClarificationCacheKey(pendingClarification.sessionId);
+    const bucket = clarificationCacheRef.current[key];
+    return bucket ? Object.keys(bucket).length > 0 : false;
+  }, [pendingClarification, clarificationCacheVersion]);
 
   const savedAnswersForPendingClarification = useMemo(() => {
     if (!pendingClarification) return {};
-    const cache = clarificationCacheRef.current;
-    const prefill: Record<string, string> = {};
+    const key = resolveClarificationCacheKey(pendingClarification.sessionId);
+    const bucket = clarificationCacheRef.current[key] ?? {};
+    const prefill: Record<string, ClarificationAnswerValue> = {};
     pendingClarification.questions.forEach(question => {
-      if (cache[question.id]) {
-        prefill[question.id] = cache[question.id];
-      }
+      prefill[question.id] = normalizeAnswerForQuestion(question, bucket[question.id]);
     });
     return prefill;
   }, [pendingClarification, clarificationCacheVersion]);
@@ -1229,6 +1400,26 @@ const SidePanel = () => {
             </button>
           </div>
         </header>
+        {connectionLost && (
+          <div
+            className={`flex items-center justify-between gap-3 border-b px-3 py-2 text-sm ${
+              isDarkMode
+                ? 'border-amber-900 bg-amber-900/40 text-amber-100'
+                : 'border-amber-200 bg-amber-50 text-amber-900'
+            }`}>
+            <span>{connectionIssue ?? t('chat_connection_lost')}</span>
+            <button
+              type="button"
+              onClick={() => {
+                void setupConnection();
+              }}
+              className={`rounded-md px-3 py-1 text-xs font-medium ${
+                isDarkMode ? 'bg-amber-700 text-white hover:bg-amber-600' : 'bg-amber-600 text-white hover:bg-amber-500'
+              }`}>
+              {t('chat_connection_retry')}
+            </button>
+          </div>
+        )}
         {showHistory ? (
           <div className="flex-1 overflow-hidden">
             <ChatHistoryList
@@ -1302,7 +1493,11 @@ const SidePanel = () => {
                       isSubmitting={clarificationSubmitting}
                       isDarkMode={isDarkMode}
                       initialAnswers={savedAnswersForPendingClarification}
-                      onClearSavedAnswers={hasSavedClarificationAnswers ? clearClarificationCache : undefined}
+                      onClearSavedAnswers={
+                        hasSavedClarificationAnswers
+                          ? () => clearClarificationCache(pendingClarification.sessionId)
+                          : undefined
+                      }
                       hasSavedAnswers={hasSavedClarificationAnswers}
                     />
                   </div>

@@ -79,6 +79,15 @@
   "chat_history_empty": {
     "message": "沒有可用的對話歷史紀錄"
   },
+  "chat_connection_lost": {
+    "message": "與代理的連線已中斷，我們會自動重試，或您也可以立即重新嘗試。"
+  },
+  "chat_connection_retry": {
+    "message": "重新連線"
+  },
+  "chat_clarification_sessionMissing": {
+    "message": "先前的釐清階段已過期，請重新送出您的任務。"
+  },
   "chat_history_bookmark": {
     "message": "將工作階段加入書籤"
   },
@@ -261,6 +270,12 @@
   },
   "options_general_replayHistoricalTasks_desc": {
     "message": "啟用儲存與重播代理程式的步驟歷史紀錄 (此為實驗性功能，可能存在問題)"
+  },
+  "options_general_llmPreferenceExtraction": {
+    "message": "LLM 偏好解析"
+  },
+  "options_general_llmPreferenceExtraction_desc": {
+    "message": "使用具結構化輸出的 LLM 解析釐清回覆；停用後將回退到關鍵字判斷。"
   },
   "options_models_providers_header": {
     "message": "LLM 提供者"

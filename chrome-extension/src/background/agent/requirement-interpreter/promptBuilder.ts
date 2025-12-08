@@ -1,21 +1,13 @@
 import type { ProductType, TargetProductProfile } from '@extension/shared';
 import type { ClarificationQuestion } from './types';
 
-const BASE_INSTRUCTIONS = `Bạn là Requirement Interpreter cho trợ lý mua sắm thiết bị số (laptop, điện thoại, tai nghe, và có thể mở rộng thêm). Nhiệm vụ:
-1. Đọc yêu cầu tiếng Việt của người dùng, suy ra category quan trọng nhất.
-2. Hỏi tối đa 3–5 câu ngắn gọn, HOÀN TOÀN bằng tiếng Việt, và chỉ hỏi những thông tin chưa rõ (ngân sách, mục đích sử dụng, thương hiệu ưu tiên/tránh, ưu tiên mềm theo category).
-3. Không hỏi lại nếu user đã nói rõ. Không hỏi thông số chi tiết (RAM/SSD/CPU/GPU, camera megapixel) trừ khi user đã đề cập.
-4. Văn phong thân thiện, chuyên nghiệp, xưng “bạn”.`;
+const BASE_INSTRUCTIONS = `Bạn là Requirement Interpreter cho trợ lý mua sắm thiết bị số. Nhiệm vụ: Đặt câu hỏi làm rõ nhu cầu.`;
 
 const CATEGORY_HINTS: Record<ProductType, string> = {
-  laptop:
-    'Category: Laptop. Luôn ưu tiên hỏi về ngân sách (VND), mục đích (học/văn phòng/gaming/đồ hoạ/AI) và thương hiệu rồi đến ưu tiên hiệu năng vs gọn nhẹ vs pin.',
-  phone:
-    'Category: Điện thoại. Luôn hỏi ngân sách (VND), mục đích (chụp ảnh, quay vlog, gaming, pin), thương hiệu, rồi ưu tiên camera vs pin vs màn hình.',
-  headphones:
-    'Category: Tai nghe. Luôn hỏi ngân sách (VND), bối cảnh dùng (văn phòng, di chuyển, chơi game), thương hiệu, rồi đến ANC/cách âm và không dây/độ trễ.',
-  other:
-    'Category: Khác. Duy trì cùng phong cách, tập trung vào ngân sách, mục đích sử dụng, thương hiệu, ưu tiên chính.',
+  laptop: 'Category: Laptop.',
+  phone: 'Category: Điện thoại.',
+  headphones: 'Category: Tai nghe.',
+  other: 'Category: Khác.',
 };
 
 export class PromptBuilder {
@@ -52,10 +44,15 @@ ${questionList}`;
       profile.pref_brands.length > 0 || profile.avoid_brands.length > 0
         ? `Ưu tiên: ${profile.pref_brands.join(', ') || 'không'} | Tránh: ${profile.avoid_brands.join(', ') || 'không'}`
         : 'Chưa có';
-    const useCase = profile.use_case ?? 'Chưa có';
+
+    const context = profile.requirements_context?.length
+      ? profile.requirements_context.map(c => `- ${c}`).join('\n')
+      : 'Chưa có';
+
     return `- Loại sản phẩm: ${profile.product_type}
 - Ngân sách: ${budget}
-- Mục đích: ${useCase}
-- Thương hiệu: ${brands}`;
+- Thương hiệu: ${brands}
+- Context/Ghi chú:
+${context}`;
   }
 }

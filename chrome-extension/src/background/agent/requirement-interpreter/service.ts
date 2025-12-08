@@ -1,6 +1,6 @@
 import type { TargetProductProfileRepository } from '@extension/storage';
 import type { ProductType, TargetProductProfile } from '@extension/shared';
-import { QuestionLibrary } from './questionLibrary';
+import { QuestionLibrary, SUPPORTED_CATEGORIES } from './questionLibrary';
 import { ProfileParser } from './profileParser';
 import { PromptBuilder } from './promptBuilder';
 import type { QuestionAnswerMap, RequirementInterpreterResult } from './types';
@@ -37,18 +37,37 @@ export class RequirementInterpreterService {
     rawTask: string,
     overrides?: Partial<TargetProductProfile>,
   ): Promise<RequirementInterpreterResult> {
+    // Lục trong repo xem có hồ sơ sản phẩm mục tiêu của session với id tương ứng ko
     const existing = await this.repository.get(sessionId);
-    const category =
-      overrides?.product_type ?? existing?.product_type ?? this.questionLibrary.inferCategory(rawTask, 'laptop');
+
+    const category = overrides?.product_type ?? existing?.product_type ?? this.questionLibrary.inferCategory(rawTask);
+    if (!category) {
+      return {
+        status: 'error',
+        error: `Không xác định được loại sản phẩm. Hỗ trợ: ${SUPPORTED_CATEGORIES.join(', ')}`,
+      };
+    }
+
     this.sessionCache.set(sessionId, { sessionId, rawTask, category });
 
+    // Tạo lại hồ sơ cơ sở cho session id hiện tại
     const baseProfile =
       existing && existing.product_type === category ? existing : this.profileParser.createBaseProfile(category);
-    const merged = this.profileParser.mergeOverrides(baseProfile, overrides);
 
+    const autoExtracted = await this.profileParser.autoExtractFromTask(rawTask, category);
+    const mergedOverrides = overrides ? { ...autoExtracted, ...overrides } : autoExtracted;
+
+    const merged = this.profileParser.mergeOverrides(baseProfile, mergedOverrides);
+
+    // Lấy ra các câu hỏi còn cần làm rõ trong hồ sơ hợp nhất
     const pendingQuestions = this.questionLibrary.getPendingQuestions(merged);
+
+    // Nếu còn câu hỏi cần làm rõ
     if (pendingQuestions.length > 0) {
+      // Trước hết, lưu hồ sơ cơ sở vừa được ghi đè vào trong repo
       await this.repository.set(sessionId, merged);
+
+      // Tạo prompt để hỏi người dùng các câu hỏi làm rõ
       const prompt = this.promptBuilder.buildClarificationPrompt({
         category,
         rawTask,
@@ -68,6 +87,8 @@ export class RequirementInterpreterService {
     }
 
     await this.repository.set(sessionId, merged);
+
+    // Nếu không còn câu hỏi nào cần làm rõ
     return {
       status: 'complete',
       profile: merged,
@@ -75,8 +96,14 @@ export class RequirementInterpreterService {
   }
 
   async submitAnswers(sessionId: string, answers: QuestionAnswerMap): Promise<RequirementInterpreterResult> {
-    const storedProfile = (await this.repository.get(sessionId)) ?? this.profileParser.createBaseProfile('laptop');
-    const updatedProfile = this.profileParser.applyAnswers(storedProfile, answers);
+    const storedProfile = await this.repository.get(sessionId);
+    if (!storedProfile) {
+      return {
+        status: 'error',
+        error: 'Phiên làm rõ đã hết hạn, vui lòng gửi lại yêu cầu.',
+      };
+    }
+    const updatedProfile = await this.profileParser.applyAnswers(storedProfile, answers);
     await this.repository.set(sessionId, updatedProfile);
 
     const pendingQuestions = this.questionLibrary.getPendingQuestions(updatedProfile);
