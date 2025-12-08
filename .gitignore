@@ -31,3 +31,5 @@ chrome-extension/public/manifest.json
 *.py
 
 .*/
+
+todolists/
