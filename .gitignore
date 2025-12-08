@@ -30,4 +30,4 @@ chrome-extension/public/manifest.json
 .cursor
 *.py
 
-.gemini
+.*/
