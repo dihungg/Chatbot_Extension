@@ -20,7 +20,7 @@ interface BookmarkListProps {
 }
 
 const BookmarkList: React.FC<BookmarkListProps> = ({
-  title = 'Gợi Ý',
+  title = 'Gợi ý',
   bookmarks,
   onBookmarkSelect,
   onBookmarkUpdateTitle,

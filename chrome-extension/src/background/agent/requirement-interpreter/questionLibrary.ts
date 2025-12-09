@@ -353,4 +353,28 @@ export class QuestionLibrary {
       uiVariant: question.uiVariant,
     }));
   }
+
+  /**
+   * Marks all questions for a given product category as opted-out.
+   * Used to bypass clarification forms when the user's intent is clearly
+   * comparison/analysis rather than a purchase.
+   *
+   * @param profile - The target product profile to update
+   * @param category - The product category (laptop, phone, headphones, etc.)
+   * @returns A new profile with all questions marked as opted-out
+   */
+  markAllQuestionsResolved(profile: TargetProductProfile, category: ProductType): TargetProductProfile {
+    const questions = this.getQuestionsForCategory(category);
+    const updatedOptOuts = { ...profile.clarification_opt_outs };
+
+    // Mark every question ID for this category as opted-out
+    for (const question of questions) {
+      updatedOptOuts[question.id] = true;
+    }
+
+    return {
+      ...profile,
+      clarification_opt_outs: updatedOptOuts,
+    };
+  }
 }

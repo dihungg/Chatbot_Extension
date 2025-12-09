@@ -3,19 +3,15 @@ import '@src/Options.css';
 import { Button } from '@extension/ui';
 import { withErrorBoundary, withSuspense } from '@extension/shared';
 import { t } from '@extension/i18n';
-import { FiSettings, FiCpu, FiShield, FiTrendingUp, FiHelpCircle } from 'react-icons/fi';
-import { GeneralSettings } from './components/GeneralSettings';
+import { FiCpu, FiHelpCircle, FiSettings } from 'react-icons/fi';
 import { ModelSettings } from './components/ModelSettings';
-import { FirewallSettings } from './components/FirewallSettings';
-import { AnalyticsSettings } from './components/AnalyticsSettings';
+import { AdvancedSettings } from './components/AdvancedSettings';
 
-type TabTypes = 'general' | 'models' | 'firewall' | 'analytics' | 'help';
+type TabTypes = 'models' | 'advanced' | 'help';
 
 const TABS: { id: TabTypes; icon: React.ComponentType<{ className?: string }>; label: string }[] = [
-  { id: 'general', icon: FiSettings, label: t('options_tabs_general') },
   { id: 'models', icon: FiCpu, label: t('options_tabs_models') },
-  { id: 'firewall', icon: FiShield, label: t('options_tabs_firewall') },
-  { id: 'analytics', icon: FiTrendingUp, label: 'Analytics' },
+  { id: 'advanced', icon: FiSettings, label: t('options_tabs_advanced') },
   { id: 'help', icon: FiHelpCircle, label: t('options_tabs_help') },
 ];
 
@@ -46,14 +42,10 @@ const Options = () => {
 
   const renderTabContent = () => {
     switch (activeTab) {
-      case 'general':
-        return <GeneralSettings isDarkMode={isDarkMode} />;
       case 'models':
         return <ModelSettings isDarkMode={isDarkMode} />;
-      case 'firewall':
-        return <FirewallSettings isDarkMode={isDarkMode} />;
-      case 'analytics':
-        return <AnalyticsSettings isDarkMode={isDarkMode} />;
+      case 'advanced':
+        return <AdvancedSettings isDarkMode={isDarkMode} />;
       default:
         return null;
     }

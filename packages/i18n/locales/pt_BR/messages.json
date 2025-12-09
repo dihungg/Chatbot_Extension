@@ -217,6 +217,12 @@
   "options_tabs_firewall": {
     "message": "Firewall"
   },
+  "options_tabs_advanced": {
+    "message": "Configurações Avançadas"
+  },
+  "options_advanced_description": {
+    "message": "Para usuários avançados"
+  },
   "options_tabs_help": {
     "message": "Ajuda"
   },

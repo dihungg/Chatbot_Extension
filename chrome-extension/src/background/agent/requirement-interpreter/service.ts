@@ -3,6 +3,7 @@ import type { ProductType, TargetProductProfile } from '@extension/shared';
 import { QuestionLibrary, SUPPORTED_CATEGORIES } from './questionLibrary';
 import { ProfileParser } from './profileParser';
 import { PromptBuilder } from './promptBuilder';
+import { detectClarificationBypassIntent } from './intentUtils';
 import type { QuestionAnswerMap, RequirementInterpreterResult } from './types';
 
 export interface RequirementInterpreterDependencies {
@@ -58,6 +59,18 @@ export class RequirementInterpreterService {
     const mergedOverrides = overrides ? { ...autoExtracted, ...overrides } : autoExtracted;
 
     const merged = this.profileParser.mergeOverrides(baseProfile, mergedOverrides);
+
+    // Check if the user's intent is comparison/analysis rather than purchase.
+    // If so, mark all clarification questions as opted-out to bypass the form.
+    if (detectClarificationBypassIntent(rawTask)) {
+      const resolvedProfile = this.questionLibrary.markAllQuestionsResolved(merged, category);
+      await this.repository.set(sessionId, resolvedProfile);
+
+      return {
+        status: 'complete',
+        profile: resolvedProfile,
+      };
+    }
 
     // Lấy ra các câu hỏi còn cần làm rõ trong hồ sơ hợp nhất
     const pendingQuestions = this.questionLibrary.getPendingQuestions(merged);

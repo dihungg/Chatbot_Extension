@@ -64,6 +64,121 @@ describe('RequirementInterpreterService', () => {
     }
   });
 
+  it('bypasses clarification when user intent is comparison/analysis - English', async () => {
+    const repository = new InMemoryRepository();
+    const service = new RequirementInterpreterService({
+      repository,
+    });
+    const sessionId = 'comparison-1';
+
+    const result = await service.ensureProfile(sessionId, 'compare iPhone 15 vs Galaxy S24');
+
+    expect(result.status).toBe('complete');
+    if (result.status === 'complete') {
+      expect(result.profile).toBeDefined();
+      expect(result.profile?.product_type).toBe('phone');
+      // All questions should be marked as opted-out
+      expect(result.profile?.clarification_opt_outs['phone_budget']).toBe(true);
+      expect(result.profile?.clarification_opt_outs['phone_use_case']).toBe(true);
+      expect(result.profile?.clarification_opt_outs['phone_brands']).toBe(true);
+    }
+  });
+
+  it('bypasses clarification when user intent is comparison/analysis - Vietnamese', async () => {
+    const repository = new InMemoryRepository();
+    const service = new RequirementInterpreterService({
+      repository,
+    });
+    const sessionId = 'comparison-vi-1';
+
+    const result = await service.ensureProfile(
+      sessionId,
+      'so sánh iPhone 15 Pro Max với Galaxy S24 Ultra thông số kỹ thuật',
+    );
+
+    expect(result.status).toBe('complete');
+    if (result.status === 'complete') {
+      expect(result.profile).toBeDefined();
+      expect(result.profile?.product_type).toBe('phone');
+      // All questions should be marked as opted-out
+      expect(result.profile?.clarification_opt_outs['phone_budget']).toBe(true);
+      expect(result.profile?.clarification_opt_outs['phone_use_case']).toBe(true);
+      expect(result.profile?.clarification_opt_outs['phone_brands']).toBe(true);
+    }
+  });
+
+  it('bypasses clarification for laptop analysis', async () => {
+    const repository = new InMemoryRepository();
+    const service = new RequirementInterpreterService({
+      repository,
+    });
+    const sessionId = 'laptop-analysis';
+
+    const result = await service.ensureProfile(sessionId, 'phân tích MacBook M3 vs M4 performance');
+
+    expect(result.status).toBe('complete');
+    if (result.status === 'complete') {
+      expect(result.profile?.product_type).toBe('laptop');
+      // All laptop questions should be marked as opted-out
+      expect(result.profile?.clarification_opt_outs['laptop_budget']).toBe(true);
+      expect(result.profile?.clarification_opt_outs['laptop_use_case']).toBe(true);
+      expect(result.profile?.clarification_opt_outs['laptop_brands']).toBe(true);
+    }
+  });
+
+  it('bypasses clarification for headphone review', async () => {
+    const repository = new InMemoryRepository();
+    const service = new RequirementInterpreterService({
+      repository,
+    });
+    const sessionId = 'headphones-review';
+
+    const result = await service.ensureProfile(
+      sessionId,
+      'review tai nghe Sony WH-1000XM5 versus Sennheiser Momentum 4',
+    );
+
+    expect(result.status).toBe('complete');
+    if (result.status === 'complete') {
+      expect(result.profile?.product_type).toBe('headphones');
+      // All headphone questions should be marked as opted-out
+      expect(result.profile?.clarification_opt_outs['headphones_budget']).toBe(true);
+      expect(result.profile?.clarification_opt_outs['headphones_use_case']).toBe(true);
+      expect(result.profile?.clarification_opt_outs['headphones_brands']).toBe(true);
+    }
+  });
+
+  it('does not bypass clarification for normal purchase intent', async () => {
+    const repository = new InMemoryRepository();
+    const service = new RequirementInterpreterService({
+      repository,
+    });
+    const sessionId = 'purchase-1';
+
+    const result = await service.ensureProfile(sessionId, 'Tôi cần mua một chiếc laptop cho công việc');
+
+    // Should still ask for clarification (not bypassed)
+    expect(result.status).toBe('needs_clarification');
+    if (result.status === 'needs_clarification') {
+      expect(result.request.questions.length).toBeGreaterThan(0);
+    }
+  });
+
+  it('stores bypassed profile in repository for subsequent tasks', async () => {
+    const repository = new InMemoryRepository();
+    const service = new RequirementInterpreterService({
+      repository,
+    });
+    const sessionId = 'comparison-storage';
+
+    await service.ensureProfile(sessionId, 'compare iPhone 15 vs iPhone 15 Pro');
+
+    // Verify profile was stored
+    const stored = await repository.get(sessionId);
+    expect(stored).toBeDefined();
+    expect(stored?.clarification_opt_outs['phone_budget']).toBe(true);
+  });
+
   it('auto extracts information from raw Vietnamese task descriptions', async () => {
     const repository = new InMemoryRepository();
     const service = new RequirementInterpreterService({
@@ -72,6 +187,7 @@ describe('RequirementInterpreterService', () => {
     const sessionId = 'session-auto';
 
     const task = 'Cần iPhone dưới 15 triệu để quay vlog và phải chống nước';
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const initial = await service.ensureProfile(sessionId, task);
     // Might need clarification if mandatory fields (budget, brand?) are missing or if core questions not answered
     // Actually, budget is present (15m), brand is present (apple).

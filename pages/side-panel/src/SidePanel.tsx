@@ -1524,12 +1524,27 @@ const SidePanel = () => {
                     </div>
                     <div className="flex-1 overflow-y-auto">
                       <BookmarkList
-                        title="Gợi ý nhanh"
-                        bookmarks={quickPromptList}
+                        bookmarks={[
+                          {
+                            id: 1,
+                            title: 'Tìm iPhone 15 trên Shopee',
+                            content: 'Tui muốn mua laptop để học lập trình và chơi game.',
+                          },
+                          {
+                            id: 2,
+                            title: 'So sánh giá Laptop',
+                            content: 'So sánh giá Macbook Air M2 giữa FPTShop và CellphoneS.',
+                          },
+                          {
+                            id: 3,
+                            title: 'Săn sale tai nghe',
+                            content: 'Tìm các loại tai nghe bluetooth đang giảm giá trên CellphoneS.',
+                          },
+                        ]}
                         onBookmarkSelect={handleBookmarkSelect}
-                        onBookmarkUpdateTitle={hasCustomFavoritePrompts ? handleBookmarkUpdateTitle : undefined}
-                        onBookmarkDelete={hasCustomFavoritePrompts ? handleBookmarkDelete : undefined}
-                        onBookmarkReorder={hasCustomFavoritePrompts ? handleBookmarkReorder : undefined}
+                        onBookmarkUpdateTitle={handleBookmarkUpdateTitle}
+                        onBookmarkDelete={handleBookmarkDelete}
+                        onBookmarkReorder={handleBookmarkReorder}
                         isDarkMode={isDarkMode}
                       />
 
