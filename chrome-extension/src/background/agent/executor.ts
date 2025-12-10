@@ -88,6 +88,8 @@ export class Executor {
 
     this.context = context;
     this.context.targetProductProfile = extraArgs?.targetProductProfile;
+    // Add logging to verify the profile is assigned to the context.
+    logger.debug('Executor context initialized with profile:', this.context.targetProductProfile);
     // Initialize message history
     this.context.messageManager.initTaskMessages(this.navigatorPrompt.getSystemMessage(), task);
   }

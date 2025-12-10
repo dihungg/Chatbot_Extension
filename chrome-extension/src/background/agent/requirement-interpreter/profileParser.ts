@@ -1,4 +1,4 @@
-import type { BudgetVnd, ProductType, TargetProductProfile } from '@extension/shared';
+import type { BudgetVnd, TargetProductType, TargetProductProfile } from '@extension/shared';
 import type { QuestionAnswerMap } from './types';
 
 const BRAND_KEYWORDS: Record<string, string[]> = {
@@ -187,7 +187,7 @@ function cleanAndSplit(text: string): string[] {
   const cleaned = text
     .replace(/(hãng|brand|thương hiệu|ưu tiên|tránh|không thích)/gi, '')
     .replace(/:+/g, ' ')
-    .replace(/[\.\?]/g, ' ')
+    .replace(/[.?]/g, ' ')
     .toLowerCase();
 
   const tokens = cleaned.split(/[,/]| và | hoặc |\/|-/).map(token => token.trim());
@@ -224,7 +224,7 @@ function parseStructuredBrandAnswer(answer: string): { pref: string; avoid: stri
 }
 
 export class ProfileParser {
-  createBaseProfile(productType: ProductType): TargetProductProfile {
+  createBaseProfile(productType: TargetProductType): TargetProductProfile {
     return {
       product_type: productType,
       budget_vnd: null,
@@ -272,7 +272,7 @@ export class ProfileParser {
     return merged;
   }
 
-  async autoExtractFromTask(task: string, productType: ProductType): Promise<Partial<TargetProductProfile>> {
+  async autoExtractFromTask(task: string): Promise<Partial<TargetProductProfile>> {
     const normalized = task.toLowerCase();
     if (!normalized.trim()) {
       return {};
@@ -303,6 +303,7 @@ export class ProfileParser {
   }
 
   async applyAnswers(profile: TargetProductProfile, answers: QuestionAnswerMap): Promise<TargetProductProfile> {
+    // Preserve immutability: create shallow copy at start to avoid mutating caller's input
     let updated = { ...profile };
     for (const [questionId, answer] of Object.entries(answers)) {
       if (!answer.trim()) continue;
@@ -416,8 +417,9 @@ export class ProfileParser {
     if (!current?.[questionId]) {
       return profile;
     }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { [questionId]: _removed, ...rest } = current;
-    // @ts-ignore: rest matches Record<string, boolean>
+    // @ts-expect-error: rest matches Record<string, boolean>
     return {
       ...profile,
       clarification_opt_outs: rest,

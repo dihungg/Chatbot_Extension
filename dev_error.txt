@@ -1,0 +1,87 @@
+
+> nanobrowser@0.1.13 dev /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension
+> turbo ready && cross-env __DEV__=true turbo watch dev --concurrency 20
+
+• Packages in scope: @extension/content-script, @extension/dev-utils, @extension/hmr, @extension/i18n, @extension/options, @extension/schema-utils, @extension/shared, @extension/sidepanel, @extension/storage, @extension/tailwindcss-config, @extension/tsconfig, @extension/ui, @extension/vite-config, @extension/zipper, chrome-extension
+• Running ready in 15 packages
+• Remote caching disabled
+@extension/zipper:ready: cache hit, replaying logs 3b84c6fe796e6b94
+@extension/schema-utils:ready: cache hit, replaying logs 1889a0a4e8ac1653
+@extension/ui:ready: cache hit, replaying logs fa659617133d6a08
+@extension/ui:ready: 
+@extension/ui:ready: 
+@extension/ui:ready: > @extension/ui@0.1.13 ready /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/packages/ui
+@extension/ui:ready: > node build.mjs
+@extension/ui:ready: 
+@extension/zipper:ready: 
+@extension/zipper:ready: 
+@extension/zipper:ready: > @extension/zipper@0.1.13 ready /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/packages/zipper
+@extension/zipper:ready: > tsc
+@extension/zipper:ready: 
+@extension/schema-utils:ready: 
+@extension/schema-utils:ready: 
+@extension/schema-utils:ready: > @extension/schema-utils@0.1.13 ready /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/packages/schema-utils
+@extension/schema-utils:ready: > node build.mjs
+@extension/schema-utils:ready: 
+@extension/schema-utils:ready: [33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mThe glob pattern "./lib/**/*.tsx" did not match any files[0m [empty-glob]
+@extension/schema-utils:ready: 
+@extension/hmr:ready: cache hit, replaying logs 8482a77f486dc064
+@extension/hmr:ready: 
+@extension/hmr:ready: 
+@extension/hmr:ready: > @extension/hmr@0.1.13 ready /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/packages/hmr
+@extension/hmr:ready: > pnpm run build:tsc && pnpm run build:rollup
+@extension/hmr:ready: 
+@extension/hmr:ready: 
+@extension/hmr:ready: > @extension/hmr@0.1.13 build:tsc /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/packages/hmr
+@extension/hmr:ready: > tsc -b tsconfig.build.json
+@extension/hmr:ready: 
+@extension/hmr:ready: 
+@extension/hmr:ready: > @extension/hmr@0.1.13 build:rollup /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/packages/hmr
+@extension/hmr:ready: > rollup --config rollup.config.mjs
+@extension/hmr:ready: 
+@extension/hmr:ready: [36m
+@extension/hmr:ready: [1mlib/injections/reload.ts[22m → [1mbuild/injections/reload.js[22m...[39m
+@extension/hmr:ready: [32mcreated [1mbuild/injections/reload.js[22m in [1m58ms[22m[39m
+@extension/hmr:ready: [36m
+@extension/hmr:ready: [1mlib/injections/refresh.ts[22m → [1mbuild/injections/refresh.js[22m...[39m
+@extension/hmr:ready: [32mcreated [1mbuild/injections/refresh.js[22m in [1m16ms[22m[39m
+@extension/shared:ready: cache hit, replaying logs 89f3300fc659db04
+@extension/shared:ready: 
+@extension/shared:ready: 
+@extension/shared:ready: > @extension/shared@0.1.13 ready /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/packages/shared
+@extension/shared:ready: > node build.mjs
+@extension/shared:ready: 
+@extension/i18n:ready: cache hit, replaying logs da5c0b6ba9f29e85
+@extension/i18n:ready: 
+@extension/i18n:ready: 
+@extension/i18n:ready: > @extension/i18n@0.1.13 ready /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/packages/i18n
+@extension/i18n:ready: > pnpm genenrate-i8n && node build.dev.mjs
+@extension/i18n:ready: 
+@extension/i18n:ready: 
+@extension/i18n:ready: > @extension/i18n@0.1.13 genenrate-i8n /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/packages/i18n
+@extension/i18n:ready: > node genenrate-i18n.mjs
+@extension/i18n:ready: 
+@extension/i18n:ready: I18n build complete
+@extension/dev-utils:ready: cache miss, executing aabf78099333071e
+@extension/storage:ready: cache hit, replaying logs 23d06131e756de9d
+@extension/storage:ready: 
+@extension/storage:ready: 
+@extension/storage:ready: > @extension/storage@0.1.13 ready /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/packages/storage
+@extension/storage:ready: > node build.mjs
+@extension/storage:ready: 
+@extension/dev-utils:ready: 
+@extension/dev-utils:ready: > @extension/dev-utils@0.1.13 ready /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/packages/dev-utils
+@extension/dev-utils:ready: > tsc
+@extension/dev-utils:ready: 
+@extension/dev-utils:ready: ../shared/lib/types/index.ts(3,1): error TS2308: Module './targetProductProfile' has already exported a member named 'ProductType'. Consider explicitly re-exporting to resolve the ambiguity.
+@extension/dev-utils:ready: ../shared/lib/utils/immutability.ts(86,3): error TS2322: Type 'Partial<T>' is not assignable to type 'T'.
+@extension/dev-utils:ready:   'Partial<T>' is assignable to the constraint of type 'T', but 'T' could be instantiated with a different subtype of constraint 'Record<string, any>'.
+@extension/dev-utils:ready: ../shared/lib/utils/typeGuards.ts(54,3): error TS2322: Type 'unknown' is not assignable to type 'boolean'.
+@extension/dev-utils:ready:  ELIFECYCLE  Command failed with exit code 2.
+
+ Tasks:    7 successful, 8 total
+Cached:    7 cached, 8 total
+  Time:    1.507s 
+Failed:    @extension/dev-utils#ready
+
+ ELIFECYCLE  Command failed with exit code 2.

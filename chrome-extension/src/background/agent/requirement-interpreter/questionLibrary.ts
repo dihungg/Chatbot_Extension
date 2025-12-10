@@ -1,4 +1,4 @@
-import type { ClarificationQuestionUiVariant, ProductType, TargetProductProfile } from '@extension/shared';
+import type { ClarificationQuestionUiVariant, TargetProductType, TargetProductProfile } from '@extension/shared';
 import type { ClarificationQuestion, QuestionDefinition } from './types';
 
 export const SUPPORTED_CATEGORIES = ['laptop', 'phone', 'headphones'] as const;
@@ -167,7 +167,7 @@ const shouldAskGeneric = (profile: TargetProductProfile, questionId: string): bo
   return !hasOptedOut(profile, questionId);
 };
 
-const QUESTION_DEFINITIONS: Record<ProductType, QuestionDefinition[]> = {
+const QUESTION_DEFINITIONS: Record<TargetProductType, QuestionDefinition[]> = {
   laptop: [
     {
       id: 'laptop_budget',
@@ -309,7 +309,7 @@ const QUESTION_DEFINITIONS: Record<ProductType, QuestionDefinition[]> = {
 };
 
 export class QuestionLibrary {
-  inferCategory(rawTask: string): ProductType | null {
+  inferCategory(rawTask: string): TargetProductType | null {
     const normalized = rawTask.toLowerCase();
     if (!normalized.trim()) {
       return null;
@@ -329,7 +329,7 @@ export class QuestionLibrary {
     return null;
   }
 
-  getQuestionsForCategory(category: ProductType): QuestionDefinition[] {
+  getQuestionsForCategory(category: TargetProductType): QuestionDefinition[] {
     return QUESTION_DEFINITIONS[category] ?? [];
   }
 
@@ -363,7 +363,7 @@ export class QuestionLibrary {
    * @param category - The product category (laptop, phone, headphones, etc.)
    * @returns A new profile with all questions marked as opted-out
    */
-  markAllQuestionsResolved(profile: TargetProductProfile, category: ProductType): TargetProductProfile {
+  markAllQuestionsResolved(profile: TargetProductProfile, category: TargetProductType): TargetProductProfile {
     const questions = this.getQuestionsForCategory(category);
     const updatedOptOuts = { ...profile.clarification_opt_outs };
 

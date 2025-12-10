@@ -1,4 +1,4 @@
-export type ProductType = 'laptop' | 'phone' | 'headphones' | 'other';
+export type TargetProductType = 'laptop' | 'phone' | 'headphones' | 'other';
 
 export type BudgetVnd =
   | number
@@ -8,7 +8,7 @@ export type BudgetVnd =
     };
 
 export interface TargetProductProfile {
-  product_type: ProductType;
+  product_type: TargetProductType;
   budget_vnd: BudgetVnd | null;
   pref_brands: string[];
   avoid_brands: string[];

@@ -1,8 +1,8 @@
-import type { ClarificationQuestionUiVariant, ProductType, TargetProductProfile } from '@extension/shared';
+import type { ClarificationQuestionUiVariant, TargetProductType, TargetProductProfile } from '@extension/shared';
 
 export interface ClarificationQuestion {
   id: string;
-  category: ProductType;
+  category: TargetProductType;
   text: string;
   fieldHints: string[];
   isCore: boolean;
@@ -11,7 +11,7 @@ export interface ClarificationQuestion {
 
 export interface RequirementClarificationRequest {
   sessionId: string;
-  category: ProductType;
+  category: TargetProductType;
   questions: ClarificationQuestion[];
   prompt: string;
 }

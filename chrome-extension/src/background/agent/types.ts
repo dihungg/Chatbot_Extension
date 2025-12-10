@@ -26,7 +26,7 @@ export const DEFAULT_AGENT_OPTIONS: AgentOptions = {
   maxActionsPerStep: 10,
   maxFailures: 3,
   retryDelay: 10,
-  maxInputTokens: 128000,
+  maxInputTokens: 500000,
   maxErrorLength: 400,
   useVision: false,
   useVisionForPlanner: true,

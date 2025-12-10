@@ -1,0 +1,29 @@
+export type UnifiedProductType = 'laptop' | 'phone' | 'headphone' | 'unknown';
+
+export interface UnifiedProductSchema {
+  product_type: UnifiedProductType;
+  url: string;
+  name: string;
+  brand: string;
+  price_vnd: number;
+  weight?: string;
+  battery?: string;
+  screen_spec?: string;
+  specs: {
+    laptop?: {
+      ram_gb: number;
+      ssd_gb: number;
+      cpu_model: string;
+      gpu_model: string;
+    };
+    phone?: {
+      camera_main_mp: number;
+      battery_mah: number;
+      chipset: string;
+    };
+    headphone?: {
+      anc: boolean;
+      wireless: boolean;
+    };
+  };
+}

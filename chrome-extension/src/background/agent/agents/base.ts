@@ -11,8 +11,8 @@ import { ProviderTypeEnum } from '@extension/storage';
 
 const logger = createLogger('agent');
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type CallOptions = Record<string, any>;
+//
+export type CallOptions = Record<string, unknown>;
 
 // Update options to use Zod schema
 export interface BaseAgentOptions {

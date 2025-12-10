@@ -1,0 +1,67 @@
+background.iife.js:87266 [background] Message received from side panel {type: 'new_task', task: 'tui cần mua laptop để học lập trình và chơi game', taskId: '70d6950f-5310-4818-812b-a1cf662f8d21', tabId: 1613933223}
+background.iife.js:87276 [background] new_task 1613933223 tui cần mua laptop để học lập trình và chơi game
+background.iife.js:87477 [background] Sending clarification request to side panel {sessionId: '70d6950f-5310-4818-812b-a1cf662f8d21', questionCount: 3}questionCount: 3sessionId: "70d6950f-5310-4818-812b-a1cf662f8d21"[[Prototype]]: Object
+background.iife.js:87266 [background] Message received from side panel {type: 'heartbeat'}type: "heartbeat"[[Prototype]]: Object
+background.iife.js:87270 [background] Responding to heartbeat
+background.iife.js:87266 [background] Message received from side panel {type: 'requirement_answers', sessionId: '70d6950f-5310-4818-812b-a1cf662f8d21', answers: {…}}answers: laptop_brands: "{\"pref\":\"ASUS, MSI, Lenovo\",\"avoid\":\"MacBook\"}"laptop_budget: "30-40 triệu"laptop_priority: "nhiều RAM và GPU mạnh"[[Prototype]]: ObjectsessionId: "70d6950f-5310-4818-812b-a1cf662f8d21"type: "requirement_answers"[[Prototype]]: Object
+background.iife.js:87487 [background] startNewTask invoked {taskId: '70d6950f-5310-4818-812b-a1cf662f8d21', tabId: 1613933223, hasProfile: true}
+background.iife.js:59650 [Executor] 🚀 Executing task: tui cần mua laptop để học lập trình và chơi game
+background.iife.js:59283 [event-manager] Emitting event {type: 'execution', actor: 'system', state: 'task.start', details: '70d6950f-5310-4818-812b-a1cf662f8d21', taskId: '70d6950f-5310-4818-812b-a1cf662f8d21', …}actor: "system"details: "70d6950f-5310-4818-812b-a1cf662f8d21"state: "task.start"subscriberCount: 1taskId: "70d6950f-5310-4818-812b-a1cf662f8d21"type: "execution"[[Prototype]]: Object
+background.iife.js:87564 [background] Executor event emitted AgentEvent {actor: 'system', state: 'task.start', data: {…}, timestamp: 1765296390170, type: 'execution'}actor: "system"data: {taskId: '70d6950f-5310-4818-812b-a1cf662f8d21', step: 0, maxSteps: 100, details: '70d6950f-5310-4818-812b-a1cf662f8d21'}state: "task.start"timestamp: 1765296390170type: "execution"[[Prototype]]: Object
+background.iife.js:59665 [Executor] 🔄 Step 1 / 100
+background.iife.js:59283 [event-manager] Emitting event {type: 'execution', actor: 'planner', state: 'step.start', details: 'Planning...', taskId: '70d6950f-5310-4818-812b-a1cf662f8d21', …}actor: "planner"details: "Planning..."state: "step.start"subscriberCount: 1taskId: "70d6950f-5310-4818-812b-a1cf662f8d21"type: "execution"[[Prototype]]: Object
+background.iife.js:87564 [background] Executor event emitted AgentEvent {actor: 'planner', state: 'step.start', data: {…}, timestamp: 1765296390171, type: 'execution'}
+background.iife.js:59100 [MessageManager] Messages in history: 5:
+background.iife.js:59104 [MessageManager] SystemMessage - Token count: 8101
+background.iife.js:59104 [MessageManager] HumanMessage - Token count: 87
+background.iife.js:59104 [MessageManager] AIMessage - Token count: 75
+background.iife.js:59104 [MessageManager] ToolMessage - Token count: 5
+background.iife.js:59104 [MessageManager] HumanMessage - Token count: 12
+background.iife.js:59110 [MessageManager] Total input tokens: 8280
+background.iife.js:55522 [agent] [gemini-2.5-pro] Preparing structured output call with schema: {schemaName: 'planner_output', messageCount: 5, modelProvider: ''}messageCount: 5modelProvider: ""schemaName: "planner_output"[[Prototype]]: Objectconstructor: ƒ Object()hasOwnProperty: ƒ hasOwnProperty()isPrototypeOf: ƒ isPrototypeOf()propertyIsEnumerable: ƒ propertyIsEnumerable()toLocaleString: ƒ toLocaleString()toString: ƒ toString()valueOf: ƒ valueOf()__defineGetter__: ƒ __defineGetter__()__defineSetter__: ƒ __defineSetter__()__lookupGetter__: ƒ __lookupGetter__()__lookupSetter__: ƒ __lookupSetter__()__proto__: (...)get __proto__: ƒ __proto__()set __proto__: ƒ __proto__()
+background.iife.js:55533 [agent] [gemini-2.5-pro] Invoking LLM with structured output...
+background.iife.js:87266 [background] Message received from side panel {type: 'heartbeat'}
+background.iife.js:87270 [background] Responding to heartbeat
+background.iife.js:55538 [agent] [gemini-2.5-pro] LLM response received: {hasParsed: true, hasRaw: true, rawContent: '{\n  "observation": "The user wants to buy a laptop…ng ạ? \\n1. Ngân sách của bạn khoảng bao nhiêu?...'}hasParsed: truehasRaw: truerawContent: "{\n  \"observation\": \"The user wants to buy a laptop for programming and gaming. This is a broad request that requires more specific information to provide a good recommendation.\",\n  \"challenges\": \"\",\n  \"done\": true,\n  \"next_steps\": \"Wait for the user to provide their budget and other preferences.\",\n  \"final_answer\": \"Chào bạn, để tư vấn laptop phù hợp nhất cho nhu cầu học lập trình và chơi game, bạn có thể cho mình biết thêm một vài thông tin được không ạ? \\n1. Ngân sách của bạn khoảng bao nhiêu?..."[[Prototype]]: Objectconstructor: ƒ Object()hasOwnProperty: ƒ hasOwnProperty()isPrototypeOf: ƒ isPrototypeOf()propertyIsEnumerable: ƒ propertyIsEnumerable()toLocaleString: ƒ toLocaleString()toString: ƒ toString()valueOf: ƒ valueOf()__defineGetter__: ƒ __defineGetter__()__defineSetter__: ƒ __defineSetter__()__lookupGetter__: ƒ __lookupGetter__()__lookupSetter__: ƒ __lookupSetter__()__proto__: (...)get __proto__: ƒ __proto__()set __proto__: ƒ __proto__()
+background.iife.js:55544 [agent] [gemini-2.5-pro] Successfully parsed structured output
+background.iife.js:59283 [event-manager] Emitting event {type: 'execution', actor: 'planner', state: 'step.ok', details: 'Chào bạn, để tư vấn laptop phù hợp nhất cho nhu cầ…\n4. Bạn thích màn hình kích thước bao nhiêu inch?', taskId: '70d6950f-5310-4818-812b-a1cf662f8d21', …}
+background.iife.js:87564 [background] Executor event emitted AgentEvent {actor: 'planner', state: 'step.ok', data: {…}, timestamp: 1765296400296, type: 'execution'}
+background.iife.js:57544 [PlannerAgent] Planner output {
+  "observation": "The user wants to buy a laptop for programming and gaming. This is a broad request that requires more specific information to provide a good recommendation.",
+  "challenges": "",
+  "done": true,
+  "next_steps": "Wait for the user to provide their budget and other preferences.",
+  "final_answer": "Chào bạn, để tư vấn laptop phù hợp nhất cho nhu cầu học lập trình và chơi game, bạn có thể cho mình biết thêm một vài thông tin được không ạ? \n1. Ngân sách của bạn khoảng bao nhiêu? \n2. Bạn thường chơi những tựa game nào? \n3. Bạn có cần máy mỏng nhẹ, hay ưu tiên hiệu năng cao? \n4. Bạn thích màn hình kích thước bao nhiêu inch?",
+  "reasoning": "The user's request is a recommendation task, not a specific product search. To give a useful recommendation, I need to understand their budget, specific use cases (which games), and preferences (portability, screen size). Asking clarifying questions is the necessary first step before starting any web search.",
+  "web_task": false
+}
+background.iife.js:59635 [Executor] ✅ Planner confirms task completion
+background.iife.js:59283 [event-manager] Emitting event {type: 'execution', actor: 'system', state: 'task.ok', details: 'Chào bạn, để tư vấn laptop phù hợp nhất cho nhu cầ…\n4. Bạn thích màn hình kích thước bao nhiêu inch?', taskId: '70d6950f-5310-4818-812b-a1cf662f8d21', …}
+background.iife.js:87564 [background] Executor event emitted AgentEvent {actor: 'system', state: 'task.ok', data: {…}, timestamp: 1765296400297, type: 'execution'}
+background.iife.js:59710 [Executor] Executor history {
+  "history": []
+}
+background.iife.js:59717 [Executor] Replay historical tasks is disabled, skipping history storage
+background.iife.js:87491 [background] new_task execution result 1613933223 undefined
+background.iife.js:33064 [BrowserContext] active tab 1613933225  
+background.iife.js:33020 [BrowserContext] getOrCreatePage 1613933225 creating new page
+background.iife.js:87266 [background] Message received from side panel {type: 'heartbeat'}
+background.iife.js:87270 [background] Responding to heartbeat
+background.iife.js:87266 [background] Message received from side panel {type: 'heartbeat'}
+background.iife.js:87270 [background] Responding to heartbeat
+background.iife.js:87266 [background] Message received from side panel {type: 'heartbeat'}
+background.iife.js:87270 [background] Responding to heartbeat
+background.iife.js:87266 [background] Message received from side panel {type: 'heartbeat'}
+background.iife.js:87270 [background] Responding to heartbeat
+background.iife.js:87266 [background] Message received from side panel {type: 'heartbeat'}
+background.iife.js:87270 [background] Responding to heartbeat
+background.iife.js:87266 [background] Message received from side panel {type: 'heartbeat'}
+background.iife.js:87270 [background] Responding to heartbeat
+background.iife.js:87266 [background] Message received from side panel {type: 'heartbeat'}
+background.iife.js:87270 [background] Responding to heartbeat
+background.iife.js:87266 [background] Message received from side panel {type: 'heartbeat'}
+background.iife.js:87270 [background] Responding to heartbeat
+background.iife.js:87266 [background] Message received from side panel {type: 'heartbeat'}
+background.iife.js:87270 [background] Responding to heartbeat
+background.iife.js:87266 [background] Message received from side panel {type: 'heartbeat'}
+background.iife.js:87270 [background] Responding to heartbeat

@@ -1,9 +1,9 @@
-import type { ProductType, TargetProductProfile } from '@extension/shared';
+import type { TargetProductType, TargetProductProfile } from '@extension/shared';
 import type { ClarificationQuestion } from './types';
 
 const BASE_INSTRUCTIONS = `Bạn là Requirement Interpreter cho trợ lý mua sắm thiết bị số. Nhiệm vụ: Đặt câu hỏi làm rõ nhu cầu.`;
 
-const CATEGORY_HINTS: Record<ProductType, string> = {
+const CATEGORY_HINTS: Record<TargetProductType, string> = {
   laptop: 'Category: Laptop.',
   phone: 'Category: Điện thoại.',
   headphones: 'Category: Tai nghe.',
@@ -12,7 +12,7 @@ const CATEGORY_HINTS: Record<ProductType, string> = {
 
 export class PromptBuilder {
   buildClarificationPrompt(params: {
-    category: ProductType;
+    category: TargetProductType;
     rawTask: string;
     questions: ClarificationQuestion[];
     partialProfile: TargetProductProfile;

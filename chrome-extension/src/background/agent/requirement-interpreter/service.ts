@@ -1,10 +1,13 @@
 import type { TargetProductProfileRepository } from '@extension/storage';
-import type { ProductType, TargetProductProfile } from '@extension/shared';
+import type { TargetProductType, TargetProductProfile } from '@extension/shared';
+import { createLogger } from '@src/background/log';
 import { QuestionLibrary, SUPPORTED_CATEGORIES } from './questionLibrary';
 import { ProfileParser } from './profileParser';
 import { PromptBuilder } from './promptBuilder';
 import { detectClarificationBypassIntent } from './intentUtils';
 import type { QuestionAnswerMap, RequirementInterpreterResult } from './types';
+
+const logger = createLogger('RequirementInterpreterService');
 
 export interface RequirementInterpreterDependencies {
   repository: TargetProductProfileRepository;
@@ -16,7 +19,7 @@ export interface RequirementInterpreterDependencies {
 interface SessionContext {
   sessionId: string;
   rawTask: string;
-  category: ProductType;
+  category: TargetProductType;
 }
 
 export class RequirementInterpreterService {
@@ -55,7 +58,7 @@ export class RequirementInterpreterService {
     const baseProfile =
       existing && existing.product_type === category ? existing : this.profileParser.createBaseProfile(category);
 
-    const autoExtracted = await this.profileParser.autoExtractFromTask(rawTask, category);
+    const autoExtracted = await this.profileParser.autoExtractFromTask(rawTask);
     const mergedOverrides = overrides ? { ...autoExtracted, ...overrides } : autoExtracted;
 
     const merged = this.profileParser.mergeOverrides(baseProfile, mergedOverrides);
@@ -116,8 +119,14 @@ export class RequirementInterpreterService {
         error: 'Phiên làm rõ đã hết hạn, vui lòng gửi lại yêu cầu.',
       };
     }
+    // Add logging to trace the profile state before applying answers.
+    logger.debug('Profile before applying answers:', storedProfile);
+
     const updatedProfile = await this.profileParser.applyAnswers(storedProfile, answers);
     await this.repository.set(sessionId, updatedProfile);
+
+    // Add logging to trace the profile state after applying answers.
+    logger.debug('Profile after applying answers:', updatedProfile);
 
     const pendingQuestions = this.questionLibrary.getPendingQuestions(updatedProfile);
     if (pendingQuestions.length > 0) {

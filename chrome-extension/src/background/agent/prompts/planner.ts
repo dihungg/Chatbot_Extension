@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+import type { UnifiedProductSchema } from '@extension/shared';
 import { BasePrompt } from './base';
 import { HumanMessage, SystemMessage } from '@langchain/core/messages';
 import type { AgentContext } from '@src/background/agent/types';
@@ -14,53 +14,47 @@ export class PlannerPrompt extends BasePrompt {
     let memoryBank = '';
     let lastActionResult = '';
 
-    // Defensive: đảm bảo history là mảng
-    const history = Array.isArray((context as any).history) ? ((context as any).history as any[]) : [];
+    const history = context.history.history;
 
     if (history.length > 0) {
       // ============================================================
       // 1) BUILD POWERFUL MEMORY BANK (DÙNG LẠI SẢN PHẨM CŨ)
       // ============================================================
-      const memoryItems: any[] = [];
+      const memoryItems: UnifiedProductSchema[] = [];
 
       for (const step of history) {
         if (!step || !step.result) continue;
 
-        // Navigator có thể trả UnifiedProductSchema tại field cache_content
-        const cache = step.result.cache_content ?? null;
+        for (const actionResult of step.result) {
+          if (actionResult.extractedContent) {
+            try {
+              // The extracted content from a cache_content action might be a JSON
+              // string of UnifiedProductSchema, or an array of them.
+              // It can be wrapped in ```json ... ```
+              const content = JSON.parse(actionResult.extractedContent.replace(/```json\n?|\n?```/g, ''));
+              const products: UnifiedProductSchema[] = Array.isArray(content) ? content : [content];
 
-        if (cache && typeof cache === 'object') {
-          // normalize title/price/source
-          const title = typeof cache.title === 'string' ? cache.title : (cache.name ?? '');
-          const price = cache.price ?? '';
-          const source = cache.source ?? '';
-
-          const keywords = Array.from(
-            new Set(
-              [...(typeof title === 'string' ? title.toLowerCase().split(/\s+/) : []), title.toLowerCase()].filter(
-                Boolean,
-              ),
-            ),
-          );
-
-          const entry = {
-            name: title,
-            price,
-            source,
-            keywords,
-            raw: cache,
-          };
-          memoryItems.push(entry);
+              for (const product of products) {
+                if (product && product.product_type) {
+                  // a simple check for a valid product
+                  memoryItems.push(product);
+                }
+              }
+            } catch (e) {
+              // not a json, or not a valid product schema
+            }
+          }
         }
       }
 
       if (memoryItems.length > 0) {
         const memoryFormatted = memoryItems
           .map((p, idx) => {
+            const keywords = Array.from(new Set(p.name.toLowerCase().split(/\s+/))).filter(Boolean);
             // safe stringify raw data (catch circular)
             let rawStr = '';
             try {
-              rawStr = JSON.stringify(p.raw, null, 2);
+              rawStr = JSON.stringify(p, null, 2);
             } catch {
               rawStr = '[unserializable raw data]';
             }
@@ -68,9 +62,9 @@ export class PlannerPrompt extends BasePrompt {
             return `\
 [${idx + 1}]
 PRODUCT_NAME: ${p.name}
-PRICE: ${p.price}
-SOURCE: ${p.source}
-MEMORY_KEYWORDS: ${JSON.stringify(p.keywords)}
+PRICE: ${p.price_vnd}
+SOURCE: ${p.url}
+MEMORY_KEYWORDS: ${JSON.stringify(keywords)}
 RAW_DATA: ${rawStr}
 `;
           })
@@ -90,16 +84,11 @@ If user mentions any MEMORY_KEYWORDS, you MUST answer using memory instead of pl
       // ============================================================
       const lastStep = history[history.length - 1];
 
-      if (lastStep && lastStep.result) {
+      if (lastStep && lastStep.result && lastStep.result.length > 0) {
+        const lastActionResultItem = lastStep.result[lastStep.result.length - 1];
         // prefer readable text if present, otherwise try cache_content
-        if (typeof lastStep.result.text === 'string' && lastStep.result.text.trim().length > 0) {
-          lastActionResult = lastStep.result.text;
-        } else if (lastStep.result.cache_content) {
-          try {
-            lastActionResult = JSON.stringify(lastStep.result.cache_content, null, 2);
-          } catch {
-            lastActionResult = '[unserializable cache_content]';
-          }
+        if (lastActionResultItem.extractedContent) {
+          lastActionResult = lastActionResultItem.extractedContent;
         } else {
           lastActionResult = 'No text result';
         }

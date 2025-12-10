@@ -1,5 +1,5 @@
 import { type ProviderConfig, type ModelConfig, ProviderTypeEnum } from '@extension/storage';
-import { ChatOpenAI, AzureChatOpenAI } from '@langchain/openai';
+import { ChatOpenAI, AzureChatOpenAI, type ChatOpenAIInputs } from '@langchain/openai';
 import { ChatAnthropic } from '@langchain/anthropic';
 import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
 import { ChatXAI } from '@langchain/xai';
@@ -11,25 +11,34 @@ import { ChatDeepSeek } from '@langchain/deepseek';
 
 // Custom ChatLlama class to handle Llama API response format
 class ChatLlama extends ChatOpenAI {
-  constructor(args: any) {
+  constructor(args: ChatOpenAIInputs) {
     super(args);
   }
-
   // Override the completionWithRetry method to intercept and transform the response
-  async completionWithRetry(request: any, options?: any): Promise<any> {
+  async completionWithRetry(request: unknown, options?: unknown): Promise<unknown> {
     try {
       // Make the request using the parent's implementation
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const response = await (ChatOpenAI.prototype as any).completionWithRetry.call(this, request, options);
 
       // Check if this is a Llama API response format
-      if (response?.completion_message?.content?.text) {
+      if (
+        response &&
+        typeof response === 'object' &&
+        'completion_message' in response &&
+        response.completion_message &&
+        typeof response.completion_message === 'object' &&
+        'content' in response.completion_message &&
+        response.completion_message.content &&
+        typeof response.completion_message.content === 'object' &&
+        'text' in response.completion_message.content
+      ) {
         // Transform Llama API response to OpenAI format
         const transformedResponse = {
-          id: response.id || 'llama-response',
+          id: 'id' in response ? response.id : 'llama-response',
           object: 'chat.completion',
           created: Date.now(),
-          model: request.model,
+          model: request && typeof request === 'object' && 'model' in request ? request.model : 'unknown',
           choices: [
             {
               index: 0,
@@ -37,13 +46,41 @@ class ChatLlama extends ChatOpenAI {
                 role: 'assistant',
                 content: response.completion_message.content.text,
               },
-              finish_reason: response.completion_message.stop_reason || 'stop',
+              finish_reason:
+                'stop_reason' in response.completion_message ? response.completion_message.stop_reason : 'stop',
             },
           ],
           usage: {
-            prompt_tokens: response.metrics?.find((m: any) => m.metric === 'num_prompt_tokens')?.value || 0,
-            completion_tokens: response.metrics?.find((m: any) => m.metric === 'num_completion_tokens')?.value || 0,
-            total_tokens: response.metrics?.find((m: any) => m.metric === 'num_total_tokens')?.value || 0,
+            prompt_tokens:
+              'metrics' in response && Array.isArray(response.metrics)
+                ? response.metrics.find(
+                    (m: unknown) =>
+                      m &&
+                      typeof m === 'object' &&
+                      'metric' in m &&
+                      (m as { metric: string }).metric === 'num_prompt_tokens',
+                  )?.value || 0
+                : 0,
+            completion_tokens:
+              'metrics' in response && Array.isArray(response.metrics)
+                ? response.metrics.find(
+                    (m: unknown) =>
+                      m &&
+                      typeof m === 'object' &&
+                      'metric' in m &&
+                      (m as { metric: string }).metric === 'num_completion_tokens',
+                  )?.value || 0
+                : 0,
+            total_tokens:
+              'metrics' in response && Array.isArray(response.metrics)
+                ? response.metrics.find(
+                    (m: unknown) =>
+                      m &&
+                      typeof m === 'object' &&
+                      'metric' in m &&
+                      (m as { metric: string }).metric === 'num_total_tokens',
+                  )?.value || 0
+                : 0,
           },
         };
 
@@ -51,7 +88,7 @@ class ChatLlama extends ChatOpenAI {
       }
 
       return response;
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error(`[ChatLlama] Error during API call:`, error);
       throw error;
     }
@@ -69,27 +106,6 @@ function isOpenAIReasoningModel(modelName: string): boolean {
   return (
     modelNameWithoutProvider.startsWith('o') ||
     (modelNameWithoutProvider.startsWith('gpt-5') && !modelNameWithoutProvider.startsWith('gpt-5-chat'))
-  );
-}
-
-// Function to check if a model is an Anthropic Opus model
-function isAnthropicOpusModel(modelName: string): boolean {
-  // Extract the model name without provider prefix if present
-  let modelNameWithoutProvider = modelName;
-  if (modelName.startsWith('anthropic/')) {
-    modelNameWithoutProvider = modelName.substring(10);
-  }
-  return modelNameWithoutProvider.startsWith('claude-opus');
-}
-
-// check if a model is sonnet-4-5 or haiku-4-5
-function isAnthropic4_5Model(modelName: string): boolean {
-  let modelNameWithoutProvider = modelName;
-  if (modelName.startsWith('anthropic/')) {
-    modelNameWithoutProvider = modelName.substring(10);
-  }
-  return (
-    modelNameWithoutProvider.startsWith('claude-sonnet-4-5') || modelNameWithoutProvider.startsWith('claude-haiku-4-5')
   );
 }
 

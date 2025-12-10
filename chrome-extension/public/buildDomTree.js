@@ -8,8 +8,7 @@ window.buildDomTree = (
     startHighlightIndex: 0,
   },
 ) => {
-  const { showHighlightElements, focusHighlightIndex, viewportExpansion, startHighlightIndex, startId, debugMode } =
-    args;
+  const { showHighlightElements, focusHighlightIndex, viewportExpansion, startHighlightIndex, startId } = args;
   // Make sure to do highlight elements always, but we can hide the highlights if needed
   const doHighlightElements = true;
 
@@ -733,6 +732,7 @@ window.buildDomTree = (
     // check whether element has event listeners by window.getEventListeners
     try {
       if (typeof getEventListeners === 'function') {
+        // eslint-disable-next-line no-undef
         const listeners = getEventListeners(element);
         const mouseEvents = ['click', 'mousedown', 'mouseup', 'dblclick'];
         for (const eventType of mouseEvents) {

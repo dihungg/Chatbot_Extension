@@ -453,6 +453,9 @@ async function setupExecutor(
   browserContext: BrowserContext,
   profile?: TargetProductProfile,
 ) {
+  // Add logging to confirm the profile parameter is received.
+  logger.debug('Setting up executor with profile:', { taskId, task, profile });
+
   const providers = await llmProviderStore.getAllProviders();
   // if no providers, need to display the options page
   if (Object.keys(providers).length === 0) {

@@ -35,7 +35,7 @@ describe('ProfileParser', () => {
 
   it('auto extracts brand and budget from task but leaves rest in context', async () => {
     const task = 'Cần iPhone dưới 15 triệu để quay vlog';
-    const extracted = await parser.autoExtractFromTask(task, 'phone');
+    const extracted = await parser.autoExtractFromTask(task);
     expect(extracted.pref_brands).toContain('apple');
     expect(extracted.budget_vnd).toBe(15_000_000);
     expect(extracted.requirements_context).toContain(task);

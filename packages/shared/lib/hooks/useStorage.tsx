@@ -7,7 +7,7 @@ type BaseStorage<Data> = {
 };
 
 type WrappedPromise = ReturnType<typeof wrapPromise>;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+//
 const storageMap: Map<BaseStorage<any>, WrappedPromise> = new Map();
 
 export function useStorage<

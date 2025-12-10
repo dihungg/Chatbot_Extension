@@ -41,10 +41,9 @@ export class InvalidInputError extends Error {
 /**
  * An action is a function that takes an input and returns an ActionResult
  */
-export class Action {
+export class Action<S extends z.ZodType> {
   constructor(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    private readonly handler: (input: any) => Promise<ActionResult>,
+    private readonly handler: (input: z.infer<S>) => Promise<ActionResult>,
     public readonly schema: ActionSchema,
     // Whether this action has an index argument
     public readonly hasIndex: boolean = false,
@@ -60,7 +59,8 @@ export class Action {
       Object.keys((schema as z.ZodObject<Record<string, z.ZodTypeAny>>).shape || {}).length === 0;
 
     if (isEmptySchema) {
-      return await this.handler({});
+      // a hack to make the handler happy
+      return await this.handler({} as z.infer<S>);
     }
 
     const parsedArgs = this.schema.schema.safeParse(input);
@@ -80,8 +80,7 @@ export class Action {
    * @returns {string} The prompt for the action
    */
   prompt() {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const schemaShape = (this.schema.schema as z.ZodObject<any>).shape || {};
+    const schemaShape = (this.schema.schema as z.ZodObject<Record<string, z.ZodTypeAny>>).shape || {};
     const schemaProperties = Object.entries(schemaShape).map(([key, value]) => {
       const zodValue = value as z.ZodTypeAny;
       return `'${key}': {'type': '${zodValue.description}', ${zodValue.isOptional() ? "'optional': true" : "'required': true"}}`;

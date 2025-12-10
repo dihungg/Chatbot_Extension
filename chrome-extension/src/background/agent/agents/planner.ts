@@ -2,8 +2,10 @@ import { BaseAgent, type BaseAgentOptions, type ExtraAgentOptions } from './base
 import { createLogger } from '@src/background/log';
 import { z } from 'zod';
 import type { AgentOutput } from '../types';
+import type { TargetProductProfile } from '@extension/shared';
 import { HumanMessage } from '@langchain/core/messages';
 import { Actors, ExecutionState } from '../event/types';
+import { TargetProductDescriptionBuilder } from '../prompts/targetProductDescriptionBuilder';
 import {
   ChatModelAuthError,
   ChatModelBadRequestError,
@@ -46,6 +48,8 @@ export const plannerOutputSchema = z.object({
 export type PlannerOutput = z.infer<typeof plannerOutputSchema>;
 
 export class PlannerAgent extends BaseAgent<typeof plannerOutputSchema, PlannerOutput> {
+  private profileDescriptionBuilder = new TargetProductDescriptionBuilder();
+
   constructor(options: BaseAgentOptions, extraOptions?: Partial<ExtraAgentOptions>) {
     super(plannerOutputSchema, options, { ...extraOptions, id: 'planner' });
   }
@@ -57,6 +61,22 @@ export class PlannerAgent extends BaseAgent<typeof plannerOutputSchema, PlannerO
       const messages = this.context.messageManager.getMessages();
       // Use full message history except the first one
       const plannerMessages = [this.prompt.getSystemMessage(), ...messages.slice(1)];
+
+      // Inject the user's profile and all clarification information right after system prompt
+      if (this.context.targetProductProfile) {
+        // Add logging to confirm the profile is accessible.
+        logger.debug('Target product profile found, formatting for planner.', this.context.targetProductProfile);
+        const profileMessage = this.formatProfileMessage(this.context.targetProductProfile);
+        // Add logging to trace the formatted profile message.
+        logger.debug('Formatted profile message:', profileMessage.content);
+        plannerMessages.splice(1, 0, profileMessage);
+      } else {
+        // Add logging to confirm when no profile is found.
+        logger.debug('No target product profile found in context.');
+      }
+
+      // Debug
+      console.log(plannerMessages);
 
       // Remove images from last message if vision is not enabled for planner but vision is enabled
       if (!this.context.options.useVisionForPlanner && this.context.options.useVision) {
@@ -76,6 +96,12 @@ export class PlannerAgent extends BaseAgent<typeof plannerOutputSchema, PlannerO
 
         plannerMessages[plannerMessages.length - 1] = new HumanMessage(newMsg);
       }
+
+      // print messages for debugging
+      logger.debug('Planner Messages:');
+      plannerMessages.forEach((msg, index) => {
+        logger.debug(`Message ${index + 1} (${msg._getType()}): ${JSON.stringify(msg.content)}`);
+      });
 
       const modelOutput = await this.invoke(plannerMessages);
       if (!modelOutput) {
@@ -127,5 +153,32 @@ export class PlannerAgent extends BaseAgent<typeof plannerOutputSchema, PlannerO
         error: errorMessage,
       };
     }
+  }
+
+  /**
+   * Format user's target product profile into a human message for the planner
+   * Includes all clarification information: hard constraints, soft constraints, and context history
+   *
+   * @param profile - The user's target product profile
+   * @returns HumanMessage containing formatted profile information
+   */
+  private formatProfileMessage(profile: TargetProductProfile): HumanMessage {
+    const profileDescription = this.profileDescriptionBuilder.build(profile);
+
+    const message = `CRITICAL USER PROFILE AND REQUIREMENTS:
+Here is the user's profile with their specific requirements and context. You MUST adhere to these constraints in all subsequent planning and observations.
+
+${profileDescription}
+
+CLARIFICATION STATUS:
+- Opt-outs (do not ask about these): ${JSON.stringify(profile.clarification_opt_outs || {})}
+
+IMPORTANT:
+1. Use the Hard Constraints (Product Type, Budget, Brands) as strict filters where applicable.
+2. Read and interpret the Requirements Context to understand the user's specific needs.
+3. Do NOT ask clarifying questions about topics the user has opted out of.
+4. Ensure all recommendations respect these constraints throughout your planning.`;
+
+    return new HumanMessage(message);
   }
 }

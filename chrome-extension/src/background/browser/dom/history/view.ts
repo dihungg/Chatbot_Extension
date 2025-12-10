@@ -32,6 +32,19 @@ export interface ViewportInfo {
   height: number;
 }
 
+export interface DOMHistoryElementDict {
+  tagName: string;
+  xpath: string;
+  highlightIndex: number | null;
+  entireParentBranchPath: string[];
+  attributes: Record<string, string>;
+  shadowRoot: boolean;
+  cssSelector: string | null;
+  pageCoordinates: CoordinateSet | null;
+  viewportCoordinates: CoordinateSet | null;
+  viewportInfo: ViewportInfo | null;
+}
+
 export class DOMHistoryElement {
   constructor(
     public tagName: string,
@@ -46,7 +59,7 @@ export class DOMHistoryElement {
     public viewportInfo: ViewportInfo | null = null,
   ) {}
 
-  toDict(): Record<string, any> {
+  toDict(): DOMHistoryElementDict {
     return {
       tagName: this.tagName,
       xpath: this.xpath,
