@@ -24,7 +24,7 @@ ${canonicalDescription}
 --------------------------------------------------
 YÊU CẦU BẮT BUỘC:
 1. Trả về kết quả là một JSON Array hợp lệ.
-2. Phải bao gồm kế hoạch cho các trang web phù hợp (ưu tiên CellphoneS, FPT Shop, Shopee).
+2. Phải bao gồm kế hoạch cho các trang web phù hợp (ưu tiên CellphoneS, FPT Shop).
 3. Tuân thủ nghiêm ngặt Entry Strategy và Filter Strategy đã định nghĩa trong System Prompt.
 `;
 

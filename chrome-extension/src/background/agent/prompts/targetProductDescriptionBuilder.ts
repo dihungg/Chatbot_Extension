@@ -1,6 +1,6 @@
 import type { TargetProductProfile } from '@extension/shared';
 
-const PREFERRED_SITES = ['https://shopee.vn/', 'https://cellphones.com.vn/', 'https://fptshop.com.vn/'];
+const PREFERRED_SITES = ['https://cellphones.com.vn/', 'https://fptshop.com.vn/'];
 
 export class TargetProductDescriptionBuilder {
   build(profile: TargetProductProfile): string {
