@@ -61,9 +61,9 @@ export class LlamaResponseAdapter implements LLMProviderResponseAdapter {
           index: 0,
           message: {
             role: 'assistant',
-            content: this.response.completion_message.content.text,
+            content: this.response.completion_message?.content?.text ?? '',
           },
-          finish_reason: this.response.completion_message.stop_reason || 'stop',
+          finish_reason: this.response.completion_message?.stop_reason ?? 'stop',
         },
       ],
       usage: this.extractMetrics(),

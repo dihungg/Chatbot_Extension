@@ -37,7 +37,7 @@ export abstract class BaseAgent<T extends z.ZodType, M = unknown> {
   protected chatLLM: BaseChatModel;
   protected prompt: BasePrompt;
   protected context: AgentContext;
-  protected actions: Record<string, Action> = {};
+  protected actions: Record<string, Action<z.ZodTypeAny>> = {};
   protected modelOutputSchema: T;
   protected toolCallingMethod: string | null;
   protected chatModelLibrary: string;

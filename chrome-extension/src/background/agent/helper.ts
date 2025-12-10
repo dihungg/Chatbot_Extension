@@ -1,5 +1,5 @@
 import { type ProviderConfig, type ModelConfig, ProviderTypeEnum } from '@extension/storage';
-import { ChatOpenAI, AzureChatOpenAI, type ChatOpenAIInputs } from '@langchain/openai';
+import { ChatOpenAI, AzureChatOpenAI, type OpenAIInput } from '@langchain/openai';
 import { ChatAnthropic } from '@langchain/anthropic';
 import { ChatGoogleGenerativeAI } from '@langchain/google-genai';
 import { ChatXAI } from '@langchain/xai';
@@ -11,7 +11,7 @@ import { ChatDeepSeek } from '@langchain/deepseek';
 
 // Custom ChatLlama class to handle Llama API response format
 class ChatLlama extends ChatOpenAI {
-  constructor(args: ChatOpenAIInputs) {
+  constructor(args: OpenAIInput) {
     super(args);
   }
   // Override the completionWithRetry method to intercept and transform the response
@@ -396,7 +396,7 @@ export function createChatModel(providerConfig: ProviderConfig, modelConfig: Mod
       }
       args.configuration = configuration;
 
-      return new ChatLlama(args);
+      return new ChatLlama(args as any);
     }
     default: {
       // by default, we think it's a openai-compatible provider

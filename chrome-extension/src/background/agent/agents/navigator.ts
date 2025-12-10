@@ -39,15 +39,15 @@ interface ParsedModelOutput {
 }
 
 export class NavigatorActionRegistry {
-  private actions: Record<string, Action> = {};
+  private actions: Record<string, Action<z.ZodTypeAny>> = {};
 
-  constructor(actions: Action[]) {
+  constructor(actions: Action<z.ZodTypeAny>[]) {
     for (const action of actions) {
       this.registerAction(action);
     }
   }
 
-  registerAction(action: Action): void {
+  registerAction(action: Action<z.ZodTypeAny>): void {
     this.actions[action.name()] = action;
   }
 
@@ -55,7 +55,7 @@ export class NavigatorActionRegistry {
     delete this.actions[name];
   }
 
-  getAction(name: string): Action | undefined {
+  getAction(name: string): Action<z.ZodTypeAny> | undefined {
     return this.actions[name];
   }
 

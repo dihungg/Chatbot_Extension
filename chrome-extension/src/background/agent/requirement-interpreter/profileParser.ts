@@ -419,7 +419,7 @@ export class ProfileParser {
     }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { [questionId]: _removed, ...rest } = current;
-    // @ts-expect-error: rest matches Record<string, boolean>
+
     return {
       ...profile,
       clarification_opt_outs: rest,
