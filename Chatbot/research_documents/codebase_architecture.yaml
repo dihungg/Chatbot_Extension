@@ -1,0 +1,269 @@
+codebase_research:
+  repo: Nanobrowser
+  generated_at: 2025-02-15T00:00:00Z
+  structure:
+    monorepo_tooling:
+      description: >-
+        Turbo + pnpm workspace monorepo; top-level scripts run Turbo pipelines for build,
+        dev, lint, formatting, and packaging while enforcing pnpm usage and Node 22 engines.
+      scripts_of_interest:
+        - pnpm build
+        - pnpm dev
+        - pnpm type-check
+        - pnpm lint
+        - pnpm -F chrome-extension test
+      sources:
+        - "package.json:1"
+        - "CLAUDE.md:5"
+    workspace_map:
+      chrome-extension:
+        summary: >-
+          Manifest V3 extension implementing the multi-agent background, DOM automation,
+          analytics, speech, and requirement interpreter logic.
+        key_directories:
+          - name: background
+            focus: >-
+              Service worker entry, BrowserContext, agents, prompts, analytics services, and
+              Chrome messaging glue.
+          - name: public
+            focus: Static assets bundled into the extension.
+          - name: utils
+            focus: Build-time helpers (manifest, rollup config, etc.).
+        sources:
+          - "chrome-extension/package_tree.md:1"
+      pages:
+        summary: React/Vite front-ends packaged as extension pages.
+        entries:
+          - name: side-panel
+            description: Chat UI, progress stream, prompt favorites, and clarification view.
+            sources:
+              - "pages/side-panel/src/index.tsx:1"
+              - "pages/side-panel/src/SidePanel.tsx:1"
+          - name: options
+            description: Settings/configuration UI for API keys, preferences, and general options.
+            sources:
+              - "pages/options/src/index.tsx:1"
+          - name: content
+            description: Minimal stub content script placeholder for future injection.
+            sources:
+              - "pages/content/src/index.ts:1"
+      packages:
+        summary: Shared libraries consumed by extension + pages.
+        entries:
+          - name: shared
+            description: Cross-cutting domain types (e.g., TargetProductProfile) and helpers.
+          - name: storage
+            description: Strongly-typed chrome.storage abstractions (chat history, agent models,
+              settings, requirement profiles).
+            sources:
+              - "packages/storage/lib/chat/history.ts:1"
+          - name: ui
+            description: Shared React primitives/styling tokens for panels/options.
+          - name: i18n
+            description: Locale JSON + generator; runtime `t()` helper used across workspaces.
+          - name: schema-utils
+            description: Shared validation schemas for prompts/profile structures.
+          - name: tailwind-config
+            description: Reusable Tailwind preset imported by UI workspaces.
+          - name: dev-utils
+            description: Build helpers (scripts, node APIs) for local tooling.
+          - name: zipper
+            description: Release packaging pipeline invoked via `pnpm zip`.
+        sources:
+          - "packages"
+      knowledge_assets:
+        - name: design_documents
+          description: High-level architecture and requirement interpreter specs.
+          sources:
+            - "design_documents/requirement_interpreter_design.md:1"
+        - name: research_documents
+          description: Workspace for architecture notes (current file lives here).
+  architecture:
+    high_level:
+      - name: Background Service Worker & BrowserContext
+        detail: >-
+          `chrome-extension/src/background/index.ts` boots the service worker, listens for
+          side-panel `chrome.runtime` connections, injects DOM scripts, attaches Chrome debugger,
+          and routes events through BrowserContext for page control.
+        sources:
+          - "chrome-extension/src/background/index.ts:1"
+          - "chrome-extension/src/background/browser/context.ts:1"
+      - name: Multi-Agent Executor Stack
+        detail: >-
+          `Executor` orchestrates Planner and Navigator agents, prompts, action registries, and
+          analytics tracking; it enforces step budgets, handles follow-up tasks, and feeds
+          Chrome actions via Navigator outputs.
+        sources:
+          - "chrome-extension/src/background/agent/executor.ts:1"
+          - "chrome-extension/src/background/agent/prompts/planner.ts"
+          - "chrome-extension/src/background/agent/prompts/navigator.ts"
+      - name: Requirement Interpreter & Profile Context
+        detail: >-
+          Background bootstraps `RequirementInterpreterService` to produce structured product
+          profiles (TargetProductProfile) before an executor starts, optionally looping UI
+          clarifications, then injecting the profile into planner prompts for contextual control.
+        sources:
+          - "design_documents/requirement_interpreter_design.md:1"
+          - "chrome-extension/src/background/index.ts:50"
+      - name: UI Surfaces
+        detail: >-
+          React side panel renders chat history, bookmarks, speech recording, and clarification
+          forms; options page configures API keys/settings; content script currently only logs
+          but is ready for DOM assistance overlays.
+        sources:
+          - "pages/side-panel/src/SidePanel.tsx:1"
+          - "pages/options/src/Options.tsx:1"
+          - "pages/content/src/index.ts:1"
+      - name: Shared Storage & Settings Layer
+        detail: >-
+          `@extension/storage` exports typed stores built atop chrome.storage with live updates
+          for chat history (`chatHistoryStore`), agent model config, general settings, prompts,
+          and target product profiles; UI and background both depend on the same stores.
+        sources:
+          - "packages/storage/lib/chat/history.ts:1"
+          - "pages/side-panel/src/SidePanel.tsx:20"
+      - name: DOM Automation + Messaging Utilities
+        detail: >-
+          BrowserContext coordinates Puppeteer-like attachments, while DOM service builds
+          annotated DOM trees via injected scripts, readability extraction, markdown conversion,
+          and clickable element registries consumed by navigator actions.
+        sources:
+          - "chrome-extension/src/background/browser/context.ts:1"
+          - "chrome-extension/src/background/browser/dom/service.ts:1"
+    low_level:
+      - component: Executor Lifecycle & Eventing
+        responsibilities: >-
+          Maintain task queue, subscribe UI listeners to ExecutionState events, guard against
+          max steps/failures, cancel/pause/resume tasks, and emit final answers while persisting
+          agent history to storage.
+        interactions:
+          - planner agent for high-level reasoning
+          - navigator agent for DOM tool use
+          - analytics + speech services for telemetry and voice input
+          - chatHistoryStore for persistence via Event callbacks
+        sources:
+          - "chrome-extension/src/background/agent/executor.ts:1"
+          - "chrome-extension/src/background/agent/event/types.ts:1"
+      - component: MessageManager & Prompt Builders
+        responsibilities: >-
+          Assemble LangChain message sequences (system, task instructions, sample tool calls,
+          attachments), keep token budgets, rotate history, and augment prompts with planner
+          context plus target profile descriptions.
+        interactions:
+          - PlannerPrompt/NavigatorPrompt for templates
+          - Requirement interpreter for profile injection
+          - NavigatorActionRegistry for available tools metadata
+        sources:
+          - "chrome-extension/src/background/agent/messages/service.ts:1"
+          - "chrome-extension/src/background/agent/prompts/planner.ts"
+      - component: BrowserContext/Page/DOM abstraction
+        responsibilities: >-
+          Attach/detach Chrome debugger, switch active tabs, build DOM trees, compute clickable
+          node maps, gather markdown/readability, and manage screenshot/highlight commands.
+        interactions:
+          - Navigator actions (`click_element`, `scroll`, etc.)
+          - Background event loop for cleanup on tab removal/detach
+        sources:
+          - "chrome-extension/src/background/browser/context.ts:1"
+          - "chrome-extension/src/background/browser/dom/service.ts:1"
+      - component: Requirement Interpreter Modules
+        responsibilities: >-
+          Detect missing TargetProductProfile fields, query side panel for clarifications, build
+          prompts from base templates, persist finalized profile per session, and feed planners.
+        interactions:
+          - TargetProductProfileRepository in `@extension/storage`
+          - Side panel clarification UI
+          - PlannerPrompt builder
+        sources:
+          - "design_documents/requirement_interpreter_design.md:1"
+          - "chrome-extension/src/background/index.ts:40"
+      - component: Side Panel State Model
+        responsibilities: >-
+          Maintain chat messages, session metadata, follow-up mode, history selection, bookmarks,
+          speech recording state, requirement clarification cache, and chrome.runtime.Port
+          heartbeat/resubscribe logic.
+        interactions:
+          - chatHistoryStore & agentModelStore for persistence/config detection
+          - Side-panel components (MessageList, ChatInput, ClarificationForm)
+          - Background port commands (`new_task`, `pause_task`, etc.)
+        sources:
+          - "pages/side-panel/src/SidePanel.tsx:1"
+      - component: Storage Implementations
+        responsibilities: >-
+          Provide CRUD helpers for chat sessions, messages, and agent step history plus generic
+          createStorage wrappers enabling local/sync storage selection and live updates used by
+          UI.
+        interactions:
+          - chrome.storage.local/sync APIs
+          - Side panel + background features requiring durable state
+        sources:
+          - "packages/storage/lib/base/base.ts"
+          - "packages/storage/lib/chat/history.ts:1"
+  information_flows:
+    - name: Task Submission & Executor Boot
+      trigger: User submits a task from side panel.
+      actors: [SidePanel UI, Background Service Worker, Requirement Interpreter, Executor]
+      steps:
+        - Side panel gathers task/tabId, ensures agent models configured, and posts `new_task`
+          through the persistent port.
+        - Background validates payload, calls RequirementInterpreterService.ensureProfile, and may
+          park the request awaiting clarifications.
+        - Once a profile exists, background instantiates BrowserContext + Executor with proper
+          LLM models from storage, subscribes UI to execution events, and calls `execute()`.
+      sources:
+        - "pages/side-panel/src/SidePanel.tsx:120"
+        - "chrome-extension/src/background/index.ts:60"
+        - "chrome-extension/src/background/agent/executor.ts:30"
+    - name: Requirement Clarification Loop
+      trigger: Interpreter detects missing product profile fields.
+      actors: [RequirementInterpreterService, Side Panel ClarificationForm, Storage]
+      steps:
+        - Interpreter emits `requirement_clarification` to the UI describing outstanding fields.
+        - Side panel renders ClarificationForm, caches partial answers, and posts
+          `requirement_answers` back over the port.
+        - Interpreter parses responses, updates TargetProductProfileRepository, and resumes the
+          pending executor start.
+      sources:
+        - "design_documents/requirement_interpreter_design.md:40"
+        - "chrome-extension/src/background/index.ts:85"
+        - "pages/side-panel/src/components/ClarificationForm.tsx"
+    - name: Planner ↔ Navigator Iteration
+      trigger: Executor execution loop.
+      actors: [PlannerAgent, NavigatorAgent, MessageManager, BrowserContext]
+      steps:
+        - Executor resets counters, logs `task.start`, and runs Planner at configured intervals to
+          craft or refine strategy while injecting current message history.
+        - Navigator receives the current plan, executes DOM actions via BrowserContext, and
+          returns action results / tool calls recorded by MessageManager.
+        - Planner determines completion or next goals; Executor halts once `done` true or when
+          max steps reached, emitting `TASK_OK` or failure states for UI + analytics.
+      sources:
+        - "chrome-extension/src/background/agent/executor.ts:70"
+        - "chrome-extension/src/background/agent/messages/service.ts:1"
+        - "chrome-extension/src/background/browser/context.ts:1"
+    - name: Chat History Persistence
+      trigger: Message stream updates or session switches in the side panel.
+      actors: [Side Panel, chatHistoryStore, chrome.storage]
+      steps:
+        - UI listens to ExecutionState events, appends messages, and on each append persists to
+          `chat_messages_<sessionId>` storage keys while maintaining metadata indexes.
+        - Sessions list queries metadata only for responsive UI; opening a session pulls the full
+          message list lazily.
+        - Deleting/renaming sessions updates metadata while clearing the corresponding message
+          storage segment.
+      sources:
+        - "pages/side-panel/src/SidePanel.tsx:120"
+        - "packages/storage/lib/chat/history.ts:1"
+    - name: DOM Instrumentation & Action Execution
+      trigger: Navigator issues DOM queries/actions.
+      actors: [NavigatorActionRegistry, BrowserContext, DOM Service Scripts]
+      steps:
+        - BrowserContext ensures target tab is attached; DOM service injects helper scripts to
+          build clickable-element trees, readability output, and markdown conversions.
+        - Navigator actions (click, scroll, input, screenshot) call BrowserContext/Page helpers,
+          which leverage Chrome debugger/scripting APIs.
+        - DOM snapshots and action results feed back into MessageManager and UI progress updates.
+      sources:
+        - "chrome-extension/src/background/browser/dom/service.ts:1"
+        - "chrome-extension/src/background/browser/context.ts:80"
+        - "chrome-extension/src/background/agent/actions/builder.ts"

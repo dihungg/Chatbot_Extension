@@ -1,0 +1,146 @@
+
+> nanobrowser@0.1.13 lint /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension
+> turbo lint --continue -- --fix --cache --cache-location node_modules/.cache/.eslintcache
+
+• Packages in scope: @extension/content-script, @extension/dev-utils, @extension/hmr, @extension/i18n, @extension/options, @extension/schema-utils, @extension/shared, @extension/sidepanel, @extension/storage, @extension/tailwindcss-config, @extension/tsconfig, @extension/ui, @extension/vite-config, @extension/zipper, chrome-extension
+• Running lint in 15 packages
+• Remote caching disabled
+@extension/options:lint: cache bypass, force executing 3e2b79cb07394a04
+@extension/ui:lint: cache bypass, force executing c10778ec914b9028
+@extension/shared:lint: cache bypass, force executing 59e95fbf4f338e7a
+@extension/zipper:lint: cache bypass, force executing b787ad89bd8a5446
+chrome-extension:lint: cache bypass, force executing 423b121fb281a9ba
+@extension/sidepanel:lint: cache bypass, force executing c22828269e0514e9
+@extension/storage:lint: cache bypass, force executing 072e3d2d9f4576b3
+@extension/content-script:lint: cache bypass, force executing f696a50ab5ed0c3f
+@extension/hmr:lint: cache bypass, force executing 90cdb9c5f9646c8a
+@extension/i18n:lint: cache bypass, force executing 3119b52aa247c7b5
+@extension/options:lint: 
+@extension/options:lint: > @extension/options@0.1.13 lint /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/pages/options
+@extension/options:lint: > eslint . --ext .ts,.tsx "--fix" "--cache" "--cache-location" "node_modules/.cache/.eslintcache"
+@extension/options:lint: 
+@extension/storage:lint: 
+@extension/storage:lint: > @extension/storage@0.1.13 lint /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/packages/storage
+@extension/storage:lint: > eslint . --ext .ts,.tsx "--fix" "--cache" "--cache-location" "node_modules/.cache/.eslintcache"
+@extension/storage:lint: 
+@extension/ui:lint: 
+@extension/ui:lint: > @extension/ui@0.1.13 lint /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/packages/ui
+@extension/ui:lint: > eslint . --ext .ts,.tsx "--fix" "--cache" "--cache-location" "node_modules/.cache/.eslintcache"
+@extension/ui:lint: 
+@extension/i18n:lint: 
+@extension/i18n:lint: > @extension/i18n@0.1.13 lint /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/packages/i18n
+@extension/i18n:lint: > eslint . --ext .ts,.tsx "--fix" "--cache" "--cache-location" "node_modules/.cache/.eslintcache"
+@extension/i18n:lint: 
+@extension/sidepanel:lint: 
+@extension/sidepanel:lint: > @extension/sidepanel@0.1.13 lint /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/pages/side-panel
+@extension/sidepanel:lint: > eslint . --ext .ts,.tsx "--fix" "--cache" "--cache-location" "node_modules/.cache/.eslintcache"
+@extension/sidepanel:lint: 
+chrome-extension:lint: 
+chrome-extension:lint: > chrome-extension@0.1.13 lint /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/chrome-extension
+chrome-extension:lint: > eslint ./ --ext .ts,.js,.tsx,.jsx "--fix" "--cache" "--cache-location" "node_modules/.cache/.eslintcache"
+chrome-extension:lint: 
+@extension/zipper:lint: 
+@extension/zipper:lint: > @extension/zipper@0.1.13 lint /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/packages/zipper
+@extension/zipper:lint: > eslint . --ext .ts,.tsx "--fix" "--cache" "--cache-location" "node_modules/.cache/.eslintcache"
+@extension/zipper:lint: 
+@extension/shared:lint: 
+@extension/shared:lint: > @extension/shared@0.1.13 lint /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/packages/shared
+@extension/shared:lint: > eslint . --ext .ts,.tsx "--fix" "--cache" "--cache-location" "node_modules/.cache/.eslintcache"
+@extension/shared:lint: 
+@extension/content-script:lint: 
+@extension/content-script:lint: > @extension/content-script@0.1.13 lint /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/pages/content
+@extension/content-script:lint: > eslint . --ext .ts,.tsx "--fix" "--cache" "--cache-location" "node_modules/.cache/.eslintcache"
+@extension/content-script:lint: 
+@extension/hmr:lint: 
+@extension/hmr:lint: > @extension/hmr@0.1.13 lint /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/packages/hmr
+@extension/hmr:lint: > eslint . --ext .ts,.tsx "--fix" "--cache" "--cache-location" "node_modules/.cache/.eslintcache"
+@extension/hmr:lint: 
+@extension/dev-utils:lint: cache bypass, force executing 37f530a284910b42
+@extension/schema-utils:lint: cache bypass, force executing 90c6c893a872a1ba
+@extension/dev-utils:lint: 
+@extension/dev-utils:lint: > @extension/dev-utils@0.1.13 lint /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/packages/dev-utils
+@extension/dev-utils:lint: > eslint . --ext .ts,.tsx "--fix" "--cache" "--cache-location" "node_modules/.cache/.eslintcache"
+@extension/dev-utils:lint: 
+@extension/shared:lint: 
+@extension/shared:lint: /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/packages/shared/lib/hooks/useStorage.tsx
+@extension/shared:lint:   11:35  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+@extension/shared:lint: 
+@extension/shared:lint: /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/packages/shared/lib/utils/__tests__/contentParsing.test.ts
+@extension/shared:lint:    13:15  error  'UnifiedProductSchema' is defined but never used  @typescript-eslint/no-unused-vars
+@extension/shared:lint:   235:24  error  'error' is defined but never used                 @typescript-eslint/no-unused-vars
+@extension/shared:lint:   245:13  error  'original' is assigned a value but never used     @typescript-eslint/no-unused-vars
+@extension/shared:lint: 
+@extension/shared:lint: /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/packages/shared/lib/utils/__tests__/immutability.test.ts
+@extension/shared:lint:    13:3   error  'ImmutableChain' is defined but never used    @typescript-eslint/no-unused-vars
+@extension/shared:lint:    21:31  error  Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+@extension/shared:lint:   129:13  error  'updated' is assigned a value but never used  @typescript-eslint/no-unused-vars
+@extension/shared:lint:   225:18  error  Unexpected any. Specify a different type      @typescript-eslint/no-explicit-any
+@extension/shared:lint: 
+@extension/shared:lint: /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/packages/shared/lib/utils/__tests__/typeGuards.test.ts
+@extension/shared:lint:   118:47  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+@extension/shared:lint:   153:38  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+@extension/shared:lint: 
+@extension/shared:lint: /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/packages/shared/lib/utils/contentParsing.ts
+@extension/shared:lint:   66:24  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+@extension/shared:lint: 
+@extension/shared:lint: /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/packages/shared/lib/utils/immutability.ts
+@extension/shared:lint:    22:54  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+@extension/shared:lint:    39:58  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+@extension/shared:lint:    61:58  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+@extension/shared:lint:    82:64  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+@extension/shared:lint:    99:54  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+@extension/shared:lint:   136:48  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+@extension/shared:lint:   147:53  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+@extension/shared:lint: 
+@extension/shared:lint: /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/packages/shared/lib/utils/typeGuards.ts
+@extension/shared:lint:   41:18  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+@extension/shared:lint:   42:25  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+@extension/shared:lint:   43:28  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+@extension/shared:lint:   59:30  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+@extension/shared:lint: 
+@extension/shared:lint: ✖ 22 problems (22 errors, 0 warnings)
+@extension/shared:lint: 
+@extension/shared:lint:  ELIFECYCLE  Command failed with exit code 1.
+@extension/schema-utils:lint: 
+@extension/schema-utils:lint: > @extension/schema-utils@0.1.13 lint /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/packages/schema-utils
+@extension/schema-utils:lint: > eslint . --ext .ts,.tsx "--fix" "--cache" "--cache-location" "node_modules/.cache/.eslintcache"
+@extension/schema-utils:lint: 
+@extension/options:lint: 
+@extension/options:lint: /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/pages/options/src/components/ModelSettings.tsx
+@extension/options:lint:   1561:16  warning  Classname 'provider-selector-container' is not a Tailwind CSS class!  tailwindcss/no-custom-classname
+@extension/options:lint: 
+@extension/options:lint: ✖ 1 problem (0 errors, 1 warning)
+@extension/options:lint: 
+@extension/options:lint: (node:87462) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/conquerormikrokosmos/Downloads/LAPTOP%20MAC/MYUNIVERSITY/%C4%90A%CC%A3I%20HO%CC%A3C%20QUO%CC%82%CC%81C%20GIA%20TPHCM/%C4%90H%20KHOA%20HO%CC%A3C%20TU%CC%9B%CC%A3%20NHIE%CC%82N/NA%CC%86M%204/HKI/Intelligent%20Data%20Analysis/Chatbot_Extension/packages/tailwind-config/tailwind.config.ts is not specified and it doesn't parse as CommonJS.
+@extension/options:lint: Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+@extension/options:lint: To eliminate this warning, add "type": "module" to /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/packages/tailwind-config/package.json.
+@extension/options:lint: (Use `node --trace-warnings ...` to show where the warning was created)
+chrome-extension:lint: 
+chrome-extension:lint: /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/chrome-extension/src/background/agent/llm/responseAdapters.ts
+chrome-extension:lint:    79:34  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+chrome-extension:lint:    91:36  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+chrome-extension:lint:   100:39  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+chrome-extension:lint: 
+chrome-extension:lint: ✖ 3 problems (3 errors, 0 warnings)
+chrome-extension:lint: 
+chrome-extension:lint:  ELIFECYCLE  Command failed with exit code 1.
+@extension/sidepanel:lint: 
+@extension/sidepanel:lint: /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/pages/side-panel/src/SidePanel.tsx
+@extension/sidepanel:lint:   1323:9  error    'quickPromptList' is assigned a value but never used                                                                             @typescript-eslint/no-unused-vars
+@extension/sidepanel:lint:   1331:6  warning  React Hook useMemo has an unnecessary dependency: 'clarificationCacheVersion'. Either exclude it or remove the dependency array  react-hooks/exhaustive-deps
+@extension/sidepanel:lint:   1342:6  warning  React Hook useMemo has an unnecessary dependency: 'clarificationCacheVersion'. Either exclude it or remove the dependency array  react-hooks/exhaustive-deps
+@extension/sidepanel:lint: 
+@extension/sidepanel:lint: ✖ 3 problems (1 error, 2 warnings)
+@extension/sidepanel:lint: 
+@extension/sidepanel:lint: (node:87640) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/conquerormikrokosmos/Downloads/LAPTOP%20MAC/MYUNIVERSITY/%C4%90A%CC%A3I%20HO%CC%A3C%20QUO%CC%82%CC%81C%20GIA%20TPHCM/%C4%90H%20KHOA%20HO%CC%A3C%20TU%CC%9B%CC%A3%20NHIE%CC%82N/NA%CC%86M%204/HKI/Intelligent%20Data%20Analysis/Chatbot_Extension/packages/tailwind-config/tailwind.config.ts is not specified and it doesn't parse as CommonJS.
+@extension/sidepanel:lint: Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+@extension/sidepanel:lint: To eliminate this warning, add "type": "module" to /Users/conquerormikrokosmos/Downloads/LAPTOP MAC/MYUNIVERSITY/ĐẠI HỌC QUỐC GIA TPHCM/ĐH KHOA HỌC TỰ NHIÊN/NĂM 4/HKI/Intelligent Data Analysis/Chatbot_Extension/packages/tailwind-config/package.json.
+@extension/sidepanel:lint: (Use `node --trace-warnings ...` to show where the warning was created)
+@extension/sidepanel:lint:  ELIFECYCLE  Command failed with exit code 1.
+
+ Tasks:    9 successful, 12 total
+Cached:    0 cached, 12 total
+  Time:    16.542s 
+Failed:    @extension/shared#lint, @extension/sidepanel#lint, chrome-extension#lint
+
+ ELIFECYCLE  Command failed with exit code 1.
