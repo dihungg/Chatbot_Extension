@@ -112,8 +112,7 @@ Nanobrowser allows you to configure different LLM models for each agent to balan
   - **Falcon3 10B**
   - **Qwen 2.5 Coder 14B**
   - **Mistral Small 24B**
-  - [Latest test results from community](https://gist.github.com/maximus2600/75d60bf3df62986e2254d5166e2524cb) 
-  - We welcome community experience sharing with other local models in our [Discord](https://discord.gg/NN3ABHggMK)
+
 
 - **Prompt Engineering**:
   - Local models require more specific and cleaner prompts
@@ -122,7 +121,4 @@ Nanobrowser allows you to configure different LLM models for each agent to balan
   - Provide explicit context and constraints
 
 > **Note**: The cost-effective configuration may produce less stable outputs and require more iterations for complex tasks.
-
-> **Tip**: Feel free to experiment with your own model configurations! Found a great combination? Share it with the community in our [Discord](https://discord.gg/NN3ABHggMK) to help others optimize their setup.
-
 
